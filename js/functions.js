@@ -147,8 +147,8 @@ function loadCensusData(variable, tipo) {
       }
 
 
-      
-      window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=400'); 
+      if(tipo != "M")
+        window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
       
 
       map.data.addListener('mouseover', mouseInToRegion);
@@ -157,8 +157,8 @@ function loadCensusData(variable, tipo) {
 
       map.data.setStyle(styleFeature);
 
-      document.getElementById('census-min').textContent = censusMin.toPrecision(4);
-      document.getElementById('census-max').textContent = censusMax.toPrecision(4);
+      document.getElementById('census-min').textContent = censusMin.toPrecision(3);
+      document.getElementById('census-max').textContent = censusMax.toPrecision(3);
       document.getElementById('census-variable').textContent = window.dado["informacao"][0];
       $('#loading').css('display','none');
       
