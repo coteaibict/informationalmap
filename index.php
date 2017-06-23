@@ -34,7 +34,7 @@
         <form>
           <input type="radio" name="divisao" value="M" > Municipios<br>
           <input type="radio" name="divisao" value="E" checked> Estados<br>
-          <input type="radio" name="divisao" value="MR" > Micro Regiões<br>
+          <input type="radio" name="divisao" value="MR" > Meso Regiões<br>
           <input type="radio" name="divisao" value="R" > Regiões<br>
         </form>
       </div>

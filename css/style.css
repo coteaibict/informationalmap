@@ -21,7 +21,27 @@ html, body {
 	display:none;
 	font-size: 50%;
 }
+#marcatodos{
+	position: fixed;
+	background-color: white;
+	z-index: 2;
+	width: 100%;
+}
+#botaoCheckBox input {
+	width:100%;
+}
+#botaoCheckBox{
+	position: fixed;
+	bottom: 0;
+	background-color: white;
+	width: 120px;
+}
 
+#opcoes{
+	position: relative;
+	top: 30px;
+    z-index: 1;
+}
 #loading{
 	display: none;
 	width: 100%;

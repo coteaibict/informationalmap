@@ -4,6 +4,7 @@ window.dado = [];
 window.tipoDivisao = "E";
 window.variavelPesquisa = null;
 window.setores = [];
+window.setoresMarcados = [];
 
  var mapStyle = [{
   'stylers': [{'visibility': 'off'}]
@@ -17,7 +18,33 @@ window.setores = [];
   'stylers': [{'visibility': 'on'}, {'color': '#bfd4ff'}]
 }];
 
+function checkAll(ele) {
+   var checkboxes = document.getElementsByTagName('input');
+   if (ele.checked) {
+       for (var i = 0; i < checkboxes.length; i++) {
+           if (checkboxes[i].type == 'checkbox') {
+               checkboxes[i].checked = true;
+           }
+       }
+   } else {
+       for (var i = 0; i < checkboxes.length; i++) {
+           if (checkboxes[i].type == 'checkbox') {
+               checkboxes[i].checked = false;
+           }
+       }
+   }
+}
 
+function SetoresMarcado(){
+  window.setoresMarcados = [];
+  var inputElements = document.getElementsByClassName('setoresMarcados');
+  for(var i=0; inputElements[i]; ++i){
+        if(inputElements[i].checked){
+             window.setoresMarcados.push(inputElements[i].value);
+        }
+  }
+  LoadMapShapes();
+}
 function AtualizaVarialvelPesquisa(variavel){
   window.variavelPesquisa = variavel;
   LoadMapShapes();
@@ -120,9 +147,9 @@ function loadCensusData(variable, tipo) {
       }
 
 
-      if(tipo != 'M'){
-        window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=400'); 
-      }
+      
+      window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=400'); 
+      
 
       map.data.addListener('mouseover', mouseInToRegion);
       map.data.addListener('mouseout', mouseOutOfRegion);
@@ -149,9 +176,8 @@ function SetoresPordivisao(){
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) { 
         var dados = this.responseText.split(";");
-        
 
-        for(var i = 0; i < dados.length -1; i++){
+        for(var i = 0; i < dados.length; i++){
           var aux = dados[i].split(",");
           window.setores.push({
             key: aux[0],
@@ -159,7 +185,6 @@ function SetoresPordivisao(){
             valor: aux[2]
           });
         }
-        
       }
     };
 
@@ -177,13 +202,32 @@ function styleFeature(feature) {
   // delta represents where the value sits between the min and max
   var delta = (feature.getProperty('census_variable') - censusMin) /
       (censusMax - censusMin);
-
+  
   var color = [];
+
   for (var i = 0; i < 3; i++) {
     // calculate an integer color based on the delta
     color[i] = (high[i] - low[i]) * delta + low[i];
   }
 
+  i = 0;
+  var achou = 0;
+  if(window.setoresMarcados.length > 0){
+    for (var j in window.setores){
+      if(window.setores[j].key == feature.getId()){
+        for (var i in window.setoresMarcados){
+          if(window.setoresMarcados[i] == window.setores[j].cod_setor)
+            achou = 1;
+        }
+      }
+    }
+    if(achou == 0){
+      
+      color[0] = 0;
+      color[1] = 0;
+      color[2] = 0;
+    }
+  }
   // determine whether to show this shape or not
   var showRow = true;
   if (feature.getProperty('census_variable') == null ||
@@ -211,8 +255,7 @@ function mouseInToRegion(e) {
   // set the hover state so the setStyle function can change the border
   e.feature.setProperty('state', 'hover');
   for (var i in window.setores){
-    if (window.setores[i].key = e.feature.getId()){
-      console.log(window.setores[i].cod_setor +" "+window.setores[i].valor);
+    if (window.setores[i].key == e.feature.getId()){
       $("#"+ window.setores[i].cod_setor).html(window.setores[i].valor);
     }
   }
@@ -306,7 +349,15 @@ function LoadMapShapes(){
     }
     else if(window.tipoDivisao == 'E'){
       $('#loading').css('display','block');
+      SetoresPordivisao();
       map.data.loadGeoJson('geojson/UF/uf.json', { idPropertyName:'GEOCODIGO'}, function(){
+        loadCensusData(window.variavelPesquisa, window.tipoDivisao);
+      });    
+    }
+    else if(window.tipoDivisao == 'MR'){
+      $('#loading').css('display','block');
+      SetoresPordivisao();
+      map.data.loadGeoJson('geojson/MesoRegiao/MesoRegiao.json', { idPropertyName:'GEOCODIGO'}, function(){
         loadCensusData(window.variavelPesquisa, window.tipoDivisao);
       });    
     }
