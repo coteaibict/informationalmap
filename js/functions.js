@@ -98,7 +98,6 @@ function clearCensusData() {
 }
 
 function loadCensusData(variable, tipo) {
-
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) { 
@@ -147,8 +146,25 @@ function loadCensusData(variable, tipo) {
       }
 
 
-      if(tipo != "M")
-        window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+      if(tipo != "M"){
+        if(window.setoresMarcados.length > 0){
+          var dadosGrafico = [];
+          dadosGrafico["label"] = [];
+          dadosGrafico["valor"] = [];
+          i = 0;
+          var cod;
+          for (i in window.dado["cod"]){
+            index = window.setores.findIndex(x => x.key == window.dado["cod"][i]);
+            if(index != -1 && window.setoresMarcados.includes(window.setores[index].cod_setor)){
+              dadosGrafico["label"].push(window.dado["nome"][i]);
+              dadosGrafico["valor"].push(window.dado["valor"][i]);
+            }
+          }
+          window.open("Grafico.php?nome="+JSON.stringify(dadosGrafico["label"])+"&valor="+JSON.stringify(dadosGrafico["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+        }
+        else
+          window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+      }
       
 
       map.data.addListener('mouseover', mouseInToRegion);
@@ -210,9 +226,9 @@ function styleFeature(feature) {
     color[i] = (high[i] - low[i]) * delta + low[i];
   }
 
-  i = 0;
-  var achou = 0;
   if(window.setoresMarcados.length > 0){
+    i = 0;
+    var achou = 0;
     for (var j in window.setores){
       if(window.setores[j].key == feature.getId()){
         for (var i in window.setoresMarcados){
@@ -254,11 +270,14 @@ function styleFeature(feature) {
 function mouseInToRegion(e) {
   // set the hover state so the setStyle function can change the border
   e.feature.setProperty('state', 'hover');
+  var total = 0;
   for (var i in window.setores){
     if (window.setores[i].key == e.feature.getId()){
       $("#"+ window.setores[i].cod_setor).html(window.setores[i].valor);
+      total += Number(window.setores[i].valor);
     }
   }
+  $("#total").html(total);
   // window.setores.forEach(function (arrayItem){
   //   if (arrayItem.key = e.feature.getId()){
   //     $("#"+ arrayItem.cod_setor).html(arrayItem.valor);
@@ -304,6 +323,7 @@ function mouseOutOfRegion(e) {
   for(var i = 1; i <= 26; i++){
     $("#"+ i).html("0");
   }
+  $("#total").html("0");
   // reset the hover state, returning the border to normal
   e.feature.setProperty('state', 'normal');
 
