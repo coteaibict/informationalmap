@@ -10,7 +10,7 @@
 	    	echo '<input type="checkbox" class="setoresMarcados" value="'.$row[0].'">'.$row[1].':<div id='.$row[0].'>0</div><br>';
 		}
 		echo 'Total: <div id="total"></div>';
-		echo '</br></br>';
+		echo '</br></br></br>';
 		echo '<div id="botaoCheckBox"><input type="button" value="Atualizar" onclick="SetoresMarcado();"></div>';
 		echo '</form>';
 

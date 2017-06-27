@@ -5,6 +5,7 @@ window.tipoDivisao = "E";
 window.variavelPesquisa = null;
 window.setores = [];
 window.setoresMarcados = [];
+window.numeroGrafico = 1;
 
  var mapStyle = [{
   'stylers': [{'visibility': 'off'}]
@@ -56,7 +57,10 @@ function AtualizaInformacoesEspecificas(variavel){
     $("#InformaçõesEspecificas").html("<ul><li onclick=\"AtualizaVarialvelPesquisa('FundamentalCom')\" ><center><img class='iconeLista' src='images/índice.jpeg'/></br>Número de pessoas com fundamental completo</center></li></ul>");
 
   }
-
+  else if(variavel == 'Economia'){
+    $('#InformaçõesEspecificas').css('display','block');
+    $("#InformaçõesEspecificas").html("<ul><li onclick=\"AtualizaVarialvelPesquisa('PIB')\" ><center><img class='iconeLista' src='images/índice.jpeg'/></br>Pib municipal</center></li></ul>");
+  }
 }
 
 
@@ -100,7 +104,7 @@ function clearCensusData() {
 function loadCensusData(variable, tipo) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) { 
+    if (this.readyState == 4 && this.status == 200){ 
       var dados = this.responseText.split(";");
       dado["cod"] = [];
       dado["informacao"] = [];
@@ -126,17 +130,23 @@ function loadCensusData(variable, tipo) {
           window.dado["total"].push(Number(aux[4]));
 
       }
-
-      censusMin = window.dado["valor"][0] / window.dado["total"][0] * 100;
-      censusMax = window.dado["valor"][0] / window.dado["total"][0] * 100;
-      
+      if( window.dado["total"][0] != ""){
+        censusMin = window.dado["valor"][0] / window.dado["total"][0] * 100;
+        censusMax = window.dado["valor"][0] / window.dado["total"][0] * 100;
+      }
+      else{
+        censusMin = window.dado["valor"][0];
+        censusMax = window.dado["valor"][0];
+      }
       for( i = 0; i < window.dado["cod"].length; i++){
-        var valor = window.dado["valor"][i] / window.dado["total"][i] * 100;
+        if( window.dado["total"][0] != "")
+          var valor = window.dado["valor"][i] / window.dado["total"][i] * 100;
+        else
+          var valor = window.dado["valor"][i];
         if( valor < censusMin)
           censusMin = valor;
         if(valor > censusMax)
           censusMax = valor;
-
         map.data
           .getFeatureById(window.dado["cod"][i])
           .setProperty('census_variable', valor);
@@ -145,25 +155,69 @@ function loadCensusData(variable, tipo) {
           .setProperty('nome', window.dado["nome"][i]);
       }
 
-
-      if(tipo != "M"){
-        if(window.setoresMarcados.length > 0){
-          var dadosGrafico = [];
-          dadosGrafico["label"] = [];
-          dadosGrafico["valor"] = [];
-          i = 0;
-          var cod;
-          for (i in window.dado["cod"]){
-            index = window.setores.findIndex(x => x.key == window.dado["cod"][i]);
-            if(index != -1 && window.setoresMarcados.includes(window.setores[index].cod_setor)){
+      var nomes;
+      var valores;
+    
+      if(window.setoresMarcados.length > 0){
+        var dadosGrafico = [];
+        dadosGrafico["label"] = [];
+        dadosGrafico["valor"] = [];
+        i = 0;
+        var cod;
+        for (i in window.dado["cod"]){
+          for(var j in window.setores){
+            if(!dadosGrafico["label"].includes(window.dado["nome"][i]) && window.setores[j].key == window.dado["cod"][i] && window.setoresMarcados.includes(window.setores[j].cod_setor)){
               dadosGrafico["label"].push(window.dado["nome"][i]);
               dadosGrafico["valor"].push(window.dado["valor"][i]);
             }
           }
-          window.open("Grafico.php?nome="+JSON.stringify(dadosGrafico["label"])+"&valor="+JSON.stringify(dadosGrafico["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
         }
-        else
-          window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+        nomes = JSON.stringify(dadosGrafico["label"]);
+        valores = JSON.stringify(dadosGrafico["valor"]);
+        // window.open("Grafico.php?nome="+JSON.stringify(dadosGrafico["label"])+"&valor="+JSON.stringify(dadosGrafico["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+      }
+      else{
+        nomes = JSON.stringify(window.dado["nome"]);
+        valores = JSON.stringify(window.dado["valor"]);
+        // window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+      }
+
+      var formGrafico = document.createElement("form");
+      formGrafico.id = "formGrafico";
+      formGrafico.target = "Grafico" + window.numeroGrafico;
+      formGrafico.method = "POST"; // or "post" if appropriate
+      formGrafico.action = "Grafico.php";
+
+      var graficoNome = document.createElement("input");
+      graficoNome.type = "hidden";
+      graficoNome.name = "nome";
+      graficoNome.value = JSON.stringify(nomes);
+      formGrafico.appendChild(graficoNome);
+
+      var graficoValor = document.createElement("input");
+      graficoValor.type = "hidden";
+      graficoValor.name = "valor";
+      graficoValor.value = JSON.stringify(valores);
+      formGrafico.appendChild(graficoValor);
+
+      var graficoInformcao = document.createElement("input");
+      graficoInformcao.type = "hidden";
+      graficoInformcao.name = "informacao";
+      graficoInformcao.value = JSON.stringify(window.dado["informacao"][0]);
+      formGrafico.appendChild(graficoInformcao);
+
+     
+      
+      $('#formGrafico').remove();
+      $('body').append(formGrafico);
+
+      grafico = window.open(" ", "Grafico" + window.numeroGrafico, "status=0,title=0,height=600,width=800,scrollbars=1");
+      window.numeroGrafico++;
+      // document.getElementById("FormGrafico").submit(); 
+      if (grafico) {
+          formGrafico.submit();
+      } else {
+          alert('Para gerar os gráficos é preciso ativar os pop-ups do seu browser');
       }
       
 

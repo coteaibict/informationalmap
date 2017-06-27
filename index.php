@@ -20,6 +20,7 @@
     <div id="listaInformacoes">
       <ul>
         <li onclick="AtualizaInformacoesEspecificas('Educacao')" ><center><img class="iconeLista" src="images/índice.jpeg"/></br>Educação</center></li>
+        <li onclick="AtualizaInformacoesEspecificas('Economia')" ><center><img class="iconeLista" src="images/índice.jpeg"/></br>Economia</center></li>
       </ul>
     </div>
     <div id="InformaçõesEspecificas"></div>
@@ -33,9 +34,9 @@
       <div id="divisao">
         <form>
           <input type="radio" name="divisao" value="M" > Municipios<br>
-          <input type="radio" name="divisao" value="E" checked> Estados<br>
           <input type="radio" name="divisao" value="MR" > Meso Regiões<br>
-          <input type="radio" name="divisao" value="R" > Regiões<br>
+          <input type="radio" name="divisao" value="E" checked> Estados<br>
+          <!--input type="radio" name="divisao" value="R" > Regiões<br-->
         </form>
       </div>
     <div id="TipoPesquisa"></div>
@@ -55,7 +56,11 @@
       <span id="data-value"></span>
     </div>
 
-    
+    <!-- <form target="Grafico" action="Grafico.php" id="FormGrafico" method="post" onSubmit="window.open('FormGraficorafico.php', 'Grafico', 'width=450,height=300,status=yes,resizable=yes,scrollbars=yes')">
+      <input id = "nome" name="nome" type="hidden">
+      <input id = "valor" name="valor" type="hidden">
+      <input id = "informacao" name="informacao" type="hidden">
+    </form> -->
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi6bbccL3QbcLhlS0fTy1WhYZh6B6QH1k&callback=initMap">        

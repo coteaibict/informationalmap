@@ -31,6 +31,36 @@
 		echo $result;
 	}
 
+	function PIB(){
+		include "ConexaoDB.php";
+		if($_GET["tipo"] == "M"){
+			$res = $con->query("SELECT m.cod_municipio,'PIB', pm.PIB ,m.Nome, null 
+								from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano = 12");
+		}
+		else if($_GET["tipo"] == "E"){
+			$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.PIB), e.Uf, null 
+								from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+                                inner join estado e on m.cod_estado = e.cod_estado
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano = 12
+                                group by e.cod_estado");
+		}
+		else if($_GET["tipo"] == "MR"){
+			$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.PIB), mr.Nome, null 
+								from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+                                inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano = 12
+                                group by mr.cod_mesoregiao");
+		}
+
+		$result = "";
+		while ($row = $res->fetch_row()) {
+	    	$result .= $row[0] . "," . $row[1] .",". $row[2].','.$row[3].",".$row[4].";";
+		}   
+		mysqli_close($con);
+		echo $result;
+	}
+
 	function SetoresPorDivsao(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
@@ -70,6 +100,9 @@
 	}
 	else if($_GET["variavel"] == "FundamentalCom"){
 		EnsinoFundamentalCompleto();
+	}
+	else if($_GET["variavel"] == "PIB"){
+		PIB();
 	}
 
 ?>

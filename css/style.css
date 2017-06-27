@@ -64,7 +64,7 @@ html, body {
 }
 #divisao{
 	position: absolute;
-	height: 100px;
+	height: 75px;
 	width: 100px;
 	bottom: 20px;
 	right: 170px;
@@ -79,7 +79,7 @@ html, body {
 	float: right;
 	background-color: white;
 	font-size: 9px;
-	overflow:scroll;
+	overflow-y:scroll;
 }
 
 
