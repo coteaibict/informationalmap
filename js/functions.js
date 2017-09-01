@@ -295,7 +295,16 @@ function RotateImage(degree,div) {
             'transform':'rotate('+now+'deg)'
         });
     }
-    });
+  });
+  $(".ExpandivelImg").not($(div).children('img')).animate({  transform: 0 }, {
+    step: function(now,fx) {
+        $(this).css({
+            '-webkit-transform':'rotate('+now+'deg)', 
+            '-moz-transform':'rotate('+now+'deg)',
+            'transform':'rotate('+now+'deg)'
+        });
+    }
+  });
 }
 function AtualizaInformacoesEspecificas(variavel, div){
   window.informacao = [];
@@ -327,6 +336,8 @@ function AtualizaInformacoesEspecificas(variavel, div){
         window.informacao.push("PIB Governo");
         window.informacao.push("Receitas Próprias");
         window.informacao.push("Receitas de Transferências e Repasses");
+        window.informacao.push("Despesas Correntes");
+        window.informacao.push("Despesas de Capital");
       
       $("<div class='informacaoEspecifica'>"+
         "<br> "+
@@ -344,6 +355,8 @@ function AtualizaInformacoesEspecificas(variavel, div){
         "<input type='radio' name='informacaoEspecifica' value='Receitas Próprias,13'>Receitas Próprias</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Receitas de Transferências e Repasses,14'>Receitas de Transferências e Repasses</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Despesas Totais,7'>Despesas Totais</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Despesas Correntes,15'>Despesas Correntes</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Despesas de Capital,16'>Despesas de Capital</br>"+
         "<input type='radio' name='informacaoEspecifica' value='% da despesa sobre a receita,8'>% da despesa sobre a receita</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Exportações,9'>Exportações</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Importações,10'>Importações</br>"+
@@ -403,7 +416,7 @@ function AtualizaInformacoesEspecificas(variavel, div){
       window.informacao.push("Fundamental Completo");
       window.informacao.push("Médio Completo");
       window.informacao.push("Superior Completo");
-      window.informacao.push("Estabelecimento de Educação Básica");
+/*RETIRAR*/      window.informacao.push("Estabelecimento de Educação Básica");
       window.informacao.push("Matrículas Educação Básica ");
       window.informacao.push("Matrículas Ensino Médio");
       window.informacao.push("Matrículas Educação Profissional");
@@ -416,7 +429,8 @@ function AtualizaInformacoesEspecificas(variavel, div){
       window.informacao.push("Concluintes Serviços");
       window.informacao.push("Concluintes Educação");
       window.informacao.push("Número de Doutores");
-      window.informacao.push("Estabelecimento de Educação Profissional");
+/*RETIRAR*/      window.informacao.push("Estabelecimento de Educação Profissional");
+      window.informacao.push("Docentes - Educação Básica  / População");
 
       $("<div class='informacaoEspecifica'>"+
         "<br> "+
@@ -441,8 +455,20 @@ function AtualizaInformacoesEspecificas(variavel, div){
         "<input type='radio' name='informacaoEspecifica' value='Concluintes Serviços,14'>Concluintes Serviços</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Concluintes Educação,15'>Concluintes Educação</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Número de Doutores,16'>Número de Doutores</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Docentes - Educação Básica  / População,18'>Docentes - Educação Básica  / População</br>"+
         "</form></div></div> </div>").insertAfter(div);
 
+    }
+    else if(variavel == "Qualidade de Vida e Desenvolvimento Social"){
+      window.arquivoPhp = "QualidadeVidaDSocial.php";
+      window.informacao.push("População Total");
+      $("<div class='informacaoEspecifica'>"+
+        "<br> "+
+        "<div class='formInformacaoEspecifica'>"+
+        "<div class='innerform'>"+
+        "<form class='Limpo'>"+
+        "<input type='radio' name='informacaoEspecifica' value='População Total,0'>População Total</br>"+
+        "</form></div></div> </div>").insertAfter(div);
     }
     $('.informacaoEspecifica input[type=radio]').change(function(){
       aux  = $(this).val().split(",");
@@ -598,6 +624,7 @@ function loadCensusData(variable, tipo,numGrafico) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){ 
+      console.log(this.responseText);
       var dados = this.responseText.split(";");
       dado["cod"] = [];
       dado["informacao"] = [];
@@ -626,7 +653,7 @@ function loadCensusData(variable, tipo,numGrafico) {
       
       for( i = 0; i < window.dado["cod"].length; i++){
         if( window.dado["total"][i] != "")
-          var valor = window.dado["valor"][i] / window.dado["total"][i] * 100;
+          var valor = window.dado["valor"][i] / window.dado["total"][i];
         else
           var valor = window.dado["valor"][i];
         if( valor < censusMin)

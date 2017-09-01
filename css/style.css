@@ -14,9 +14,7 @@ li {
 	cursor: hand; 
 }
 
-li:hover{
-	opacity: 0.5;
-}
+
 #addResumoRelatorio img{
 	position: relative;
 	top:10px;
@@ -134,8 +132,9 @@ li:hover{
 }
 .Expandivel img{
 	float: right;
-	padding-top: 10px;
-	padding-right: 10px;
+    position: relative;
+    right: 10px;
+    top: 8px;
 }
 
 #GerarRelatorio:hover{
@@ -152,6 +151,7 @@ li:hover{
 	top: 8%;
 	left: 10px;
 	height: 75%;
+	overflow-y: auto;
 }
 #InformaçõesEspecificas{
 	height: 100%;

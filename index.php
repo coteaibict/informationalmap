@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>Observatorio APL</title>
+    <title>Visão</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script> 
@@ -38,6 +38,7 @@
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Economia', this)" ><div class="ExpandivelTitulo"> Economia</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Trabalho e Renda', this)" ><div class="ExpandivelTitulo"> Trabalho e Renda</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Educação', this)" ><div class="ExpandivelTitulo"> Educação</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
+        <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Qualidade de Vida e Desenvolvimento Social', this)" ><div class="ExpandivelTitulo"> Qualidade de Vida e Desenvolvimento Social</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
       </div> 
       
       

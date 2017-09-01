@@ -430,7 +430,339 @@ function ReceitasProprias(){
 	echo $result;
 }
 
+function ReceitaTransferenciaRepasse(){
+	include "ConexaoDB.php";
+	if($_GET["tipo"] == "M"){
+		$res = $con->query("SELECT m.cod_municipio, 'pib',  
+							IFNULL((select valor from receitas_municipios where informacao = '1.7.0.0.00.00.00 - Transferências Correntes' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '1.7.2.2.01.01.00 - Cota-Parte do ICMS' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '1.7.2.2.01.04.00 - Cota-Parte do IPI sobre Exportação' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '1.9.0.0.00.00.00 - Outras Receitas Correntes' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '2.0.0.0.00.00.00 - Receitas de Capital' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '2.1.0.0.00.00.00 - Operações de Crédito' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '2.3.0.0.00.00.00 - Amortização de Empréstimos' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '2.4.0.0.00.00.00 - Transferências de Capital' and cod_municipio = m.cod_municipio) ,0)+
+							IFNULL((select valor from receitas_municipios where informacao = '2.5.0.0.00.00.00 - Outras Receitas de Capital ' and cod_municipio = m.cod_municipio) ,0) 
+							, m.nome, (select valor from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio) 
+					from receitas_municipios rm 
+	                inner join municipio m on m.cod_municipio = rm.cod_municipio
+					where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+	                group by m.cod_municipio");
+		$result = "";
+		while ($row = $res->fetch_row()) {
+	    	$result .= $row[0] . "," . $row[1] .",". $row[2].','.$row[3].",".$row[4].";";
+		}   
+		mysqli_close($con);
+		echo $result;
+	}
+	else if($_GET["tipo"] == "E"){
+		$res = $con->query("SELECT distinct(cod_estado) from municipio order by cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$estados[$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.7.0.0.00.00.00 - Transferências Correntes' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[0][$i] = $row[0];
+	    	$i++;
+		}		
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.7.2.2.01.01.00 - Cota-Parte do ICMS' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[1][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.7.2.2.01.04.00 - Cota-Parte do IPI sobre Exportação' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[2][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.9.0.0.00.00.00 - Outras Receitas Correntes' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[3][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.0.0.0.00.00.00 - Receitas de Capital' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[4][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.1.0.0.00.00.00 - Operações de Crédito' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[5][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.3.0.0.00.00.00 - Amortização de Empréstimos' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[6][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.4.0.0.00.00.00 - Transferências de Capital' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[7][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.5.0.0.00.00.00 - Outras Receitas de Capital' group by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[8][$i] = $row[0];
+	    	$i++;
+		}
+		for($j=0;$j<$i;$j++){
+			$valorT[$j]=0;
+			for($k=0;$k<9;$k++){
+				$valorT[$j]+=$valor[$k][$j];
+			}
 
+		}
+		
+		$res = $con->query("SELECT distinct(uf) from estado order by cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$nomes[$i] = $row[0];
+	    	$i++;
+		}
+
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_estado order by m.cod_estado");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$total[$i] = $row[0];
+	    	$i++;
+		}
+		$i = 0;
+		$result = "";
+		while($i < $j){
+			$result .= $estados[$i] . ","."".",".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
+			$i++;
+		}
+
+
+		mysqli_close($con);
+		echo $result;
+	}
+	else if($_GET["tipo"] == "MR"){
+		$res = $con->query("SELECT distinct(cod_mesoRegiao) from municipio order by cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$mesoRegiao[$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.7.0.0.00.00.00 - Transferências Correntes' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[0][$i] = $row[0];
+	    	$i++;
+		}		
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.7.2.2.01.01.00 - Cota-Parte do ICMS' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[1][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.7.2.2.01.04.00 - Cota-Parte do IPI sobre Exportação' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[2][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '1.9.0.0.00.00.00 - Outras Receitas Correntes' group by m.mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[3][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.0.0.0.00.00.00 - Receitas de Capital' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[4][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.1.0.0.00.00.00 - Operações de Crédito' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[5][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.3.0.0.00.00.00 - Amortização de Empréstimos' group by m.mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[6][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.4.0.0.00.00.00 - Transferências de Capital' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[7][$i] = $row[0];
+	    	$i++;
+		}
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on rm.cod_municipio = m.cod_municipio where informacao = '2.5.0.0.00.00.00 - Outras Receitas de Capital' group by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$valor[8][$i] = $row[0];
+	    	$i++;
+		}
+		for($j=0;$j<$i;$j++){
+			$valorT[$j]=0;
+			for($k=0;$k<9;$k++){
+				$valorT[$j]+=$valor[$k][$j];
+			}
+
+		}
+		$res = $con->query("SELECT distinct(Nome) from mesoRegiao order by cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$nomes[$i] = $row[0];
+	    	$i++;
+		}
+
+		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_estado order by m.cod_mesoRegiao");
+		$i = 0;
+		while ($row = $res->fetch_row()) {
+			$total[$i] = $row[0];
+	    	$i++;
+		}
+		$i = 0;
+		$result = "";
+		while($i < $j){
+			$result .= $mesoRegiao[$i] . ","."".",".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
+			$i++;
+		}
+		mysqli_close($con);
+		echo $result;
+	}
+}
+
+//VERIFICAR SE FUNCIONA!
+function DespesasCorrentes(){
+		include "ConexaoDB.php";
+		if($_GET["tipo"] == "M"){
+			$res = $con->query("SELECT m.cod_municipio, '',  sum(dm.valor), m.nome, null
+				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+			                    and (dm.informacao = '3.3.00.00.00.00 - Outras Despesas Correntes '
+			                    or dm.informacao = '3.1.00.00.00.00 - Pessoal e Encargos Sociais ')
+			                    group by m.cod_municipio
+			                    order by m.cod_municipio");
+			$resd = $con->query("SELECT valor 
+								from despesas_municipios
+								where informacao = 'Total Despesa'
+                                group by cod_municipio
+								order by cod_municipio");
+		}
+		else if($_GET["tipo"] == "E"){
+			$res = $con->query("SELECT m.cod_estado, '',  sum(dm.valor), e.uf, null
+				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
+                                inner join estado e on e.cod_estado = m.cod_estado
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+			                    and (dm.informacao = '3.3.00.00.00.00 - Outras Despesas Correntes '
+			                    or dm.informacao = '3.1.00.00.00.00 - Pessoal e Encargos Sociais ')
+			                    group by m.cod_estado
+			                    order by m.cod_estado");
+			$resd = $con->query("SELECT sum(dm.valor) 
+								from despesas_municipios dm 
+						        inner join municipio m on m.cod_municipio = dm.cod_municipio
+						        inner join estado e on e.cod_estado = m.cod_estado
+								where dm.informacao = 'Total Despesa'
+						        group by m.cod_estado
+								order by m.cod_estado");
+		}
+		else if($_GET["tipo"] == "MR"){
+			$res = $con->query("SELECT m.cod_mesoregiao, '',  sum(dm.valor), e.nome, null
+				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
+                                inner join mesoregiao e on e.cod_mesoregiao = m.cod_mesoregiao
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+			                    and (dm.informacao = '3.3.00.00.00.00 - Outras Despesas Correntes '
+			                    or dm.informacao = '3.1.00.00.00.00 - Pessoal e Encargos Sociais ')
+			                    group by m.cod_mesoregiao
+			                    order by m.cod_mesoregia");
+
+			$resd = $con->query("SELECT sum(dm.valor) 
+								from despesas_municipios dm 
+						        inner join municipio m on m.cod_municipio = dm.cod_municipio
+						        inner join mesoregiao e on e.cod_mesoregiao = m.cod_mesoregiao
+								where dm.informacao = 'Total Despesa'
+						        group by m.cod_mesoregiao
+								order by m.cod_mesoregiao");
+		}
+
+		$result = "";
+		while ($row = $res->fetch_row()) {
+			$rowd = $resd->fetch_row();
+	    	$result .= $row[0] . "," . $row[1] .",". $row[2].','.$row[3].",".$rowd[0].";";
+		}   
+		mysqli_close($con);
+		echo $result;
+}
+
+function DespesasCapital(){
+		include "ConexaoDB.php";
+		if($_GET["tipo"] == "M"){
+			$res = $con->query("SELECT m.cod_municipio, '',  sum(dm.valor), m.nome, null
+				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+			                    and (dm.informacao = '4.4.00.00.00.00 - Investimentos '
+			                    or dm.informacao = '4.6.00.00.00.00 - Amortização da Dívida ')
+			                    group by m.cod_municipio
+			                    order by m.cod_municipio");
+			
+			$resd = $con->query("SELECT valor 
+								from despesas_municipios
+								where informacao = 'Total Despesa'
+                                group by cod_municipio
+								order by cod_municipio");
+		}
+		else if($_GET["tipo"] == "E"){
+			$res = $con->query("SELECT m.cod_estado, '',  sum(dm.valor), e.uf, null
+				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
+                                inner join estado e on e.cod_estado = m.cod_estado
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+			                    and (dm.informacao = '4.4.00.00.00.00 - Investimentos '
+			                    or dm.informacao = '4.6.00.00.00.00 - Amortização da Dívida ')
+			                    group by m.cod_estado
+			                    order by m.cod_estado");
+			$resd = $con->query("SELECT sum(dm.valor) 
+								from despesas_municipios dm 
+						        inner join municipio m on m.cod_municipio = dm.cod_municipio
+						        inner join estado e on e.cod_estado = m.cod_estado
+								where dm.informacao = 'Total Despesa'
+						        group by m.cod_estado
+								order by m.cod_estado");
+		}
+		else if($_GET["tipo"] == "MR"){
+			$res = $con->query("SELECT m.cod_mesoregiao, '',  sum(dm.valor), e.nome, null
+				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
+                                inner join mesoregiao e on e.cod_mesoregiao = m.cod_mesoregiao
+								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+			                    and (dm.informacao = '4.4.00.00.00.00 - Investimentos '
+			                    or dm.informacao = '4.6.00.00.00.00 - Amortização da Dívida ')
+			                    group by m.cod_mesoregiao
+			                    order by m.cod_mesoregia");
+			
+			$resd = $con->query("SELECT sum(dm.valor) 
+								from despesas_municipios dm 
+						        inner join municipio m on m.cod_municipio = dm.cod_municipio
+						        inner join mesoregiao e on e.cod_mesoregiao = m.cod_mesoregiao
+								where dm.informacao = 'Total Despesa'
+						        group by m.cod_mesoregiao
+								order by m.cod_mesoregiao");
+		}
+
+		$result = "";
+		while ($row = $res->fetch_row()) {
+			$rowd = $resd->fetch_row();
+	    	$result .= $row[0] . "," . $row[1] .",". $row[2].','.$row[3].",".$rowd[0].";";
+		}   
+		mysqli_close($con);
+		echo $result;
+}
 if ($_GET["variavel"] == "PIB"){
 	PIB();
 }
@@ -473,4 +805,14 @@ else if ($_GET["variavel"] == "PIB Governo"){
 else if ($_GET["variavel"] == "Receitas Próprias"){
 	ReceitasProprias();
 }
+else if ($_GET["variavel"] == "Receitas de Transferências e Repasses"){
+	ReceitaTransferenciaRepasse();
+}
+else if($_GET["variavel"] == "Despesas Correntes"){
+	DespesasCorrentes();
+}
+else if($_GET["variavel"] == "Despesas de Capital"){
+	DespesasCapital();
+}
+
 ?>
