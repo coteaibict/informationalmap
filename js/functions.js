@@ -1098,6 +1098,15 @@ function LimparTudo(){
   $("#Saves").css("opacity", "0.5");
   $(".informacaoEspecifica").remove();
   $("#addResumoRelatorio").css("display", "none");
+  $(".ExpandivelImg").animate({  transform: 0 }, {
+    step: function(now,fx) {
+        $(this).css({
+            '-webkit-transform':'rotate('+now+'deg)', 
+            '-moz-transform':'rotate('+now+'deg)',
+            'transform':'rotate('+now+'deg)'
+        });
+    }
+  });
   LoadMapShapes();
 }
 

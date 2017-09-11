@@ -80,7 +80,6 @@ function CriarGraficoPizza(numero,nomes,valores, informacao){
 }
 
 function GraficoDespesas(cod){
-  console.log(cod+" "+ window.tipoDivisao)
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
@@ -89,7 +88,7 @@ function GraficoDespesas(cod){
       var valores = [];
       for(var i = 0; i < dados.length -1; i++){
         var aux = dados[i].split(",");
-        nomes.push(aux[0]);
+        nomes.push(aux[0]); 
         valores.push([aux[1]]);
       }
       
