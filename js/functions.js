@@ -119,6 +119,10 @@ function MostraDadosGerais(dadosGerais){
         //window.divisoesMarcadas.push(window.dadosGerais[i]); 
         // AtualizarDivisoesMarcadas();
     
+    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
+    $("#geraGraficoDespesas").on("click", function(){ GraficoDespesas(window.dadosGerais[i].key); });
+
+    
   }
   
   else if(dadosGerais != ""){
@@ -126,6 +130,7 @@ function MostraDadosGerais(dadosGerais){
       if(feature.getProperty('click') == 'clicked')
         feature.setProperty('click', 'normal');
     });
+    $("#geraGraficoDespesas").remove();
     $('#divisaoPesquisada').css("display","none");
     $("#addResumoRelatorio").css("display", "none");
   }
@@ -431,6 +436,8 @@ function AtualizaInformacoesEspecificas(variavel, div){
       window.informacao.push("Número de Doutores");
 /*RETIRAR*/      window.informacao.push("Estabelecimento de Educação Profissional");
       window.informacao.push("Docentes - Educação Básica  / População");
+      window.informacao.push("Docentes - Ensino Médio  / População");
+      window.informacao.push("Docentes - Educação Profissional  / População");
 
       $("<div class='informacaoEspecifica'>"+
         "<br> "+
@@ -456,18 +463,95 @@ function AtualizaInformacoesEspecificas(variavel, div){
         "<input type='radio' name='informacaoEspecifica' value='Concluintes Educação,15'>Concluintes Educação</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Número de Doutores,16'>Número de Doutores</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Docentes - Educação Básica  / População,18'>Docentes - Educação Básica  / População</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Docentes - Ensino Médio  / População,19'>Docentes - Ensino Médio  / População</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Docentes - Educação Profissional  / População,20'>Docentes - Educação Profissional  / População</br>"+
         "</form></div></div> </div>").insertAfter(div);
 
     }
     else if(variavel == "Qualidade de Vida e Desenvolvimento Social"){
       window.arquivoPhp = "QualidadeVidaDSocial.php";
       window.informacao.push("População Total");
+      window.informacao.push("IDH Municipal"); //NÃO USAR
+      window.informacao.push("IDH Municipal – Educação");
+      window.informacao.push("IDH Municipal – Longevidade");
+      window.informacao.push("IDH Municipal – Renda");
+/*2010*/  window.informacao.push("Índice de GINI");
+/*2010*/  window.informacao.push("Extremamente Pobres");
+/*2010*/  window.informacao.push("Pobres");
+/*2010*/  window.informacao.push("Vulneráveis à pobreza");
+
       $("<div class='informacaoEspecifica'>"+
         "<br> "+
         "<div class='formInformacaoEspecifica'>"+
         "<div class='innerform'>"+
         "<form class='Limpo'>"+
         "<input type='radio' name='informacaoEspecifica' value='População Total,0'>População Total</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='IDH Municipal,1'>IDH Municipal</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='IDH Municipal – Educação,2'>IDH Municipal – Educação</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='IDH Municipal – Longevidade,3'>IDH Municipal – Longevidade</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='IDH Municipal – Renda,4'>IDH Municipal – Renda</br>"+
+/*2010*/"<input type='radio' name='informacaoEspecifica' value='Índice de GINI,5'>Índice de GINI</br>"+
+/*2010*/"<input type='radio' name='informacaoEspecifica' value='Extremamente Pobres,6'>Extremamente Pobres</br>"+
+/*2010*/"<input type='radio' name='informacaoEspecifica' value='Pobres,7'>Pobres</br>"+
+/*2010*/"<input type='radio' name='informacaoEspecifica' value='Vulneráveis à pobreza,8'>Vulneráveis à pobreza</br>"+
+        "</form></div></div> </div>").insertAfter(div);
+    }
+
+    else if(variavel == "RAIS"){
+      window.arquivoPhp = "RAIS.php";
+      window.informacao.push("Empregados: Extrativa mineral");
+      window.informacao.push("Empregados: Indústria de Transformação");
+      window.informacao.push("Empregados: Serviços Industriais");
+      window.informacao.push("Empregados: Construção Civil");
+      window.informacao.push("Empregados: Comércio");
+      window.informacao.push("Empregados: Serviços");
+      window.informacao.push("Empregados: Administração Pública");
+      window.informacao.push("Empregados: Agropecuárias, extração, caça e pesca");
+      window.informacao.push("Remuneração média: Extrativa mineral");
+      window.informacao.push("Remuneração média: Indústria de Transformação");
+      window.informacao.push("Remuneração média: Serviços Industriais");
+      window.informacao.push("Remuneração média: Construção Civil");
+      window.informacao.push("Remuneração média: Comércio");
+      window.informacao.push("Remuneração média: Serviços");
+      window.informacao.push("Remuneração média: Administração Pública");
+      window.informacao.push("Remuneração média: Agropecuárias, extração, caça e pesca");
+
+      $("<div class='informacaoEspecifica'>"+
+        "<br> "+
+        "<div class='formInformacaoEspecifica'>"+
+        "<div class='innerform'>"+
+        "<form class='Limpo'>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Extrativa mineral,0'>Empregados: Extrativa mineral</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Indústria de Transformação,1'>Empregados: Indústria de Transformação</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Serviços Industriais,2'>Empregados: Serviços Industriais</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Construção Civil,3'>Empregados: Construção Civil</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Comércio,4'>Empregados: Comércio</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Serviços,5'>Empregados: Serviços</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Administração Pública,6'>Empregados: Administração Pública</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Empregados: Agropecuárias,7'>Empregados: Agropecuárias, extração, caça e pesca</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Extrativa mineral,8'>Remuneração média: Extrativa mineral</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Indústria de Transformação,9'>Remuneração média: Indústria de Transformação</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Serviços Industriais,10'>Remuneração média: Serviços Industriais</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Construção Civil,11'>Remuneração média: Construção Civil</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Comércio,12'>Remuneração média: Comércio</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Serviços,13'>Remuneração média: Serviços</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Administração Pública,14'>Remuneração média: Administração Pública</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Remuneração média: Agropecuárias,15'>Remuneração média: Agropecuárias, extração, caça e pesca</br>"+
+        "</form></div></div> </div>").insertAfter(div);
+
+    }
+    else if(variavel == "Saúde"){
+      window.arquivoPhp = "Saude.php";
+      window.informacao.push("Quantidade de Médicos");
+      window.informacao.push("Recursos humanos da área da saúde");
+
+      $("<div class='informacaoEspecifica'>"+
+        "<br> "+
+        "<div class='formInformacaoEspecifica'>"+
+        "<div class='innerform'>"+
+        "<form class='Limpo'>"+
+        "<input type='radio' name='informacaoEspecifica' value='Quantidade de Médicos,0'>Quantidade de Médicos</br>"+
+        "<input type='radio' name='informacaoEspecifica' value='Recursos humanos da área da saúde,1'>Recursos humanos da área da saúde</br>"+
         "</form></div></div> </div>").insertAfter(div);
     }
     $('.informacaoEspecifica input[type=radio]').change(function(){
@@ -624,7 +708,6 @@ function loadCensusData(variable, tipo,numGrafico) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){ 
-      console.log(this.responseText);
       var dados = this.responseText.split(";");
       dado["cod"] = [];
       dado["informacao"] = [];
@@ -866,15 +949,15 @@ function styleFeature(feature) {
     color[1] = 70;
     color[2] = 70;
   }
-
   if(window.setoresMarcados.length > 0){
     i = 0;
     var achou = 0;
     for (var j in window.setores){
       if(window.setores[j].key == feature.getId()){
         for (var i in window.setoresMarcados){
-          if(window.setoresMarcados[i] == window.setores[j].cod_setor)
+          if(window.setoresMarcados[i] == window.setores[j].cod_setor){
             achou = 1;
+          }
         }
       }
     }
@@ -1118,5 +1201,4 @@ function LoadMapShapes(grafico){
     map.data.setStyle(styleFeature);
   }
 }
-
 

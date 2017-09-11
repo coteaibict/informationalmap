@@ -785,8 +785,8 @@
 	function DocentesBasica(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res1 = $con->query("SELECT m.cod_municipio, '', dc.valor , m.nome,
-								from municipio m inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+			$res1 = $con->query("SELECT m.cod_municipio, '', dc.valor , m.nome
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
                                 where dc.informacao = ' Docentes - Educação Básica  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 order by m.cod_municipio");
@@ -798,8 +798,8 @@
 			
 		}
 		elseif($_GET["tipo"] == "E"){
-			$res1 = $con->query("SELECT e.cod_estado, '', sum(dc.valor) , e.uf,
-								from municipio m inner join dadoscenso2010 dc on m.cod_municipio = dc.cod_municipio
+				$res1 = $con->query("SELECT e.cod_estado, '', sum(dc.valor) , e.uf
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado
 						        where dc.informacao = ' Docentes - Educação Básica  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
@@ -814,10 +814,123 @@
 								order by m.cod_municipio");
 		}
 		elseif($_GET["tipo"] == "MR"){
-			$res1 = $con->query("SELECT e.cod_mesoRegiao, '', sum(dc.valor) , e.nome,
-								from municipio m inner join dadoscenso2010 dc on m.cod_municipio = dc.cod_municipio
+			$res1 = $con->query("SELECT e.cod_mesoRegiao, '', sum(dc.valor) , e.nome
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
 								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
 						        where dc.informacao = ' Docentes - Educação Básica  '
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_mesoRegiao
+								order by m.cod_municipio");
+
+			$res2 = $con->query("SELECT  sum(pb.Populacao)
+								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
+								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_mesoRegiao
+								order by m.cod_municipio");
+		}
+
+		$result = "";
+		while ($row2 = $res2->fetch_row()) {
+			$row1 = $res1->fetch_row();
+	    	$result .= $row1[0] . "," . $row1[1] .",". $row1[2].','.$row1[3].",".$row2[0].";";
+		}   
+		mysqli_close($con);
+		echo $result;
+	}
+	function DocentesMedio(){
+		include "ConexaoDB.php";
+		if($_GET["tipo"] == "M"){
+			$res1 = $con->query("SELECT m.cod_municipio, '', dc.valor , m.nome
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
+                                where dc.informacao = ' Docentes - Ensino Médio  '
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                                order by m.cod_municipio");
+
+			$res2 = $con->query("SELECT  pb.Populacao
+								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+								order by m.cod_municipio");
+			
+		}
+		elseif($_GET["tipo"] == "E"){
+				$res1 = $con->query("SELECT e.cod_estado, '', sum(dc.valor) , e.uf
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
+								inner join estado e on m.cod_estado = e.cod_estado
+						        where dc.informacao = ' Docentes - Ensino Médio  '
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_estado
+								order by m.cod_municipio");
+
+			$res2 = $con->query("SELECT  sum(pb.Populacao)
+								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
+								inner join estado e on m.cod_estado = e.cod_estado
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_estado
+								order by m.cod_municipio");
+		}
+		elseif($_GET["tipo"] == "MR"){
+			$res1 = $con->query("SELECT e.cod_mesoRegiao, '', sum(dc.valor) , e.nome
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
+								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
+						        where dc.informacao = ' Docentes - Ensino Médio  '
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_mesoRegiao
+								order by m.cod_municipio");
+
+			$res2 = $con->query("SELECT  sum(pb.Populacao)
+								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
+								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_mesoRegiao
+								order by m.cod_municipio");
+		}
+
+		$result = "";
+		while ($row2 = $res2->fetch_row()) {
+			$row1 = $res1->fetch_row();
+	    	$result .= $row1[0] . "," . $row1[1] .",". $row1[2].','.$row1[3].",".$row2[0].";";
+		}   
+		mysqli_close($con);
+		echo $result;
+	}
+
+	function DocentesProfissional(){
+		include "ConexaoDB.php";
+		if($_GET["tipo"] == "M"){
+			$res1 = $con->query("SELECT m.cod_municipio, '', dc.valor , m.nome
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
+                                where dc.informacao = ' Docentes - Educação Profissional  '
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                                order by m.cod_municipio");
+
+			$res2 = $con->query("SELECT  pb.Populacao
+								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+								order by m.cod_municipio");
+			
+		}
+		elseif($_GET["tipo"] == "E"){
+				$res1 = $con->query("SELECT e.cod_estado, '', sum(dc.valor) , e.uf
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
+								inner join estado e on m.cod_estado = e.cod_estado
+						        where dc.informacao = ' Docentes - Educação Profissional  '
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_estado
+								order by m.cod_municipio");
+
+			$res2 = $con->query("SELECT  sum(pb.Populacao)
+								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
+								inner join estado e on m.cod_estado = e.cod_estado
+								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+						        group by e.cod_estado
+								order by m.cod_municipio");
+		}
+		elseif($_GET["tipo"] == "MR"){
+			$res1 = $con->query("SELECT e.cod_mesoRegiao, '', sum(dc.valor) , e.nome
+								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
+								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
+						        where dc.informacao = ' Docentes - Educação Profissional  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 						        group by e.cod_mesoRegiao
 								order by m.cod_municipio");
@@ -896,4 +1009,9 @@
 	else if ($_GET["variavel"] == 'Docentes - Educação Básica  / População'){
 		DocentesBasica();
 	}
-?>
+	else if ($_GET["variavel"] == 'Docentes - Ensino Médio  / População'){
+		DocentesMedio();
+	}
+	else if ($_GET["variavel"] == 'Docentes - Educação Profissional  / População'){
+		DocentesProfissional();
+	}?>

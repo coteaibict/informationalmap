@@ -252,7 +252,7 @@ function DespesasTotais(){
 function DespesasSobreReceitas(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,  'pib', sum(dm.valor)/sum(rm.valor),m.nome, null 
+		$res = $con->query("SELECT m.cod_municipio,  'pib', sum(dm.valor)*100/sum(rm.valor),m.nome, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join receitas_municipios rm on m.cod_municipio = rm.cod_municipio
@@ -260,7 +260,7 @@ function DespesasSobreReceitas(){
 							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado, 'pib', sum(dm.valor)/sum(rm.valor),e.uf, null 
+		$res = $con->query("SELECT e.cod_estado, 'pib', sum(dm.valor)*100/sum(rm.valor),e.uf, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join estado e on e.cod_estado = m.cod_estado
@@ -269,7 +269,7 @@ function DespesasSobreReceitas(){
 							group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(dm.valor)/sum(rm.valor),mr.Nome, null 
+		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(dm.valor)*100/sum(rm.valor),mr.Nome, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join mesoregiao mr on mr.cod_mesoRegiao = m.cod_mesoRegiao
@@ -406,7 +406,7 @@ function ReceitasProprias(){
 							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,  'pib', sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_estado), e.uf,(select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_estado) 
+		$res = $con->query("SELECT e.cod_estado,  'pib', sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_estado), e.uf,(select sum(valor) from receitas_municipios srm inner join municipio sm on sm.cod_municipio = srm.cod_municipio where informacao = 'Total Receitas' and sm.cod_estado = m.cod_estado)
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
                             inner join estado e on e.cod_estado = m.cod_estado
@@ -414,7 +414,7 @@ function ReceitasProprias(){
 							group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_mesoregiao),mr.Nome, (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_mesoregiao) 
+		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_mesoregiao),mr.Nome, (select sum(valor) from receitas_municipios srm inner join municipio sm on sm.cod_municipio = srm.cod_municipio where informacao = 'Total Receitas' and sm.cod_mesoregiao = m.cod_mesoregiao) 
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
                             inner join mesoregiao mr on mr.cod_mesoRegiao = m.cod_mesoRegiao

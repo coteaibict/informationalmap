@@ -19,7 +19,7 @@
     <script src="js/FileSaver.js"></script>
     <script src="js/html-docx.js"></script>
     <script src="js/jquery.wordexport.js"></script>
-    <script src="http://tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <!-- <script src="http://tinymce.cachefly.net/4.1/tinymce.min.js"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body>
@@ -39,6 +39,9 @@
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Trabalho e Renda', this)" ><div class="ExpandivelTitulo"> Trabalho e Renda</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Educação', this)" ><div class="ExpandivelTitulo"> Educação</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Qualidade de Vida e Desenvolvimento Social', this)" ><div class="ExpandivelTitulo"> Qualidade de Vida e Desenvolvimento Social</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
+        <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('RAIS', this)" ><div class="ExpandivelTitulo"> RAIS</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
+        <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Saúde', this)" ><div class="ExpandivelTitulo"> Saúde</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>
+
       </div> 
       
       
