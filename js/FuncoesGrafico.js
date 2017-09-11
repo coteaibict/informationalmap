@@ -45,7 +45,7 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   // $("#addGraficoRelatorio").remove();
   // $(select).parent().prepend("<button id='addGraficoRelatorio' onclick='SalvaGraficoImg()'>Adcionar gráfico ao relatório</button>");
 }
-function CriarGraficoPizza(numero,nomes,valores, informacao){
+function CriarGraficoPizza(nomes,valores, informacao){
 
   $("body").append("<div class='dragable'>"+
     "<div class='chartsHearder'></div>"+
@@ -58,20 +58,19 @@ function CriarGraficoPizza(numero,nomes,valores, informacao){
     "</div>"+
   "</div>");
 
-  var ctx = document.getElementById("myChart"+numero).getContext("2d");
+  var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
   var options = {
     responsive:true
   };
-  var data = [];
-  for(var i = 0; i< valores.length; i++){
-    data.push({
-      value:valores[i],
-      color:'hsl(' + (i*10) + ',' + (i*10) + '%,' + (i*10) + '%)',
-      highlight: 'hsl(' + (i*15) + ',' + (i*15) + '%,' + (i*15) + '%)',
-      label: nomes[i]
-    });
-  }
-  
+  data = {
+    datasets: [{
+        data: valores
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels:nomes
+  };
+
   var myPieChart = new Chart(ctx,{
     type: 'pie',
     data: data,
@@ -92,12 +91,12 @@ function GraficoDespesas(cod){
       var nomes = [];
       var valores = [];
       for(var i = 0; i < dados.length -1; i++){
-        var aux = dados[i].split(",");
+        var aux = dados[i].split("&");
         nomes.push(aux[0]); 
         valores.push([aux[1]]);
       }
       
-      CriarGraficoPizza(window.numeroGrafico,nomes,valores, 'Despesas');
+      CriarGraficoPizza(nomes,valores, 'Despesas');
     }
   }
   xmlhttp.open("GET", "php/GraficoDespesas.php?tipoDivisao="+window.tipoDivisao+"&cod="+cod, true);

@@ -53,7 +53,7 @@
 							inner join municipio m on m.cod_municipio = d.cod_municipio
 							inner join funcoes_finbras on d.cod_funcaoFinbra = cod_funcoes_finbras 
 							inner join estado e on m.cod_estado = e.cod_estado
-							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração') and m.cod_estado".$_GET["cod"]."
+							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração') and m.cod_estado =".$_GET["cod"]."
 							group by m.cod_estado;");
 		$row = $res->fetch_row();
 		$x = $row[0];
@@ -64,7 +64,7 @@
 							group by m.cod_estado;");
 		$row = $res->fetch_row();
 		$div = $x/$row[0];
-		$result .= 'Despesas com poderes executivo, legislativo e judiciário,'.$div.';';
+		$result .= 'Despesas com poderes executivo, legislativo e judiciário&'.$div.';';
 
 		mysqli_close($con);
 		echo $result;
