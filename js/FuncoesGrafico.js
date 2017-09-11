@@ -72,7 +72,11 @@ function CriarGraficoPizza(numero,nomes,valores, informacao){
     });
   }
   
-  var PizzaChart = new Chart(ctx).Pie(data, options);
+  var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: data,
+    options: options
+  });
 
   $(".dragable").draggable();
   $(".dragable").resizable();
@@ -83,6 +87,7 @@ function GraficoDespesas(cod){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
+      console.log(this.responseText);
       var dados = this.responseText.split(";");
       var nomes = [];
       var valores = [];
