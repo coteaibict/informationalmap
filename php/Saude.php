@@ -30,7 +30,7 @@
 						        inner join estado e on e.cod_estado = m.cod_estado
 								where dm.informacao = 'Recursos humanos da área da saúde - Total(*) '
 						        group by m.cod_estado
-								order by m.cod_estado");
+								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT m.cod_mesoRegiao, '',  sum(dm.valor), e.nome, null
@@ -46,8 +46,8 @@
 						        inner join municipio m on m.cod_municipio = dm.cod_municipio
 						        inner join mesoRegiao e on e.cod_mesoRegiao = m.cod_mesoRegiao
 								where dm.informacao = 'Recursos humanos da área da saúde - Total(*) '
-						        group by m.mesoRegiao
-								order by m.cod_estado");
+						        group by m.cod_mesoRegiao
+								order by m.cod_municipio");
 		}
 
 		$result = "";

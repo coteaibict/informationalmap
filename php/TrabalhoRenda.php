@@ -32,15 +32,24 @@ function PossuemOcupacao(){
 function PossuemOcupacaoPercentual(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total população mais de 10 anos') as 'Empregado (%)' from municipio m");
+		$res = $con->query("SELECT m.cod_municipio, '', 100*(select dc.valor 
+								from dadoscenso2010 dc 
+								where dc.cod_municipio = m.cod_municipio 
+								and informacao like  'Total ocupados mais de 10 anos')
+								,m.nome,(select dc.valor 
+								from dadoscenso2010 dc 
+								where dc.cod_municipio = m.cod_municipio 
+								and informacao like  'Total população mais de 10 anos') as 'Empregado (%)' 
+							from municipio m
+							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,  '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total população mais de 10 anos')) as 'Empregado (%)' from
+		$res = $con->query("SELECT e.cod_estado,  '', 100*sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total população mais de 10 anos')) as 'Empregado (%)' from
 							municipio m inner join estado e on m.cod_estado = e.cod_estado
                             group by e.uf");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT e.cod_mesoRegiao,'', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total população mais de 10 anos')) from
+		$res = $con->query("SELECT e.cod_mesoRegiao,'', 100*sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total população mais de 10 anos')) from
 							municipio m inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
                             group by e.Nome");
 	}
@@ -223,19 +232,23 @@ function MulheresComRedendimento(){
 function MediaRendimentoHomens(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', valor, m.nome, null from dadoscenso2010 dc
+		$res = $con->query("SELECT m.cod_municipio, '', valor, m.nome, null 
+							from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
-							where dc.informacao = 'Rendimento Médio Mensal NULLHomens' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+							where dc.informacao = 'Rendimento Médio Mensal NULLHomens' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                            group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado, '', sum(valor)/count(*),e.uf, null from dadoscenso2010 dc
+		$res = $con->query("SELECT e.cod_estado, '', sum(valor)/count(*),e.uf, null 
+							from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
 							inner join estado e on m.cod_estado = e.cod_estado
 							where dc.informacao = 'Rendimento Médio Mensal NULLHomens'
                             group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT e.cod_mesoRegiao, '', sum(valor)/count(*), e.nome null from dadoscenso2010 dc
+		$res = $con->query("SELECT e.cod_mesoRegiao, '', sum(valor)/count(*), e.nome, null 
+							from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
 							inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
 							where dc.informacao = 'Rendimento Médio Mensal NULLHomens'
@@ -253,7 +266,8 @@ function MediaRendimentoHomens(){
 function MediaRendimentoMulheres(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'', valor, m.nome, null from dadoscenso2010 dc
+		$res = $con->query("SELECT m.cod_municipio,'', valor, m.nome, null 
+							from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
 							where dc.informacao = 'Rendimento Médio Mensal NULLMulheres'");
 	}

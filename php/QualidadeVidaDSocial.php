@@ -5,7 +5,7 @@
 			$res = $con->query("SELECT  m.cod_municipio, '', pb.Populacao , m.nome,null
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								order by m.cod_municipio");
+								group by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado, '', sum(pb.Populacao) , e.uf,null
