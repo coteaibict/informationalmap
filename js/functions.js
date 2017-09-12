@@ -122,6 +122,9 @@ function MostraDadosGerais(dadosGerais){
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoDespesas(window.dadosGerais[i].key); });
 
+    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPopulacao(window.dadosGerais[i].key); });
+
     
   }
   
@@ -131,6 +134,7 @@ function MostraDadosGerais(dadosGerais){
         feature.setProperty('click', 'normal');
     });
     $("#geraGraficoDespesas").remove();
+    $("#geraGraficoPopulacao").remove();
     $('#divisaoPesquisada').css("display","none");
     $("#addResumoRelatorio").css("display", "none");
   }

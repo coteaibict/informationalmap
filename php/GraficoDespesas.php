@@ -5,42 +5,250 @@
 		$res = $con->query("SELECT valor 
 							FROM despesas_municipios 
 							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
-							where descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração';");
+							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração')
+							and cod_municipio =".$_GET["cod"].";");
 		$row = $res->fetch_row();
 		$x = $row[0];
-		$res = $con->query("SELECT valor FROM despesas_municipios where informacao = 'Total Despesa';");
+
+		$res = $con->query("SELECT valor FROM despesas_municipios where informacao = 'Total Despesa'							and cod_municipio =".$_GET["cod"].";");
 		$row = $res->fetch_row();
-		$div = $x/$row[0];
-		$result .= 'Despesas com poderes executivo, legislativo e judiciário,'.$div.';';
+		$tot = $row[0];
 
+		$div = $x/$tot;
+		$result .= 'Despesas com poderes executivo, legislativo e judiciário&'.$div.';';
 
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Defesa Nacional' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Defesa Nacional&'.$div.';';
 
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Segurança Pública' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Segurança Pública&'.$div.';';
 
-	/*
-		$result .= 'Defesa Nacional,'.';';
-		$result .= 'Segurança Pública,'.';';
-		$result .= 'Relações Exteriores,'.';';
-		$result .= 'Assistência Social,'.';';
-		$result .= 'Previdência Social,'.';';
-		$result .= 'Saúde,'.';';
-		$result .= 'Trabalho,'.';';
-		$result .= 'Educação,'.';';
-		$result .= 'Cultura,'.';';
-		$result .= 'Direitos da Cidadania,'.';';
-		$result .= 'Urbanismo,'.';';
-		$result .= 'Habitação,'.';';
-		$result .= 'Saneamento,'.';';
-		$result .= 'Gestão Ambiental,'.';';
-		$result .= 'Ciência e Tecnologia,'.';';
-		$result .= 'Agricultura,'.';';
-		$result .= 'Organização Agrária,'.';';
-		$result .= 'Indústria,'.';';
-		$result .= 'Comércio e Serviços,'.';';
-		$result .= 'Comunicações,'.';';
-		$result .= 'Energia,'.';';
-		$result .= 'Transporte,'.';';
-		$result .= 'Desporto e Lazer,'.';';
-		$result .= 'Total Despesa,'.';';
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Relações Exteriores' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Relações Exteriores&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Assistência Social' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Assistência Social&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Previdência Social' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Previdência Social&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saúde' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saúde&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Trabalho' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Trabalho&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Educação' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Educação&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Cultura' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Cultura&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Direitos da Cidadania' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Direitos da Cidadania&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Urbanismo' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Urbanismo&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Habitação' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Habitação&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saneamento' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saneamento&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Gestão Ambiental' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Gestão Ambiental&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Ciência e Tecnologia' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Ciência e Tecnologia&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Agricultura' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Agricultura&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Organização Agrária' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Organização Agrária&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Indústria' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Indústria&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comércio e Serviços' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comércio e Serviços&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comunicações' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comunicações&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Energia' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Energia&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Transporte' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Transporte&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Desporto e Lazer' 
+							and cod_municipio =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Desporto e Lazer&'.$div.';';
+/*
+		$result .= 'Total Despesa&'.$tot.';';
+
 		*/
 		mysqli_close($con);
 		echo $result;
@@ -53,18 +261,604 @@
 							inner join municipio m on m.cod_municipio = d.cod_municipio
 							inner join funcoes_finbras on d.cod_funcaoFinbra = cod_funcoes_finbras 
 							inner join estado e on m.cod_estado = e.cod_estado
-							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração') and m.cod_estado =".$_GET["cod"]."
-							group by m.cod_estado;");
+							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração') 
+							and m.cod_estado =".$_GET["cod"].";");
 		$row = $res->fetch_row();
 		$x = $row[0];
 		$res = $con->query("SELECT sum(d.valor) FROM despesas_municipios d
 							inner join municipio m on m.cod_municipio = d.cod_municipio
 							inner join estado e on m.cod_estado = e.cod_estado 
 							where d.informacao = 'Total Despesa'
-							group by m.cod_estado;");
+							and m.cod_estado =".$_GET["cod"].";");
 		$row = $res->fetch_row();
-		$div = $x/$row[0];
+		$tot = $row[0];
+		$div = $x/$tot;
 		$result .= 'Despesas com poderes executivo, legislativo e judiciário&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras
+							inner join estado e on m.cod_estado = e.cod_estado 
+							where descricao = 'Defesa Nacional' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Defesa Nacional&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras				 
+							where descricao = 'Segurança Pública' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Segurança Pública&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Relações Exteriores' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Relações Exteriores&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios  d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Assistência Social' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Assistência Social&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios  d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Previdência Social' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Previdência Social&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saúde' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saúde&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Trabalho' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Trabalho&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Educação' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Educação&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Cultura' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Cultura&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Direitos da Cidadania' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Direitos da Cidadania&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Urbanismo' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Urbanismo&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Habitação' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Habitação&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saneamento' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saneamento&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Gestão Ambiental' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Gestão Ambiental&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Ciência e Tecnologia' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Ciência e Tecnologia&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Agricultura' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Agricultura&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Organização Agrária' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Organização Agrária&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Indústria' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Indústria&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comércio e Serviços' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comércio e Serviços&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comunicações' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comunicações&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Energia' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Energia&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Transporte' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Transporte&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join estado e on m.cod_estado = e.cod_estado
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Desporto e Lazer' 
+							and m.cod_estado =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Desporto e Lazer&'.$div.';';
+/*
+		$result .= 'Total Despesa&'.$tot.';';
+
+		*/
+
+		mysqli_close($con);
+		echo $result;
+	}
+	function MesoRegiao(){
+		include "ConexaoDB.php";
+		$result = '';
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join funcoes_finbras on d.cod_funcaoFinbra = cod_funcoes_finbras 
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração') 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$res = $con->query("SELECT sum(d.valor) FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao 
+							where d.informacao = 'Total Despesa'
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$tot = $row[0];
+		$div = $x/$tot;
+		$result .= 'Despesas com poderes executivo, legislativo e judiciário&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao 
+							where descricao = 'Defesa Nacional' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Defesa Nacional&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras				 
+							where descricao = 'Segurança Pública' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Segurança Pública&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Relações Exteriores' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Relações Exteriores&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios  d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Assistência Social' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Assistência Social&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios  d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Previdência Social' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Previdência Social&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saúde' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saúde&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Trabalho' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Trabalho&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Educação' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Educação&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Cultura' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Cultura&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Direitos da Cidadania' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Direitos da Cidadania&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Urbanismo' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Urbanismo&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Habitação' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Habitação&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saneamento' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saneamento&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Gestão Ambiental' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Gestão Ambiental&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Ciência e Tecnologia' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Ciência e Tecnologia&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Agricultura' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Agricultura&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Organização Agrária' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Organização Agrária&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Indústria' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Indústria&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comércio e Serviços' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comércio e Serviços&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comunicações' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comunicações&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Energia' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Energia&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Transporte' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Transporte&'.$div.';';
+
+		$res = $con->query("SELECT valor 
+							FROM despesas_municipios d
+							inner join municipio m on m.cod_municipio = d.cod_municipio
+							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Desporto e Lazer' 
+							and m.cod_mesoregiao =".$_GET["cod"].";");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Desporto e Lazer&'.$div.';';
+/*
+		$result .= 'Total Despesa&'.$tot.';';
+
+		*/
 
 		mysqli_close($con);
 		echo $result;

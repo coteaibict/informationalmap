@@ -103,6 +103,27 @@ function GraficoDespesas(cod){
   xmlhttp.send();
 }
 
+function GraficoPopulacao(cod){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+      console.log(this.responseText);
+      var dados = this.responseText.split(";");
+      var nomes = [];
+      var valores = [];
+      for(var i = 0; i < dados.length -1; i++){
+        var aux = dados[i].split("&");
+        nomes.push(aux[0]); 
+        valores.push([aux[1]]);
+      }
+      
+      CriarGraficoPizza(nomes,valores, 'Populacao');
+    }
+  }
+  xmlhttp.open("GET", "php/GraficoPopulacao.php?tipoDivisao="+window.tipoDivisao+"&cod="+cod, true);
+  xmlhttp.send();
+}
+
 function SalvaGraficoImg(){
 
   var can = document.getElementById('myChart');
