@@ -290,7 +290,8 @@ function Exportacoes(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
 		$res = $con->query("SELECT m.cod_municipio, 'pip', mdic.exportacao,m.Nome,null from dadosmdic mdic
-							inner join municipio m on m.cod_municipio = mdic.cod_municipio");
+							inner join municipio m on m.cod_municipio = mdic.cod_municipio
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'pip', mdic.exportacao,e.uf,null from dadosmdic mdic
@@ -317,7 +318,8 @@ function Importacoes(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
 		$res = $con->query("SELECT m.cod_municipio, 'pip', mdic.importacao, m.Nome,null from dadosmdic mdic
-							inner join municipio m on m.cod_municipio = mdic.cod_municipio");
+							inner join municipio m on m.cod_municipio = mdic.cod_municipio
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, 'pip', sum(mdic.importacao), e.uf,null from dadosmdic mdic
@@ -344,8 +346,9 @@ function Importacoes(){
 function BalancaComercial(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, 'pip', mdic.exportacao - mdic.importacaom ,m.Nome,null  from dadosmdic mdic
-							inner join municipio m on m.cod_municipio = mdic.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, 'pip', mdic.exportacao - mdic.importacao ,m.Nome,null  from dadosmdic mdic
+							inner join municipio m on m.cod_municipio = mdic.cod_municipio
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'pip', sum(mdic.exportacao) - sum(mdic.importacao), e.uf,null  from dadosmdic mdic

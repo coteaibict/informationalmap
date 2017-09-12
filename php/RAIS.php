@@ -6,13 +6,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '1 NULL Emprego NULL Extrativa mineral '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -62,13 +64,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '2 NULL Emprego NULL  Indústria de transformação '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -119,13 +123,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '3 NULL  Emprego NULL Servicos industriais de utilidade pública '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -176,13 +182,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '4 NULL  Emprego NULL  Construção Civil '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -233,13 +241,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '5 NULL  Emprego NULL  Comércio '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -290,13 +300,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '6 NULL  Emprego NULL  Serviços '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -347,13 +359,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '7 NULL  Emprego NULL  Administração Pública '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -404,13 +418,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '8 NULL  Emprego NULL  Agropecuária, extração vegetal, caça e pesca '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Emprego NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -461,13 +477,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '1 NULL Remuneração Mensal  NULL Extrativa mineral '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -517,13 +535,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '2 NULL Remuneração Mensal  NULL  Indústria de transformação '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -574,13 +594,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '3 NULL  Remuneração Mensal  NULL Servicos industriais de utilidade pública '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -631,13 +653,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '4 NULL  Remuneração Mensal  NULL  Construção Civil '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -688,13 +712,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '5 NULL  Remuneração Mensal  NULL  Comércio '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -745,13 +771,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '6 NULL  Remuneração Mensal  NULL  Serviços '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -802,13 +830,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '7 NULL  Remuneração Mensal  NULL  Administração Pública '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
@@ -859,13 +889,15 @@
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = '8 NULL  Remuneração Mensal  NULL  Agropecuária, extração vegetal, caça e pesca '
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 
 			$resd = $con->query("SELECT valor
 								FROM dadosextraidosdaraiz d 
 								inner join municipio m on d.cod_municipio = m.cod_municipio 
 								where informacao = ' Remuneração Mensal  NULL  Total'
-								order by m.cod_municipio;");
+								and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+order by m.cod_municipio;");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,'',sum(valor), e.uf,null 
