@@ -5,7 +5,8 @@ function PossuemOcupacao(){
 	if($_GET["tipo"] == "M"){
 		$res = $con->query("SELECT m.cod_municipio, 'pib', valor, m.nome, null from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
-							where dc.informacao = 'Total ocupados mais de 10 anos' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+							where dc.informacao = 'Total ocupados mais de 10 anos'
+							and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)  ");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'pib', sum(valor), e.uf,null from dadoscenso2010 dc
@@ -35,14 +36,13 @@ function PossuemOcupacaoPercentual(){
 		$res = $con->query("SELECT m.cod_municipio, '', 100*(select dc.valor 
 								from dadoscenso2010 dc 
 								where dc.cod_municipio = m.cod_municipio
-								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								and informacao like  'Total ocupados mais de 10 anos')
 								,m.nome,(select dc.valor 
 								from dadoscenso2010 dc 
 								where dc.cod_municipio = m.cod_municipio
-								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								and informacao like  'Total população mais de 10 anos') as 'Empregado (%)' 
 							from municipio m
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 							group by m.cod_municipio
 							order by m.cod_municipio");
 	}
@@ -67,7 +67,8 @@ function PossuemOcupacaoPercentual(){
 function Empregados(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Empregados'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m
+			where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 			order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
@@ -92,7 +93,7 @@ function Empregados(){
 function ComCarteiraAssinada(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Empregados  com carteira de trabalho assinada'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados  com carteira de trabalho assinada'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados  com carteira de trabalho assinada')),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')) as 'Empregado (%)' from
@@ -116,7 +117,7 @@ function ComCarteiraAssinada(){
 function SemCarteiraAssinada(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Empregados  outros sem carteira de trabalho assinada'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados  outros sem carteira de trabalho assinada'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados  outros sem carteira de trabalho assinada')),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')) as 'Empregado (%)' from
@@ -140,7 +141,7 @@ function SemCarteiraAssinada(){
 function FuncionariosPublicos(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,  '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Empregados  militares e funcionários públicos estatutários'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio,  '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados  militares e funcionários públicos estatutários'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregados  militares e funcionários públicos estatutários')),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')) as 'Empregado (%)' from
@@ -164,7 +165,7 @@ function FuncionariosPublicos(){
 function OutroTipodeRenda(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Não remunerados em ajuda a membro do domicílio')+(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Trabalhadores na produção para o próprio consumo')+(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Empregadores')+(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Conta própria'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio,'', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Não remunerados em ajuda a membro do domicílio')+(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Trabalhadores na produção para o próprio consumo')+(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Empregadores')+(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Conta própria'),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total ocupados mais de 10 anos') as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Não remunerados em ajuda a membro do domicílio'))+sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Trabalhadores na produção para o próprio consumo'))+sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Empregadores'))+sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Conta própria')),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')) as 'Empregado (%)' from
@@ -188,7 +189,7 @@ function OutroTipodeRenda(){
 function HomensComRendimento(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,  '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Homens' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio,  '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Homens' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Homens' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1)) as 'Empregado (%)' from
@@ -212,7 +213,7 @@ function HomensComRendimento(){
 function MulheresComRedendimento(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mulheres' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mulheres' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mulheres' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1)) as 'Empregado (%)' from
@@ -239,7 +240,8 @@ function MediaRendimentoHomens(){
 		$res = $con->query("SELECT m.cod_municipio, '', valor, m.nome, null 
 							from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
-							where dc.informacao = 'Rendimento Médio Mensal NULLHomens' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+							where dc.informacao = 'Rendimento Médio Mensal NULLHomens'
+							and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)  
                             group by m.cod_municipio order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
@@ -273,7 +275,8 @@ function MediaRendimentoMulheres(){
 		$res = $con->query("SELECT m.cod_municipio,'', valor, m.nome, null 
 							from dadoscenso2010 dc
 							inner join municipio m on m.cod_municipio = dc.cod_municipio
-							where dc.informacao = 'Rendimento Médio Mensal NULLMulheres'and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)  order by m.cod_municipio");
+							where dc.informacao = 'Rendimento Médio Mensal NULLMulheres'
+							and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)   order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'', sum(valor)/count(*), e.uf, null from dadoscenso2010 dc
@@ -301,7 +304,7 @@ function MediaRendimentoMulheres(){
 function AteUmSalario(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Até 1 salário mínimo' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Até 1 salário mínimo' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Até 1 salário mínimo' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
@@ -325,7 +328,7 @@ function AteUmSalario(){
 function DeUmaDoisSalarios(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mais de 1 a 2 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mais de 1 a 2 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mais de 1 a 2 salários mínimos' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
@@ -349,7 +352,7 @@ function DeUmaDoisSalarios(){
 function DeDoisaTresSalarios(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mais de 2 a 3 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio,'', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mais de 2 a 3 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mais de 2 a 3 salários mínimos' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
@@ -373,7 +376,7 @@ function DeDoisaTresSalarios(){
 function DeTresaCincoSalarios(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mais de 3 a 5 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mais de 3 a 5 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,'', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mais de 3 a 5 salários mínimos' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
@@ -397,7 +400,7 @@ function DeTresaCincoSalarios(){
 function DeCincoaDezSalarios(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mais de 5 a 10 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mais de 5 a 10 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mais de 5 a 10 salários mínimos' limit 1)),e.uf, sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
@@ -421,7 +424,7 @@ function DeCincoaDezSalarios(){
 function DeDezaVinteSalarios(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mais de 10 a 20 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mais de 10 a 20 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,  '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mais de 10 a 20 salários mínimos' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
@@ -445,7 +448,7 @@ function DeDezaVinteSalarios(){
 function MaisdeVinteSalarios(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Mais de 20 salários mínimos' limit 1),m.nome(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m order by m.cod_municipio");
+		$res = $con->query("SELECT m.cod_municipio, '', (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Mais de 20 salários mínimos' limit 1),m.nome,(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio   and informacao like  'Total' limit 1) as 'Empregado (%)' from municipio m where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, '', sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Mais de 20 salários mínimos' limit 1)),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total' limit 1)) as 'Empregado (%)' from
