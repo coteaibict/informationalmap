@@ -93,6 +93,8 @@ function MostraDadosGerais(dadosGerais){
 
   var i = window.dadosGerais.map(function(x) {return x.Nome; }).indexOf(dadosGerais);
   if(i != -1){
+    $("#geraGraficoDespesas").remove();
+    $("#geraGraficoPopulacao").remove();
     $('#divisaoPesquisada').css("display","block");
     $("#addResumoRelatorio").css("display", "block");
     $('#divisaoPesquisada').html(
