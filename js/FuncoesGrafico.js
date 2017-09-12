@@ -59,12 +59,18 @@ function CriarGraficoPizza(nomes,valores, informacao){
   "</div>");
 
   var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
+
+  colors = [];
+  for(var i in valores){
+    colors.push('rgb('+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+')');
+  }
   var options = {
     responsive:true
   };
   data = {
     datasets: [{
-        data: valores
+        data: valores,
+        backgroundColor: colors
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
