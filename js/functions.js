@@ -153,7 +153,7 @@ function ObtemdadosGerais(){
   var request = new XMLHttpRequest();
   request.onreadystatechange = function(response) {
     if (request.readyState === 4 && request.status === 200) {
-      var dados = this.responseText.split(";");      
+      var dados = this.responseText.split(";");    
       for(var i = 0; i < dados.length; i++){
         var aux = dados[i].split(",");
         window.dadosGerais.push({
@@ -688,10 +688,9 @@ function initMap() {
   });
   
   window.tipoDivisao = $('#divisao input[type=radio]:checked').val();
-  ObtemdadosGerais();
   $('#divisao input[type=radio]').change(function(){
     window.tipoDivisao = $(this).val();
-    ObtemdadosGerais();
+    
     LoadMapShapes();
     AtualizaVarialvelPesquisa(window.variavelPesquisa);
   });
