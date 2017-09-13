@@ -111,11 +111,11 @@ function GraficoDespesas(cod){
   xmlhttp.send();
 }
 
-function GraficoPopulacao(cod){
+function GraficoPizza(cod, arquivo, informacao){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
-      console.log(this.responseText);
+    
       var dados = this.responseText.split(";");
       var nomes = [];
       var valores = [];
@@ -125,12 +125,12 @@ function GraficoPopulacao(cod){
         valores.push(Number(aux[1]));
       }
       
-      CriarGraficoPizza(nomes,valores, 'Populacao');
+      CriarGraficoPizza(nomes,valores, informacao);
       $('#loading').css('display','none');
     }
   }
   $('#loading').css('display','block');
-  xmlhttp.open("GET", "php/GraficoPopulacao.php?tipoDivisao="+window.tipoDivisao+"&cod="+cod, true);
+  xmlhttp.open("GET", "php/"+arquivo+"?tipoDivisao="+window.tipoDivisao+"&cod="+cod, true);
   xmlhttp.send();
 }
 

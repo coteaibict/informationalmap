@@ -122,10 +122,10 @@ function MostraDadosGerais(dadosGerais){
         // AtualizarDivisoesMarcadas();
     
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoDespesas(window.dadosGerais[i].key); });
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
-    $("#geraGraficoPopulacao").on("click", function(){ GraficoPopulacao(window.dadosGerais[i].key); });
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População"); });
 
     
   }
