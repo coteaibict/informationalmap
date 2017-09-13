@@ -95,6 +95,7 @@ function MostraDadosGerais(dadosGerais){
   if(i != -1){
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
+    $("#geraGraficoEstabelecimento").remove();
     $('#divisaoPesquisada').css("display","block");
     $("#addResumoRelatorio").css("display", "block");
     $('#divisaoPesquisada').html(
@@ -127,6 +128,9 @@ function MostraDadosGerais(dadosGerais){
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
     $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População"); });
 
+    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
+    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoEstabelecimento.php","Estabelecimentos"); });
+
     
   }
   
@@ -137,6 +141,7 @@ function MostraDadosGerais(dadosGerais){
     });
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
+    $("#geraGraficoEstabelecimento").remove();
     $('#divisaoPesquisada').css("display","none");
     $("#addResumoRelatorio").css("display", "none");
   }
