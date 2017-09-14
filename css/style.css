@@ -257,6 +257,7 @@ span {
 	width:100%;
 	height: 300px;
 }
+
 #AplicarNoMapa{
 	position: absolute;
 	z-index: 2;
@@ -315,6 +316,7 @@ span {
 	z-index: 10;
 	background-color: white;
 	cursor: move;
+	overflow: scroll;/*MUDANÇA: ADICAO*/
 
 }
 .removeItem{
