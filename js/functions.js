@@ -159,7 +159,7 @@ function ObtemdadosGerais(){
   request.onreadystatechange = function(response) {
     if (request.readyState === 4 && request.status === 200) {
       var dados = this.responseText.split(";");    
-      for(var i = 0; i < dados.length; i++){
+      for(var i = 0; i < dados.length-1; i++){
         var aux = dados[i].split(",");
         window.dadosGerais.push({
           key: aux[0],

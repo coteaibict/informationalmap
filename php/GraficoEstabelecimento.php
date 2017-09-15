@@ -2023,8 +2023,7 @@
 
 		$div = $x/$tot;
 		$result .= 'FABRICAÇÃO DE PRODUTOS TÊXTEIS&'.$div.';';
-//=================================================================================================================
-///*
+
 		$res = $con->query("SELECT sum(valor)
 							FROM raisestabelecimentos re
 							inner join municipio m on m.cod_municipio = re.cod_municipio
@@ -2061,6 +2060,7 @@
 
 		$div = $x/$tot;
 		$result .= 'FABRICAÇÃO DE PRODUTOS DE MADEIRA&'.$div.';';
+
 		$res = $con->query("SELECT sum(valor)
 							FROM raisestabelecimentos re
 							inner join municipio m on m.cod_municipio = re.cod_municipio
@@ -2085,6 +2085,7 @@
 
 		$div = $x/$tot;
 		$result .= 'IMPRESSÃO E REPRODUÇÃO DE GRAVAÇÕES&'.$div.';';
+
 		$res = $con->query("SELECT sum(valor)
 							FROM raisestabelecimentos re
 							inner join municipio m on m.cod_municipio = re.cod_municipio
@@ -2109,6 +2110,8 @@
 
 		$div = $x/$tot;
 		$result .= 'FABRICAÇÃO DE PRODUTOS QUÍMICOS&'.$div.';';
+
+
 		$res = $con->query("SELECT sum(valor)
 							FROM raisestabelecimentos re
 							inner join municipio m on m.cod_municipio = re.cod_municipio
@@ -2145,6 +2148,8 @@
 
 		$div = $x/$tot;
 		$result .= 'FABRICAÇÃO DE PRODUTOS DE MINERAIS NÃO-METÁLICOS&'.$div.';';
+//=================================================================================================================
+///*
 		$res = $con->query("SELECT sum(valor)
 							FROM raisestabelecimentos re
 							inner join municipio m on m.cod_municipio = re.cod_municipio

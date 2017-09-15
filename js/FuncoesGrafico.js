@@ -47,21 +47,27 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
 }
 function CriarGraficoPizza(nomes,valores, informacao){
 
+
+
   $("body").append("<div class='dragable'>"+
     "<div class='chartsHearder'></div>"+
     "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
     "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
     "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+
     "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
+
     "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
       "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
     "</div>"+
   "</div>");
 
+
   var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
 
   colors = [];
   for(var i in valores){
+
     colors.push('rgb('+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+')');
   }
   var options = {
@@ -102,8 +108,8 @@ function GraficoPizza(cod, arquivo, informacao){
         var aux = dados[i].split("&");
         nomes.push(aux[0]); 
         valores.push(Number(aux[1]));
+
       }
-      
       CriarGraficoPizza(nomes,valores, informacao);
       $('#loading').css('display','none');
     }
