@@ -115,6 +115,7 @@ function GraficoPizza(cod, arquivo, informacao){
     }
   }
   $('#loading').css('display','block');
+  console.log(window.anoSelecionado);
   xmlhttp.open("GET", "php/"+arquivo+"?tipoDivisao="+window.tipoDivisao+"&cod="+cod+"&ano="+window.anoSelecionado, true);
   xmlhttp.send();
 }

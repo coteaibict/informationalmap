@@ -96,6 +96,7 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
     $("#geraGraficoEstabelecimento").remove();
+    $("#geraGraficoPatentes").remove();
     $('#divisaoPesquisada').css("display","block");
     $("#addResumoRelatorio").css("display", "block");
     $('#divisaoPesquisada').html(
@@ -131,7 +132,9 @@ function MostraDadosGerais(dadosGerais){
     $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
     $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoEstabelecimento.php","Estabelecimentos"); });
 
-    
+    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
+    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPatentes.php","Patentes"); });
+
   }
   
   else if(dadosGerais != ""){
@@ -142,6 +145,7 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
     $("#geraGraficoEstabelecimento").remove();
+    $("#geraGraficoPatentes").remove();
     $('#divisaoPesquisada').css("display","none");
     $("#addResumoRelatorio").css("display", "none");
   }
