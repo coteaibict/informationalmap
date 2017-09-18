@@ -5,6 +5,7 @@
 			$res = $con->query("SELECT  m.cod_municipio, '', pb.Populacao , m.nome,null
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+								and cod_ano = ".$_GET["ano"]."
 								group by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "E"){
@@ -12,6 +13,7 @@
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+								and cod_ano = ".$_GET["ano"]."
 								group by m.cod_estado
 								order by m.cod_municipio");
 		}
@@ -20,6 +22,7 @@
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+								and cod_ano = ".$_GET["ano"]."
 								group by m.cod_mesoRegiao
 								order by m.cod_municipio");
 		}

@@ -11,7 +11,7 @@
 
 		$res = $con->query("SELECT qtd, tipo
 							FROM patentes
-							where m.cod_municipio =".$_GET["cod"]."
+							where cod_municipio =".$_GET["cod"]."
 							and cod_ano = ".$_GET["ano"]."
 							group by tipo;");
 		while($row = $res->fetch_row()){
@@ -94,7 +94,5 @@
 		MesoRegiao();
 	else
 		Estado();
-
-
 
 ?>
