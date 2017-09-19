@@ -558,12 +558,8 @@ ul {
 	line-height: 45px;
     display: none;
     position: absolute;
-    bottom: 50px;
-    left: 925px;
     background-color: white;
-    opacity: 0.5;
-    height: 53px;
-    width: 170px;
+    opacity: 0.7;
     text-align: center;
     font-size: 0.5vw;
 }
