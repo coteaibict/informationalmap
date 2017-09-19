@@ -13,6 +13,7 @@
 							FROM raisestabelecimentos
 							where cod_municipio =".$_GET["cod"]."
 							and valor != 0
+							and re.informacao != 'Total'
 							group by informacao;");
 		while($row = $res->fetch_row()){
 			$x = $row[0];
@@ -42,6 +43,7 @@
 							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
 							where m.cod_mesoregiao =".$_GET["cod"]."
 							and valor != 0
+							and re.informacao != 'Total'
 							group by re.informacao;");
 		while($row = $res->fetch_row()){
 			$x = $row[0];
@@ -71,6 +73,7 @@
 							inner join estado e on m.cod_estado = e.cod_estado
 							where m.cod_estado =".$_GET["cod"]."
 							and valor != 0
+							and re.informacao != 'Total'
 							group by re.informacao;");
 		while($row = $res->fetch_row()){
 			$x = $row[0];

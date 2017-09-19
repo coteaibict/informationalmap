@@ -1086,6 +1086,10 @@ function mouseInToRegion(e) {
     document.getElementById('data-box').style.display = 'block';
     document.getElementById('data-caret').style.display = 'block';
     document.getElementById('data-caret').style.paddingLeft = percent + '%';
+//TENTATIVA DE COLOCAR VALOR NO MOUSE========================================================
+    $(document).mousemove(function(event){  $varx = event.pageX;  $vary = event.pageY;});
+    document.getElementById('data-box').style.top = $vary + 'px';
+    document.getElementById('data-box').style.left = $varx + 'px';
   }
 }
 

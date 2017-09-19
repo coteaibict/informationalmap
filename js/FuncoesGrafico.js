@@ -71,7 +71,10 @@ function CriarGraficoPizza(nomes,valores, informacao){
     colors.push('rgb('+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+')');
   }
   var options = {
-    responsive:true
+    legend: {
+            display: false
+         },
+    responsive: false
   };
   data = {
     datasets: [{
