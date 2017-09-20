@@ -124,16 +124,16 @@ function MostraDadosGerais(dadosGerais){
         // AtualizarDivisoesMarcadas();
     
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas"); });
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
-    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População"); });
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População de "+window.dadosGerais[i].Nome); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
-    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoEstabelecimento.php","Estabelecimentos"); });
+    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoEstabelecimento.php","Estabelecimentos em "+window.dadosGerais[i].Nome); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
-    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPatentes.php","Patentes"); });
+    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPatentes.php","Patentes em "+window.dadosGerais[i].Nome); });
 
   }
   
@@ -146,6 +146,19 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoPopulacao").remove();
     $("#geraGraficoEstabelecimento").remove();
     $("#geraGraficoPatentes").remove();
+
+    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
+
+    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
+
+    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
+    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza("", "GraficoEstabelecimento.php","Estabelecimentos no Brasil"); });
+
+    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
+    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza("", "GraficoPatentes.php","Patentes no Brasil"); });
+
     $('#divisaoPesquisada').css("display","none");
     $("#addResumoRelatorio").css("display", "none");
   }
@@ -325,6 +338,32 @@ function RotateImage(degree,div) {
         });
     }
   });
+}
+function LimpaDadosGerais(){
+  map.data.forEach(function(feature) {
+      if(feature.getProperty('click') == 'clicked')
+        feature.setProperty('click', 'normal');
+    });
+    $("#geraGraficoDespesas").remove();
+    $("#geraGraficoPopulacao").remove();
+    $("#geraGraficoEstabelecimento").remove();
+    $("#geraGraficoPatentes").remove();
+
+    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
+
+    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
+
+    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
+    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza("", "GraficoEstabelecimento.php","Estabelecimentos no Brasil"); });
+
+    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
+    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza("", "GraficoPatentes.php","Patentes no Brasil"); });
+
+    $('#divisaoPesquisada').css("display","none");
+    $("#addResumoRelatorio").css("display", "none");
+
 }
 function AtualizaInformacoesEspecificas(variavel, div){
   window.informacao = [];
@@ -1153,6 +1192,7 @@ function LoadMapShapes(grafico){
   ObtemdadosGerais();
   ClearMapData();
   clearCensusData();
+  LimpaDadosGerais();
   if(window.variavelPesquisa != null){
     $("#SalvaAnalise").remove();
     if(window.caminho.includes("|"))

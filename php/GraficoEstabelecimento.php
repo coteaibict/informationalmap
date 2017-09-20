@@ -1,4 +1,27 @@
 <?php
+	function Brasil(){
+		include "ConexaoDB.php";
+		$result = '';
+		$res = $con->query("SELECT sum(valor), cod_raisestabelecimentos
+							FROM raisestabelecimentos
+							where informacao = 'Total'");
+		$row = $res->fetch_row();
+		$tot = $row[0];
+
+		$res = $con->query("SELECT sum(valor), informacao
+							FROM raisestabelecimentos
+							where valor != 0
+							and informacao != 'Total'
+							group by informacao;");
+		while($row = $res->fetch_row()){
+			$x = $row[0];
+
+			$div = $x/$tot;
+			$result .= $row[1].'&'.$div.';';
+		}
+		mysqli_close($con);
+		echo $result;
+	}
 	function Municipio(){
 		include "ConexaoDB.php";
 		$result = '';
@@ -13,7 +36,7 @@
 							FROM raisestabelecimentos
 							where cod_municipio =".$_GET["cod"]."
 							and valor != 0
-							and re.informacao != 'Total'
+							and informacao != 'Total'
 							group by informacao;");
 		while($row = $res->fetch_row()){
 			$x = $row[0];
@@ -85,8 +108,9 @@
 		mysqli_close($con);
 		echo $result;
 	}
-
-	if($_GET["tipoDivisao"] == "M")
+	if($_GET["cod"] == "")
+		Brasil();
+	else if($_GET["tipoDivisao"] == "M")
 		Municipio();
 	else if	($_GET["tipoDivisao"] == "MR")
 		MesoRegiao();

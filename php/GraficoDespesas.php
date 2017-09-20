@@ -1,4 +1,258 @@
 <?php
+	function Brasil(){
+		include "ConexaoDB.php";
+		$result = '';
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where (descricao = 'Legislativa' or descricao = 'Judiciária' or descricao = 'Essencial à Justiça' or descricao = 'Administração')
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+
+		$res = $con->query("SELECT sum(valor) FROM despesas_municipios where informacao = 'Total Despesa'							");
+		$row = $res->fetch_row();
+		$tot = $row[0];
+
+		$div = $x/$tot;
+		$result .= 'Despesas com poderes executivo, legislativo e judiciário&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Defesa Nacional' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Defesa Nacional&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Segurança Pública' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Segurança Pública&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Relações Exteriores' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Relações Exteriores&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Assistência Social' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Assistência Social&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Previdência Social' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Previdência Social&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saúde' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saúde&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Trabalho' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Trabalho&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Educação' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Educação&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Cultura' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Cultura&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Direitos da Cidadania' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Direitos da Cidadania&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Urbanismo' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Urbanismo&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Habitação' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Habitação&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Saneamento' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Saneamento&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Gestão Ambiental' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Gestão Ambiental&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Ciência e Tecnologia' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Ciência e Tecnologia&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Agricultura' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Agricultura&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Organização Agrária' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Organização Agrária&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Indústria' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Indústria&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comércio e Serviços' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comércio e Serviços&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Comunicações' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Comunicações&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Energia' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Energia&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Transporte' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Transporte&'.$div.';';
+
+		$res = $con->query("SELECT sum(valor) 
+							FROM despesas_municipios 
+							inner join funcoes_finbras on cod_funcaoFinbra = cod_funcoes_finbras 
+							where descricao = 'Desporto e Lazer' 
+							");
+		$row = $res->fetch_row();
+		$x = $row[0];
+		$div = $x/$tot;
+		$result .= 'Desporto e Lazer&'.$div.';';
+/*
+		$result .= 'Total Despesa&'.$tot.';';
+
+		*/
+		mysqli_close($con);
+		echo $result;
+	}
 	function Municipio(){
 		include "ConexaoDB.php";
 		$result = '';
@@ -863,8 +1117,9 @@
 		mysqli_close($con);
 		echo $result;
 	}
-
-	if($_GET["tipoDivisao"] == "M")
+	if($_GET["cod"] == "")
+		Brasil();
+	else if($_GET["tipoDivisao"] == "M")
 		Municipio();
 	else if	($_GET["tipoDivisao"] == "MR")
 		MesoRegiao();
