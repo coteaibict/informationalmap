@@ -12,11 +12,7 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
         datasets: [{
             label: informacao,
             data: valores,
-            backgroundColor: "rgb(85, 112, 124,1)"
-               
-                
-            
-           
+            backgroundColor: "rgb(85, 112, 124,1)"  
           }]
       },
       options: {
@@ -45,6 +41,54 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   // $("#addGraficoRelatorio").remove();
   // $(select).parent().prepend("<button id='addGraficoRelatorio' onclick='SalvaGraficoImg()'>Adcionar gráfico ao relatório</button>");
 }
+function CriarGraficoLinha(nomes,valores, informacao, dominio){
+  $("body").append("<div class='dragable'>"+
+    "<div class='chartsHearder'></div>"+
+    "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
+    "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
+    "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+
+    "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
+
+    "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
+      "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+    "</div>"+
+  "</div>");
+
+
+  var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
+
+  var options = {
+    legend: {
+            display: false
+         },
+    responsive: false
+  };
+  data = {
+    datasets: [{
+        data: valores
+    },{
+        data : dominio
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels:nomes
+  };
+
+  var myPieChart = new Chart(ctx,{
+    type: 'line',
+    data: data,
+    options: options
+  });
+
+  $(".dragable").draggable();
+  $(".dragable").resizable();
+  window.numeroGrafico++;
+
+
+
+}
+
 function CriarGraficoPizza(nomes,valores, informacao){
 
 
@@ -121,6 +165,31 @@ function GraficoPizza(cod, arquivo, informacao){
   xmlhttp.open("GET", "php/"+arquivo+"?tipoDivisao="+window.tipoDivisao+"&cod="+cod+"&ano="+window.anoSelecionado, true);
   xmlhttp.send();
 }
+
+function GraficoLinha(cod, arquivo, informacao){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+      
+      var dados = this.responseText.split(";");
+      var nomes = [];
+      var valores = [];
+      var dominio = [];
+      for(var i = 0; i < dados.length -1; i++){
+        var aux = dados[i].split("&");
+        nomes.push(aux[0]); 
+        valores.push(Number(aux[1]));
+        dominio.push(Number(aux[2]))
+      }
+      CriarGraficoLinha(nomes,valores, informacao, dominio);
+      $('#loading').css('display','none');
+    }
+  }
+  $('#loading').css('display','block');
+  xmlhttp.open("GET", "php/"+arquivo+"?tipoDivisao="+window.tipoDivisao+"&cod="+cod+"&variavel="+window.variavelPesquisa, true);
+  xmlhttp.send();
+}
+
 
 function SalvaGraficoImg(){
 

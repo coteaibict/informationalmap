@@ -93,6 +93,7 @@ function MostraDadosGerais(dadosGerais){
 
   var i = window.dadosGerais.map(function(x) {return x.Nome; }).indexOf(dadosGerais);
   if(i != -1){
+    $("#geraGraficoHistorico").remove();
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
     $("#geraGraficoEstabelecimento").remove();
@@ -122,7 +123,10 @@ function MostraDadosGerais(dadosGerais){
         .setProperty('click', 'clicked'); 
         //window.divisoesMarcadas.push(window.dadosGerais[i]); 
         // AtualizarDivisoesMarcadas();
-    
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
+    $("#geraGraficoHistorico").on("click", function(){ GraficoLinha(window.dadosGerais[i].key, "GraficoHistorico.php", "Histórico de "+window.dadosGerais[i].Nome); });
+
+
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome); });
 
@@ -142,10 +146,14 @@ function MostraDadosGerais(dadosGerais){
       if(feature.getProperty('click') == 'clicked')
         feature.setProperty('click', 'normal');
     });
+    $("#geraGraficoHistorico").remove();
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
     $("#geraGraficoEstabelecimento").remove();
     $("#geraGraficoPatentes").remove();
+
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
+    $("#geraGraficoHistorico").on("click", function(){ GraficoLinha("", "GraficoHistorico.php", "Histórico do Brasil"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
@@ -344,10 +352,14 @@ function LimpaDadosGerais(){
       if(feature.getProperty('click') == 'clicked')
         feature.setProperty('click', 'normal');
     });
+    $("#geraGraficoHistorico").remove();
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
     $("#geraGraficoEstabelecimento").remove();
     $("#geraGraficoPatentes").remove();
+
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
+    $("#geraGraficoHistorico").on("click", function(){ GraficoLinha("", "GraficoHistorico.php", "Histórico do Brasil"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
