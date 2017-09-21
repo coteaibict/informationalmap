@@ -103,7 +103,7 @@ function GraficoPizza(cod, arquivo, informacao){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
-      console.log(this.responseText);
+      
       var dados = this.responseText.split(";");
       var nomes = [];
       var valores = [];
@@ -118,7 +118,6 @@ function GraficoPizza(cod, arquivo, informacao){
     }
   }
   $('#loading').css('display','block');
-  console.log(window.anoSelecionado);
   xmlhttp.open("GET", "php/"+arquivo+"?tipoDivisao="+window.tipoDivisao+"&cod="+cod+"&ano="+window.anoSelecionado, true);
   xmlhttp.send();
 }
