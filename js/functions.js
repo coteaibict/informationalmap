@@ -774,6 +774,7 @@ function loadCensusData(variable, tipo,numGrafico) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){ 
       var dados = this.responseText.split(";");
+      console.log(this.responseText);
       dado["cod"] = [];
       dado["informacao"] = [];
       dado["valor"] = [];

@@ -3,23 +3,24 @@
 function PIB(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', pm.PIB ,m.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
-							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."");
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, pm.PIB ,m.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
+							group by a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.PIB), e.Uf, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.PIB), e.Uf, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by e.cod_estado");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                            group by e.cod_estado,a.cod_ano");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.PIB), mr.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.PIB), mr.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by mr.cod_mesoregiao");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                            group by mr.cod_mesoregiao, a.cod_ano");
 	}
 
 	$result = "";
@@ -33,23 +34,24 @@ function PIB(){
 function PibPerCapita(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', pm.PIB ,m.Nome, pm.Populacao
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
-							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]);
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, pm.PIB ,m.Nome, pm.Populacao
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+							group by a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.PIB)/count(*), e.Uf, pm.Populacao 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.PIB)/count(*), e.Uf, pm.Populacao 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by e.cod_estado");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
+                            group by e.cod_estado, a.cod_ano");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.PIB)/count(*), mr.Nome, pm.Populacao 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.PIB)/count(*), mr.Nome, pm.Populacao 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by mr.cod_mesoregiao");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
+                            group by mr.cod_mesoregiao, a.cod_ano");
 	}
 
 	$result = "";
@@ -63,22 +65,22 @@ function PibPerCapita(){
 function ImpostosRecolhidos(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', pm.Impostos_liquidos_de_subsidios_sobre_produtos ,m.Nome, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
-							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]);
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, pm.Impostos_liquidos_de_subsidios_sobre_produtos ,m.Nome, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) ");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.Impostos_liquidos_de_subsidios_sobre_produtos), e.Uf, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.Impostos_liquidos_de_subsidios_sobre_produtos), e.Uf, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
                             group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.Impostos_liquidos_de_subsidios_sobre_produtos), mr.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.Impostos_liquidos_de_subsidios_sobre_produtos), mr.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
                             group by mr.cod_mesoregiao");
 	}
 
@@ -94,23 +96,24 @@ function ImpostosRecolhidos(){
 function PibAgropecuaria(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', pm.Valor_adicionado_bruto_da_Agropecuaria ,m.Nome, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
-							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]);
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, pm.Valor_adicionado_bruto_da_Agropecuaria ,m.Nome, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+							group by a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.Valor_adicionado_bruto_da_Agropecuaria), e.Uf, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.Valor_adicionado_bruto_da_Agropecuaria), e.Uf, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by e.cod_estado");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
+                            group by e.cod_estado, a.cod_ano");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.Valor_adicionado_bruto_da_Agropecuaria), mr.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.Valor_adicionado_bruto_da_Agropecuaria), mr.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by mr.cod_mesoregiao");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
+                            group by mr.cod_mesoregiao, a.cod_ano");
 	}
 
 	$result = "";
@@ -124,22 +127,23 @@ function PibAgropecuaria(){
 function PibIndustrial(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', pm.Valor_adicionado_bruto_da_Industria ,m.Nome, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
-							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]);
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, pm.Valor_adicionado_bruto_da_Industria ,m.Nome, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+							group by a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.Valor_adicionado_bruto_da_Industria), e.Uf, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.Valor_adicionado_bruto_da_Industria), e.Uf, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
                             group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.Valor_adicionado_bruto_da_Industria), mr.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.Valor_adicionado_bruto_da_Industria), mr.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
                             group by mr.cod_mesoregiao");
 	}
 
@@ -154,23 +158,24 @@ function PibIndustrial(){
 function PibServicos(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc ,m.Nome, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
-							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]);
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc ,m.Nome, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275) 
+							group by a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), e.Uf, null
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), e.Uf, null
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by e.cod_estado");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
+                            group by e.cod_estado,a.cod_ano");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), mr.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), mr.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
-							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and pm.cod_ano =".$_GET["ano"]."
-                            group by mr.cod_mesoregiao");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
+                            group by mr.cod_mesoregiao,a.cod_ano");
 	}
 
 	$result = "";
@@ -184,14 +189,14 @@ function PibServicos(){
 function ReceitasTotais(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, 'pib', sum(rm.valor), m.nome, null 
+		$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(rm.valor), m.nome, null 
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
 							where rm.informacao = 'Total Receitas' and m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
 							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,  'pib', sum(rm.valor), e.uf,null 
+		$res = $con->query("SELECT e.cod_estado,  a.descricao, sum(rm.valor), e.uf,null 
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
                             inner join estado e on e.cod_estado = m.cod_estado
@@ -199,7 +204,7 @@ function ReceitasTotais(){
 							group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(rm.valor),mr.Nome, null 
+		$res = $con->query("SELECT mr.cod_mesoRegiao,  a.descricao, sum(rm.valor),mr.Nome, null 
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
                             inner join mesoregiao mr on mr.cod_mesoRegiao = m.cod_mesoRegiao
@@ -218,14 +223,14 @@ function ReceitasTotais(){
 function DespesasTotais(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, 'pib', sum(dm.valor),m.nome, null 
+		$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dm.valor),m.nome, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
 							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
 							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado, 'pib', sum(dm.valor), e.uf, null 
+		$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dm.valor), e.uf, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join estado e on e.cod_estado = m.cod_estado
@@ -233,7 +238,7 @@ function DespesasTotais(){
 							group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(dm.valor),mr.Nome, null 
+		$res = $con->query("SELECT mr.cod_mesoRegiao,  a.descricao, sum(dm.valor),mr.Nome, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join mesoregiao mr on mr.cod_mesoRegiao = m.cod_mesoRegiao
@@ -252,7 +257,7 @@ function DespesasTotais(){
 function DespesasSobreReceitas(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,  'pib', sum(dm.valor)*100/sum(rm.valor),m.nome, null 
+		$res = $con->query("SELECT m.cod_municipio,  a.descricao, sum(dm.valor)*100/sum(rm.valor),m.nome, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join receitas_municipios rm on m.cod_municipio = rm.cod_municipio
@@ -260,7 +265,7 @@ function DespesasSobreReceitas(){
 							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado, 'pib', sum(dm.valor)*100/sum(rm.valor),e.uf, null 
+		$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dm.valor)*100/sum(rm.valor),e.uf, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join estado e on e.cod_estado = m.cod_estado
@@ -269,7 +274,7 @@ function DespesasSobreReceitas(){
 							group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(dm.valor)*100/sum(rm.valor),mr.Nome, null 
+		$res = $con->query("SELECT mr.cod_mesoRegiao,  a.descricao, sum(dm.valor)*100/sum(rm.valor),mr.Nome, null 
 							from despesas_municipios dm 
                             inner join municipio m on m.cod_municipio = dm.cod_municipio
                             inner join mesoregiao mr on mr.cod_mesoRegiao = m.cod_mesoRegiao
@@ -373,21 +378,21 @@ function BalancaComercial(){
 function PIBGoverno(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio,'PIB', sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc) ,m.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio 					
+		$res = $con->query("SELECT m.cod_municipio,a.descricao, sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc) ,m.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio 					
 							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
                             group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,'PIB', sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), e.Uf, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), e.Uf, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                             group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoregiao,'PIB', sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), mr.Nome, null 
-							from pibmunicipalibge pm inner join municipio m on pm.cod_municipio = m.cod_municipio
+		$res = $con->query("SELECT mr.cod_mesoregiao,a.descricao, sum(pm.Valor_add_bru_Admin_sau_edu_pubs_seg_soc), mr.Nome, null 
+							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join mesoregiao mr on m.cod_mesoregiao = mr.cod_mesoregiao
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                             group by mr.cod_mesoregiao");
@@ -403,14 +408,14 @@ function PIBGoverno(){
 function ReceitasProprias(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, 'pib', sum(rm.valor) -(select valor from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio)  , m.nome, (select valor from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio) 
+		$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(rm.valor) -(select valor from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio)  , m.nome, (select valor from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio) 
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
 							where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
 							group by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,  'pib', sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_estado), e.uf,(select sum(valor) from receitas_municipios srm inner join municipio sm on sm.cod_municipio = srm.cod_municipio where informacao = 'Total Receitas' and sm.cod_estado = m.cod_estado)
+		$res = $con->query("SELECT e.cod_estado,  a.descricao, sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_estado), e.uf,(select sum(valor) from receitas_municipios srm inner join municipio sm on sm.cod_municipio = srm.cod_municipio where informacao = 'Total Receitas' and sm.cod_estado = m.cod_estado)
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
                             inner join estado e on e.cod_estado = m.cod_estado
@@ -418,7 +423,7 @@ function ReceitasProprias(){
 							group by e.cod_estado");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT mr.cod_mesoRegiao,  'pib', sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_mesoregiao),mr.Nome, (select sum(valor) from receitas_municipios srm inner join municipio sm on sm.cod_municipio = srm.cod_municipio where informacao = 'Total Receitas' and sm.cod_mesoregiao = m.cod_mesoregiao) 
+		$res = $con->query("SELECT mr.cod_mesoRegiao,  a.descricao, sum(rm.valor)- (select sum(valor) from receitas_municipios where informacao = 'Total Receitas' and cod_municipio = m.cod_municipio group by m.cod_mesoregiao),mr.Nome, (select sum(valor) from receitas_municipios srm inner join municipio sm on sm.cod_municipio = srm.cod_municipio where informacao = 'Total Receitas' and sm.cod_mesoregiao = m.cod_mesoregiao) 
 							from receitas_municipios rm 
                             inner join municipio m on m.cod_municipio = rm.cod_municipio
                             inner join mesoregiao mr on mr.cod_mesoRegiao = m.cod_mesoRegiao
@@ -437,7 +442,7 @@ function ReceitasProprias(){
 function ReceitaTransferenciaRepasse(){
 	include "ConexaoDB.php";
 	if($_GET["tipo"] == "M"){
-		$res = $con->query("SELECT m.cod_municipio, 'pib',  
+		$res = $con->query("SELECT m.cod_municipio, a.descricao,  
 							IFNULL((select valor from receitas_municipios where informacao = '1.7.0.0.00.00.00 - Transferências Correntes' and cod_municipio = m.cod_municipio) ,0)+
 							IFNULL((select valor from receitas_municipios where informacao = '1.7.2.2.01.01.00 - Cota-Parte do ICMS' and cod_municipio = m.cod_municipio) ,0)+
 							IFNULL((select valor from receitas_municipios where informacao = '1.7.2.2.01.04.00 - Cota-Parte do IPI sobre Exportação' and cod_municipio = m.cod_municipio) ,0)+
@@ -544,7 +549,7 @@ function ReceitaTransferenciaRepasse(){
 		$i = 0;
 		$result = "";
 		while($i < $j){
-			$result .= $estados[$i] . ","."".",".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
+			$result .= $estados[$i] . ",,".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
 			$i++;
 		}
 
@@ -636,7 +641,7 @@ function ReceitaTransferenciaRepasse(){
 		$i = 0;
 		$result = "";
 		while($i < $j){
-			$result .= $mesoRegiao[$i] . ","."".",".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
+			$result .= $mesoRegiao[$i] . ",,".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
 			$i++;
 		}
 		mysqli_close($con);
