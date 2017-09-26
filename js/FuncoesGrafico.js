@@ -84,7 +84,6 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
     }
   }
   
-  //x deve ser a localização do primeiro valor do estado/municipio/mesoregiao selecionado
   var valoreslocal =[];
   for(var i =0; i<window.AnosUnicos.length;i++){
     valoreslocal.push(valores[x+i]);
