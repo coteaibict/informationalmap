@@ -818,12 +818,15 @@ function loadCensusData(variable, tipo,numGrafico) {
   $("#datas").empty();
 
   for(var i = 0; i <window.AnosUnicos.length ;i++){
-    $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:'+ 100/13 +'"%;" ><b>'+ window.AnosUnicos[i] +'</b></div>');    
+    $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:70px;" ><b>'+ window.AnosUnicos[i] +'</b></div>');    
   }
   if($.inArray(window.anoSelecionado,AnosUnicos)==-1){
     $("#Marcador").css("display", "block");
     //$("#Marcador").css("left", $(this).position().left + 20);
     window.anoSelecionado =window.AnosUnicos[0];
+  }
+  else{
+    $("#Marcador").css("left",$.inArray(window.anoSelecionado,AnosUnicos)* 70+"px");
   }
   //========================================================================================================
 
@@ -834,20 +837,22 @@ function loadCensusData(variable, tipo,numGrafico) {
   });
 
       for( i = 0; i < window.dado["cod"].length; i++){
-        if( window.dado["total"][i] != "")
-          var valor = window.dado["valor"][i] / window.dado["total"][i];
-        else
-          var valor = window.dado["valor"][i];
-        if( valor < censusMin)
-          censusMin = valor;
-        if(valor > censusMax)
-          censusMax = valor;
-        map.data
-          .getFeatureById(window.dado["cod"][i])
-          .setProperty('census_variable', valor);
-        map.data
-          .getFeatureById(window.dado["cod"][i])
-          .setProperty('nome', window.dado["nome"][i]);
+        if(window.dado["ano"][i] == window.anoSelecionado){
+          if( window.dado["total"][i] != "" )
+            var valor = window.dado["valor"][i] / window.dado["total"][i];
+          else
+            var valor = window.dado["valor"][i];
+          if( valor < censusMin)
+            censusMin = valor;
+          if(valor > censusMax)
+            censusMax = valor;
+          map.data
+            .getFeatureById(window.dado["cod"][i])
+            .setProperty('census_variable', valor);
+          map.data
+            .getFeatureById(window.dado["cod"][i])
+            .setProperty('nome', window.dado["nome"][i]);
+        }
       }
 
       var nomes;

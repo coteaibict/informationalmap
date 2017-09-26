@@ -679,7 +679,7 @@ function ReceitaTransferenciaRepasse(){
 function DespesasCorrentes(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res = $con->query("SELECT m.cod_municipio, '',  sum(dm.valor), m.nome, null
+			$res = $con->query("SELECT m.cod_municipio, a.descricao,  sum(dm.valor), m.nome, null
 				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
 				                inner join ano a on a.cod_ano = dm.cod_ano
 								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
@@ -695,7 +695,7 @@ function DespesasCorrentes(){
 								order by cod_municipio");
 		}
 		else if($_GET["tipo"] == "E"){
-			$res = $con->query("SELECT m.cod_estado, '',  sum(dm.valor), e.uf, null
+			$res = $con->query("SELECT m.cod_estado, a.descricao,  sum(dm.valor), e.uf, null
 				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
                                 inner join estado e on e.cod_estado = m.cod_estado
                                 inner join ano a on a.cod_ano = dm.cod_ano
@@ -714,7 +714,7 @@ function DespesasCorrentes(){
 								order by m.cod_estado");
 		}
 		else if($_GET["tipo"] == "MR"){
-			$res = $con->query("SELECT m.cod_mesoregiao, '',  sum(dm.valor), e.nome, null
+			$res = $con->query("SELECT m.cod_mesoregiao, a.descricao,  sum(dm.valor), e.nome, null
 				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
                                 inner join mesoregiao e on e.cod_mesoregiao = m.cod_mesoregiao
                                 inner join ano a on a.cod_ano = dm.cod_ano
@@ -746,7 +746,7 @@ function DespesasCorrentes(){
 function DespesasCapital(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res = $con->query("SELECT m.cod_municipio, '',  sum(dm.valor), m.nome, null
+			$res = $con->query("SELECT m.cod_municipio, a.descricao,  sum(dm.valor), m.nome, null
 				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
 				                inner join ano a on a.cod_ano = dm.cod_ano
 								where m.cod_municipio not in (2206720, 1504752,4212650, 4220000, 4314548, 5006275)
@@ -763,7 +763,7 @@ function DespesasCapital(){
 								order by cod_municipio");
 		}
 		else if($_GET["tipo"] == "E"){
-			$res = $con->query("SELECT m.cod_estado, '',  sum(dm.valor), e.uf, null
+			$res = $con->query("SELECT m.cod_estado, a.descricao,  sum(dm.valor), e.uf, null
 				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
                                 inner join estado e on e.cod_estado = m.cod_estado
                                 inner join ano a on a.cod_ano = dm.cod_ano
@@ -782,7 +782,7 @@ function DespesasCapital(){
 								order by m.cod_estado");
 		}
 		else if($_GET["tipo"] == "MR"){
-			$res = $con->query("SELECT m.cod_mesoregiao, '',  sum(dm.valor), e.nome, null
+			$res = $con->query("SELECT m.cod_mesoregiao, a.descricao,  sum(dm.valor), e.nome, null
 				                from  municipio m inner join despesas_municipios dm on m.cod_municipio = dm.cod_municipio
                                 inner join mesoregiao e on e.cod_mesoregiao = m.cod_mesoregiao
                                 inner join ano a on a.cod_ano = dm.cod_ano
