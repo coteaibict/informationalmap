@@ -826,7 +826,7 @@ function loadCensusData(variable, tipo,numGrafico) {
     window.anoSelecionado =window.AnosUnicos[0];
   }
   else{
-    $("#Marcador").css("left",$.inArray(window.anoSelecionado,AnosUnicos)* 70+"px");
+    $("#Marcador").css("left",($.inArray(window.anoSelecionado,AnosUnicos) * 70 + 20)+"px");
   }
   //========================================================================================================
 
