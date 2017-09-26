@@ -1,4 +1,4 @@
-function CriarGrafico(numero,nome, informacao, valores, tipo, select, ano){
+function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   if(select != undefined){
 
     $("#myChart"+numero).remove();
@@ -7,22 +7,28 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select, ano){
 	var ctx = document.getElementById("myChart"+numero).getContext("2d");
 
   var valoreslocal = [];
-  var infolocal = [];
   var nomelocal = [];
-  console.log(valores);
-  //AJUSTAR PARA PEGAR VALOR DO ANO SELCIONADO E AUMENTAR DE ACORDO COM O TAMANHO DE ANOS PRESENTES
-  for (var i =0;i<valores.length;i+=13){
+  var anos = (window.AnosUnicos);
+
+  for(var i=0;i<anos.length;i++){
+    if(anos[i]==window.anoSelecionado)
+      var i0 = i;
+  }
+
+
+
+  for (var i =i0;i<valores.length;i+=anos.length){
     valoreslocal.push(valores[i]);
-    infolocal.push(informacao[i]);
     nomelocal.push(nome[i]);
   }
+
 
   var myChart = new Chart(ctx, {
       type: tipo,
       data: {
         labels: nomelocal,
         datasets: [{
-            label: infolocal,
+            label: informacao,
             data: valoreslocal,
             backgroundColor: "rgb(85, 112, 124,1)"  
           }]

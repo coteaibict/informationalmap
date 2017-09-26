@@ -818,12 +818,11 @@ function loadCensusData(variable, tipo,numGrafico) {
   $("#datas").empty();
 
   for(var i = 0; i <window.AnosUnicos.length ;i++){
-    if(i < 9  )
-      $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:'+ 100/13 +'"%;" ><b>200'+ (i+1) +'</b></div>');
-    else
-      $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i]  +'" style= "width:'+ 100/13 +'"%;" ><b>20'+ (i+1) +'</b></div>');
+    $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:'+ 100/13 +'"%;" ><b>'+ window.AnosUnicos[i] +'</b></div>');    
   }
   if($.inArray(window.anoSelecionado,AnosUnicos)==-1){
+    $("#Marcador").css("display", "block");
+    //$("#Marcador").css("left", $(this).position().left + 20);
     window.anoSelecionado =window.AnosUnicos[0];
   }
   //========================================================================================================
@@ -853,6 +852,7 @@ function loadCensusData(variable, tipo,numGrafico) {
 
       var nomes;
       var valores;
+      var anos;
       var dadosGrafico = [];
       dadosGrafico["label"] = [];
       dadosGrafico["valor"] = [];
@@ -956,7 +956,7 @@ function loadCensusData(variable, tipo,numGrafico) {
           "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
           "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+window.caminho+" | ano "+ano+"</div>"+
           "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
-          "<select id='selectGrafico' onchange=\'CriarGrafico("+window.numeroGrafico+","+JSON.stringify(nomes)+", window.informacao[window.indexInformacao],"+JSON.stringify(valores)+", this.value, this,"+window.dado+" )\'>"+
+          "<select id='selectGrafico' onchange=\'CriarGrafico("+window.numeroGrafico+","+JSON.stringify(nomes)+", window.informacao[window.indexInformacao],"+JSON.stringify(valores)+", this.value, this, )\'>"+
             "<option value='' selected>Selecione um tipo de gráfico</option>"+
             "<option value='bar'>Barra</option>"+
             "<option value='radar'>Radar</option>"+
@@ -967,7 +967,8 @@ function loadCensusData(variable, tipo,numGrafico) {
           "</div>"+
         "</div>");
 
-        CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar', ano);
+        
+        CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar');
 
         $(".dragable").draggable();
         $(".dragable").resizable();
