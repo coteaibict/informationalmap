@@ -13,13 +13,19 @@ window.historico["variavel"] = [];
 window.historico["setoresMarcados"] = [];
 window.historico["divisao"] = [];
 window.dadosGerais = [];
-window.divisoesMarcadas = []
+window.divisoesMarcadas = [];
+
 window.indexInformacao = null;
 window.caminho = null;
 window.arquivoPhp = null;
 window.jsonLayers = [];
-window.anoSelecionado = 12;
+window.anoSelecionado = null;
 window.numRelatorio = 1;
+
+//PODE ISSO, ARNALDO?====================================================
+window.AnosUnicos = [];
+
+
 
  var mapStyle = [{
   'stylers': [{'visibility': 'on'}]
@@ -91,6 +97,8 @@ function ExpandeDivisaoGeo(){
 
 function MostraDadosGerais(dadosGerais){
 
+
+
   var i = window.dadosGerais.map(function(x) {return x.Nome; }).indexOf(dadosGerais);
   if(i != -1){
     $("#geraGraficoHistorico").remove();
@@ -123,9 +131,11 @@ function MostraDadosGerais(dadosGerais){
         .setProperty('click', 'clicked'); 
         //window.divisoesMarcadas.push(window.dadosGerais[i]); 
         // AtualizarDivisoesMarcadas();
-    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ GraficoLinha(window.dadosGerais[i].key, "GraficoHistorico.php", "Histórico de "+window.dadosGerais[i].Nome); });
 
+// PROBLEMA: COMO PEGAR VALOR SOMENTE DO MUNICIPIO
+//Receber lista de anos e lista de valores. CriarGraficoLInha===========================================================================
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Histórico de "+window.dadosGerais[i].Nome,window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome); });
@@ -153,7 +163,7 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoPatentes").remove();
 
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ GraficoLinha("", "GraficoHistorico.php", "Histórico do Brasil"); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Histórico do Brasil",window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
@@ -359,7 +369,7 @@ function LimpaDadosGerais(){
     $("#geraGraficoPatentes").remove();
 
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ GraficoLinha("", "GraficoHistorico.php", "Histórico do Brasil"); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Histórico do Brasil",window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
@@ -710,13 +720,13 @@ function initMap() {
   $("#BaixarRelatorio").click(function(event) {
     DownloadDiv();
   });
-
+/*
   for(var i = 1; i < 14 ;i++){
     if(i < 9  )
       $("#datas").append('<div class="anoData" id= "ano'+ i +'" style= "width:'+ 100/13 +'"%;" ><b>200'+ (i+1) +'</b></div>');
     else
       $("#datas").append('<div class="anoData" id= "ano'+ i +'" style= "width:'+ 100/13 +'"%;" ><b>20'+ (i+1) +'</b></div>');
-  }
+  }*/
   // window.jsonLayers.push(new google.maps.Data().loadGeoJson('geojson/UF/uf.json', { idPropertyName:'GEOCODIGO'}));
   // window.jsonLayers.push(new google.maps.Data().loadGeoJson('geojson/Municipios/geojs-100-mun.json', { idPropertyName:'id'}));
   // window.jsonLayers.push(new google.maps.Data().loadGeoJson('geojson/MesoRegiao/MesoRegiao.json', { idPropertyName:'GEOCODIGO'}));
@@ -741,11 +751,7 @@ function initMap() {
      }
   }
 
-  $(".anoData").click( function(){
-    $("#Marcador").css("display", "block");
-    $("#Marcador").css("left", $(this).position().left + 20);
-    window.anoSelecionado = this.id.replace( /^\D+/g, '');
-  });
+  
   
   window.tipoDivisao = $('#divisao input[type=radio]:checked').val();
   $('#divisao input[type=radio]').change(function(){
@@ -774,17 +780,19 @@ function loadCensusData(variable, tipo,numGrafico) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){ 
       var dados = this.responseText.split(";");
-      console.log(this.responseText);
+      //console.log(this.responseText);//salvar apenas do ano selecionado
       dado["cod"] = [];
-      dado["informacao"] = [];
+      dado["ano"] = [];
       dado["valor"] = [];
       dado["nome"] = [];
       dado["total"] = [];
 
       for(var i = 0; i < dados.length -1; i++){
         var aux = dados[i].split(",");
+
+
         window.dado["cod"].push(aux[0]);
-        window.dado["informacao"].push(aux[1]);
+        window.dado["ano"].push(aux[1]);
   
         if(aux[2] == "")
           window.dado["valor"].push(0);
@@ -799,7 +807,33 @@ function loadCensusData(variable, tipo,numGrafico) {
           window.dado["total"].push(Number(aux[4]));
 
       }
-      
+
+      //FUNCAO PARA ATUALIZAR OS ANOS==================================================================================
+  window.AnosUnicos = [];
+
+  $.each(window.dado["ano"], function(i, el){
+      if($.inArray(el,window.AnosUnicos) === -1)window.AnosUnicos.push(el);
+  });
+
+  $("#datas").empty();
+
+  for(var i = 0; i <window.AnosUnicos.length ;i++){
+    if(i < 9  )
+      $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:'+ 100/13 +'"%;" ><b>200'+ (i+1) +'</b></div>');
+    else
+      $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i]  +'" style= "width:'+ 100/13 +'"%;" ><b>20'+ (i+1) +'</b></div>');
+  }
+  if($.inArray(window.anoSelecionado,AnosUnicos)==-1){
+    window.anoSelecionado =window.AnosUnicos[0];
+  }
+  //========================================================================================================
+
+  $(".anoData").click( function(){
+    $("#Marcador").css("display", "block");
+    $("#Marcador").css("left", $(this).position().left + 20);
+    window.anoSelecionado = this.id.replace( /^\D+/g, '');
+  });
+
       for( i = 0; i < window.dado["cod"].length; i++){
         if( window.dado["total"][i] != "")
           var valor = window.dado["valor"][i] / window.dado["total"][i];
@@ -915,17 +949,14 @@ function loadCensusData(variable, tipo,numGrafico) {
 
       if(numGrafico == null){
         var ano;
-        if(window.anoSelecionado < 10)
-          ano = "200"+ (Number(window.anoSelecionado) + 1);
-        if(window.anoSelecionado >= 10)
-          ano = "20" + (Number(window.anoSelecionado) + 1);
+        ano = Number(window.anoSelecionado);
         $("body").append("<div class='dragable'>"+
           "<div class='chartsHearder'></div>"+
           "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
           "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
           "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+window.caminho+" | ano "+ano+"</div>"+
           "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
-          "<select id='selectGrafico' onchange=\'CriarGrafico("+window.numeroGrafico+","+JSON.stringify(nomes)+", window.informacao[window.indexInformacao],"+JSON.stringify(valores)+", this.value, this )\'>"+
+          "<select id='selectGrafico' onchange=\'CriarGrafico("+window.numeroGrafico+","+JSON.stringify(nomes)+", window.informacao[window.indexInformacao],"+JSON.stringify(valores)+", this.value, this,"+window.dado+" )\'>"+
             "<option value='' selected>Selecione um tipo de gráfico</option>"+
             "<option value='bar'>Barra</option>"+
             "<option value='radar'>Radar</option>"+
@@ -936,7 +967,7 @@ function loadCensusData(variable, tipo,numGrafico) {
           "</div>"+
         "</div>");
 
-        CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar');
+        CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar', ano);
 
         $(".dragable").draggable();
         $(".dragable").resizable();

@@ -1,17 +1,29 @@
-function CriarGrafico(numero,nome, informacao, valores, tipo, select){
+function CriarGrafico(numero,nome, informacao, valores, tipo, select, ano){
   if(select != undefined){
 
     $("#myChart"+numero).remove();
     $("<canvas class='charts' id='myChart"+numero+"' ></canvas>").insertAfter("#chartTittle"+numero);
   }
 	var ctx = document.getElementById("myChart"+numero).getContext("2d");
+
+  var valoreslocal = [];
+  var infolocal = [];
+  var nomelocal = [];
+  console.log(valores);
+  //AJUSTAR PARA PEGAR VALOR DO ANO SELCIONADO E AUMENTAR DE ACORDO COM O TAMANHO DE ANOS PRESENTES
+  for (var i =0;i<valores.length;i+=13){
+    valoreslocal.push(valores[i]);
+    infolocal.push(informacao[i]);
+    nomelocal.push(nome[i]);
+  }
+
   var myChart = new Chart(ctx, {
       type: tipo,
       data: {
-        labels: nome,
+        labels: nomelocal,
         datasets: [{
-            label: informacao,
-            data: valores,
+            label: infolocal,
+            data: valoreslocal,
             backgroundColor: "rgb(85, 112, 124,1)"  
           }]
       },
@@ -41,7 +53,8 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   // $("#addGraficoRelatorio").remove();
   // $(select).parent().prepend("<button id='addGraficoRelatorio' onclick='SalvaGraficoImg()'>Adcionar gráfico ao relatório</button>");
 }
-function CriarGraficoLinha(nomes,valores, informacao, dominio){
+//Colocar nomes como argumento se quiser usar labels
+function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
   $("body").append("<div class='dragable'>"+
     "<div class='chartsHearder'></div>"+
     "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
@@ -54,7 +67,6 @@ function CriarGraficoLinha(nomes,valores, informacao, dominio){
       "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
     "</div>"+
   "</div>");
-
 
   var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
 
@@ -72,10 +84,10 @@ function CriarGraficoLinha(nomes,valores, informacao, dominio){
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels:nomes
+    //labels:nomes
   };
 
-  var myPieChart = new Chart(ctx,{
+  var myLineChart = new Chart(ctx,{
     type: 'line',
     data: data,
     options: options
@@ -84,9 +96,6 @@ function CriarGraficoLinha(nomes,valores, informacao, dominio){
   $(".dragable").draggable();
   $(".dragable").resizable();
   window.numeroGrafico++;
-
-
-
 }
 
 function CriarGraficoPizza(nomes,valores, informacao){
@@ -165,7 +174,7 @@ function GraficoPizza(cod, arquivo, informacao){
   xmlhttp.open("GET", "php/"+arquivo+"?tipoDivisao="+window.tipoDivisao+"&cod="+cod+"&ano="+window.anoSelecionado, true);
   xmlhttp.send();
 }
-
+//APAGAR============================================================================
 function GraficoLinha(cod, arquivo, informacao){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
