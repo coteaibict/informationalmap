@@ -135,7 +135,7 @@ function MostraDadosGerais(dadosGerais){
 // PROBLEMA: COMO PEGAR VALOR SOMENTE DO MUNICIPIO
 //Receber lista de anos e lista de valores. CriarGraficoLInha===========================================================================
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Histórico de "+window.dadosGerais[i].Nome,window.AnosUnicos); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome); });
@@ -163,7 +163,7 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoPatentes").remove();
 
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Histórico do Brasil",window.AnosUnicos); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
@@ -369,7 +369,7 @@ function LimpaDadosGerais(){
     $("#geraGraficoPatentes").remove();
 
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Histórico do Brasil",window.AnosUnicos); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });

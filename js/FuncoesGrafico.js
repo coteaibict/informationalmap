@@ -65,7 +65,7 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
     "<div class='chartsHearder'></div>"+
     "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
     "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
-    "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+    "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>Histórico de "+informacao+"</div>"+
 
     "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
 
@@ -76,17 +76,31 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
 
   var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
 
+  
+  for(var i =0; i<window.dado["nome"].length;i++){
+    if(window.dado["nome"][i]==informacao){
+      var x = i;
+      i=window.dado["nome"].length;
+    }
+  }
+  
+  //x deve ser a localização do primeiro valor do estado/municipio/mesoregiao selecionado
+  var valoreslocal =[];
+  for(var i =0; i<window.AnosUnicos.length;i++){
+    valoreslocal.push(valores[x+i]);
+  } 
+  
+console.log(window.dado["nome"].length);
+
   var options = {
     legend: {
             display: false
          },
     responsive: false
   };
-  data = {
+  var data = {
     datasets: [{
-        data: valores
-    },{
-        data : dominio
+        data: valoreslocal
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -95,7 +109,12 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
 
   var myLineChart = new Chart(ctx,{
     type: 'line',
-    data: data,
+    data: {
+      labels: dominio,
+      datasets: [{
+        data: valoreslocal
+      }]       
+    },
     options: options
   });
 
