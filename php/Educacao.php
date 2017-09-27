@@ -5,21 +5,22 @@
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, (select dc.valor from dadoscenso2010 dc where dc.informacao = 'Sem instrução e fundamental incompleto' and dc.cod_municipio = m.cod_municipio), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
 								from municipio m 
 								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Sem instrução e fundamental incompleto' and dc.cod_municipio = m.cod_municipio)), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado");
+								group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Sem instrução e fundamental incompleto' and dc.cod_municipio = m.cod_municipio)), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao");
+								group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -35,21 +36,22 @@
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, ((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Fundamental completo e médio incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio)), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
 								from municipio m 
 								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Fundamental completo e médio incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado");
+								group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Fundamental completo e médio incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao");
+								group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -66,21 +68,22 @@
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, ((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio)), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
 								from municipio m 
 								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado");
+								group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao");
+								group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -96,21 +99,22 @@
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, ((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio)), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
 								from municipio m 
 								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado");
+								group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
 								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pm.cod_ano
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao");
+								group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -128,7 +132,7 @@
                                 inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by m.cod_municipio");
+                                group by m.cod_municipio, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,a.descricao, sum(dc.valor) , e.uf,sum(pb.Populacao)
@@ -137,7 +141,7 @@
                                 inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by e.cod_estado");
+                                group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome,sum(pb.Populacao)
@@ -146,7 +150,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao");
+                                group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -165,7 +169,7 @@
                                 inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by m.cod_municipio");
+                                group by m.cod_municipio, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor) , e.uf,sum(pb.Populacao)
@@ -174,7 +178,7 @@
                                 inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by e.cod_estado");
+                                group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome,sum(pb.Populacao)
@@ -183,7 +187,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao");
+                                group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -202,7 +206,7 @@
                                 inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by m.cod_municipio");
+                                group by m.cod_municipio, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor) , e.uf,sum(pb.Populacao)
@@ -211,7 +215,7 @@
                                 inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by e.cod_estado");
+                                group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome,sum(pb.Populacao)
@@ -220,7 +224,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao");
+                                group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -239,7 +243,7 @@
                                 inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas - Ensino  Médio ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by m.cod_municipio");
+                                group by m.cod_municipio, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor) , e.uf,sum(pb.Populacao)
@@ -248,7 +252,7 @@
 								inner join ano a on a.cod_ano = pb.cod_ano
                                 inner join estado e on m.cod_estado = e.cod_estado
 								where dc.informacao = ' Matrículas - Ensino  Médio ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by e.cod_estado");
+                                group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome,sum(pb.Populacao)
@@ -257,7 +261,7 @@
 								inner join ano a on a.cod_ano = pb.cod_ano
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								where dc.informacao = ' Matrículas - Ensino  Médio ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao");
+                                group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -276,7 +280,7 @@
                                 inner join dados_inep_censodaeducacaobasica2015 dc on dc.cod_municipio = m.cod_municipio
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas -Educação profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by m.cod_municipio");
+                                group by m.cod_municipio, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor) , e.uf,sum(pb.Populacao)
@@ -285,7 +289,7 @@
 								inner join ano a on a.cod_ano = pb.cod_ano
                                 inner join estado e on m.cod_estado = e.cod_estado
 								where dc.informacao = ' Matrículas -Educação profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by e.cod_estado");
+                                group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome,sum(pb.Populacao)
@@ -294,7 +298,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas -Educação profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao");
+                                group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -329,7 +333,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Agricultura e veterinária Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
@@ -338,7 +342,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
@@ -377,13 +381,15 @@
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
 								inner join ano a on a.cod_ano = dc.cod_ano
                                 where dc.informacao = ' QT_MATRICULA_CURSO - Ciências sociais, negócios e direito Total '
-								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 
 			$res2 = $con->query("SELECT  dc.valor 
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
 								inner join ano a on a.cod_ano = dc.cod_ano
 								where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
-								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res1 = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor) , e.uf
@@ -392,7 +398,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_MATRICULA_CURSO - Ciências sociais, negócios e direito Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado");
+						        group by e.cod_estado, a.cod_ano");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
@@ -400,7 +406,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado");
+						        group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res1 = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome
@@ -409,7 +415,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_MATRICULA_CURSO - Ciências sociais, negócios e direito Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao");
+						        group by mr.cod_mesoRegiao,a.cod_ano)");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
@@ -417,7 +423,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao");
+						        group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -436,13 +442,15 @@
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
 								inner join ano a on a.cod_ano = dc.cod_ano
                                 where dc.informacao = ' QT_CONCLUINTES_CURSO - Ciências, matemática e computação Total '
-								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 
 			$res2 = $con->query("SELECT  dc.valor 
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
 								inner join ano a on a.cod_ano = dc.cod_ano
 								where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
-								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)");
+								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
+								group by m.cod_municipio,a.cod_ano)");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res1 = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor) , e.uf
@@ -451,7 +459,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Ciências, matemática e computação Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado");
+						        group by e.cod_estado, a.cod_ano");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
@@ -459,7 +467,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado");
+						        group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res1 = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(dc.valor) , mr.nome
@@ -468,7 +476,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Ciências, matemática e computação Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao");
+						        group by mr.cod_mesoRegiao,a.cod_ano)");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
@@ -476,7 +484,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao");
+						        group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -512,7 +520,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Educação Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
@@ -521,7 +529,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
@@ -577,7 +585,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Engenharia, produção e construção Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
@@ -586,7 +594,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
@@ -642,7 +650,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Humanidades e artes Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
@@ -651,7 +659,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
@@ -708,7 +716,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Saúde e bem estar social Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
@@ -717,7 +725,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
@@ -773,7 +781,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Serviços Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
@@ -782,7 +790,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "MR"){
@@ -821,21 +829,21 @@
 								from cursopos_municipio cm inner join municipio m on cm.cod_municipio = m.cod_municipio	
 								inner join ano a on a.cod_ano = cm.cod_ano							
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by m.cod_municipio ");
+								group by m.cod_municipio, a.cod_ano ");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT e.cod_estado,a.descricao,sum(cm.Numero_de_Titulados_na_Pos_Graduacao_Doutorado), e.uf, null 
 								from cursopos_municipio cm inner join municipio m on cm.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = cm.cod_ano
-								group by e.cod_estado");
+								group by e.cod_estado, a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT mr.cod_mesoRegiao,a.descricao,sum(cm.Numero_de_Titulados_na_Pos_Graduacao_Doutorado), mr.nome, null 
 								from cursopos_municipio cm inner join municipio m on cm.cod_municipio = m.cod_municipio
 								inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = cm.cod_ano
-								group by mr.cod_mesoRegiao");
+								group by mr.cod_mesoRegiao,a.cod_ano)");
 		}
 
 		$result = "";
@@ -857,7 +865,7 @@
 
 			$res2 = $con->query("SELECT  pb.Populacao
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
-								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								order by m.cod_municipio");
 			
@@ -869,15 +877,15 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' Docentes - Educação Básica  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(pb.Populacao)
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado
-								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		elseif($_GET["tipo"] == "MR"){
@@ -887,15 +895,15 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' Docentes - Educação Básica  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_mesoRegiao
+						        group by e.cod_mesoRegiao, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(pb.Populacao)
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
-								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_mesoRegiao
+						        group by e.cod_mesoRegiao, a.cod_ano
 								order by m.cod_municipio");
 		}
 
@@ -931,7 +939,7 @@
 								inner join estado e on m.cod_estado = e.cod_estado
 						        where dc.informacao = ' Docentes - Ensino Médio  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(pb.Populacao)
@@ -939,7 +947,7 @@
 								inner join ano a on a.cod_ano = pb.cod_ano
 								inner join estado e on m.cod_estado = e.cod_estado
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		elseif($_GET["tipo"] == "MR"){
@@ -949,7 +957,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' Docentes - Ensino Médio  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_mesoRegiao
+						        group by e.cod_mesoRegiao, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(pb.Populacao)
@@ -957,7 +965,7 @@
 								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_mesoRegiao
+						        group by e.cod_mesoRegiao, a.cod_ano
 								order by m.cod_municipio");
 		}
 
@@ -994,7 +1002,7 @@
 								inner join estado e on m.cod_estado = e.cod_estado
 						        where dc.informacao = ' Docentes - Educação Profissional  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(pb.Populacao)
@@ -1002,7 +1010,7 @@
 								inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_estado
+						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
 		}
 		elseif($_GET["tipo"] == "MR"){
@@ -1012,7 +1020,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' Docentes - Educação Profissional  '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_mesoRegiao
+						        group by e.cod_mesoRegiao, a.cod_ano
 								order by m.cod_municipio");
 
 			$res2 = $con->query("SELECT  sum(pb.Populacao)
@@ -1020,7 +1028,7 @@
 								inner join mesoregiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by e.cod_mesoRegiao
+						        group by e.cod_mesoRegiao, a.cod_ano
 								order by m.cod_municipio");
 		}
 
