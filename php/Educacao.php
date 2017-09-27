@@ -2,25 +2,33 @@
 	function FundamentalIncompleto(){//CONCERTAR ANO
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res = $con->query("SELECT m.cod_municipio, a.descricao, (select dc.valor from dadoscenso2010 dc where dc.informacao = 'Sem instrução e fundamental incompleto' and dc.cod_municipio = m.cod_municipio), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
-								from municipio m 
-								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
-								group by m.cod_municipio,a.cod_ano)");
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, dc.valor, m.nome,(select ac.valor from dadoscenso2010 ac inner join ano b on ac.cod_ano = b.cod_ano where ac.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by b.cod_ano)  
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                                and dc.informacao = 'Sem instrução e fundamental incompleto'
+								group by m.cod_municipio,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
-			$res = $con->query("SELECT e.cod_estado, a.descricao, sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Sem instrução e fundamental incompleto' and dc.cod_municipio = m.cod_municipio)), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join estado e on m.cod_estado = e.cod_estado
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.uf,sum((select ac.valor from dadoscenso2010 ac inner join ano b on ac.cod_ano = b.cod_ano where ac.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by b.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join estado e on e.cod_estado = m.cod_estado
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado, a.cod_ano");
+                                and dc.informacao = 'Sem instrução e fundamental incompleto'
+								group by m.cod_estado,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
-			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Sem instrução e fundamental incompleto' and dc.cod_municipio = m.cod_municipio)), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.nome,sum((select ac.valor from dadoscenso2010 ac inner join ano b on ac.cod_ano = b.cod_ano where ac.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by b.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join mesoregiao e on e.cod_mesoRegiao = m.cod_mesoRegiao
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao,a.cod_ano)");
+                                and dc.informacao = 'Sem instrução e fundamental incompleto'
+								group by m.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -33,25 +41,33 @@
 	function FundamentalCompleto(){//CONCERTAR ANO
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res = $con->query("SELECT m.cod_municipio, a.descricao, ((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Fundamental completo e médio incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio)), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
-								from municipio m 
-								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
-								group by m.cod_municipio,a.cod_ano)");
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), m.nome,(select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                                and (dc.informacao = 'Fundamental completo e médio incompleto' or dc.informacao = 'Médio completo e superior incompleto' or dc.informacao = 'Superior completo')
+								group by m.cod_municipio,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
-			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Fundamental completo e médio incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join estado e on m.cod_estado = e.cod_estado
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.uf,sum((select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join estado e on e.cod_estado = m.cod_estado
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado, a.cod_ano");
+                                and (dc.informacao = 'Fundamental completo e médio incompleto' or dc.informacao = 'Médio completo e superior incompleto' or dc.informacao = 'Superior completo')
+								group by m.cod_estado,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
-			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Fundamental completo e médio incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.nome,sum((select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join mesoregiao e on e.cod_mesoRegiao = m.cod_mesoRegiao
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao,a.cod_ano)");
+                                and (dc.informacao = 'Fundamental completo e médio incompleto' or dc.informacao = 'Médio completo e superior incompleto' or dc.informacao = 'Superior completo')
+								group by m.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -65,25 +81,33 @@
 	function MedioCompleto(){//CONCERTAR ANO
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res = $con->query("SELECT m.cod_municipio, a.descricao, ((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio)), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
-								from municipio m 
-								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
-								group by m.cod_municipio,a.cod_ano)");
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), m.nome,(select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                                and (dc.informacao = 'Médio completo e superior incompleto' or dc.informacao = 'Superior completo')
+								group by m.cod_municipio,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
-			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join estado e on m.cod_estado = e.cod_estado
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.uf,sum((select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join estado e on e.cod_estado = m.cod_estado
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado, a.cod_ano");
+                                and (dc.informacao = 'Médio completo e superior incompleto' or dc.informacao = 'Superior completo')
+								group by m.cod_estado,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
-			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Médio completo e superior incompleto' and dc.cod_municipio = m.cod_municipio)+(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.nome,sum((select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join mesoregiao e on e.cod_mesoRegiao = m.cod_mesoRegiao
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao,a.cod_ano)");
+                                and (dc.informacao = 'Médio completo e superior incompleto' or dc.informacao = 'Superior completo')
+								group by m.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -96,25 +120,33 @@
 	function SuperiorCompleto(){//CONCERTAR ANO
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
-			$res = $con->query("SELECT m.cod_municipio, a.descricao, ((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio)), m.nome,(select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio)  
-								from municipio m 
-								inner join ano a on a.cod_ano = pm.cod_ano
-								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275
-								group by m.cod_municipio,a.cod_ano)");
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), m.nome,(select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
+                                and (dc.informacao = 'Superior completo')
+								group by m.cod_municipio,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "E"){
-			$res = $con->query("SELECT e.cod_estado, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join estado e on m.cod_estado = e.cod_estado
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.uf,sum((select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join estado e on e.cod_estado = m.cod_estado
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by e.cod_estado, a.cod_ano");
+                                and (dc.informacao = 'Superior completo')
+								group by m.cod_estado,a.cod_ano");
 		}
 		else if($_GET["tipo"] == "MR"){
-			$res = $con->query("SELECT mr.cod_mesoRegiao, a.descricao, sum(((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Superior completo' and dc.cod_municipio = m.cod_municipio))), mr.nome,sum((select dc.valor from dadoscenso2010 dc where dc.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio))  
-								from municipio m inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
-								inner join ano a on a.cod_ano = pm.cod_ano
+			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), e.nome,sum((select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  )
+								from municipio m
+                                inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
+								inner join ano a on a.cod_ano = dc.cod_ano
+								inner join mesoregiao e on e.cod_mesoRegiao = m.cod_mesoRegiao
 								where  m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by mr.cod_mesoRegiao,a.cod_ano)");
+                                and (dc.informacao = 'Superior completo')
+								group by m.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
