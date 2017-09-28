@@ -1,5 +1,5 @@
 <?php
-	function FundamentalIncompleto(){//CONCERTAR ANO
+	function FundamentalIncompleto(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, dc.valor, m.nome,(select ac.valor from dadoscenso2010 ac inner join ano b on ac.cod_ano = b.cod_ano where ac.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by b.cod_ano)  
@@ -38,7 +38,7 @@
 		mysqli_close($con);
 		echo $result;
 	}
-	function FundamentalCompleto(){//CONCERTAR ANO
+	function FundamentalCompleto(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), m.nome,(select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  
@@ -78,7 +78,7 @@
 		echo $result;
 	}
 
-	function MedioCompleto(){//CONCERTAR ANO
+	function MedioCompleto(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), m.nome,(select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  
@@ -117,7 +117,7 @@
 		mysqli_close($con);
 		echo $result;
 	}
-	function SuperiorCompleto(){//CONCERTAR ANO
+	function SuperiorCompleto(){
 		include "ConexaoDB.php";
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT m.cod_municipio, a.descricao, sum(dc.valor), m.nome,(select dc2.valor from dadoscenso2010 dc2 inner join ano a2 on a2.cod_ano = dc2.cod_ano where dc2.informacao = 'Total população mais de 10 anos' and cod_municipio = m.cod_municipio group by a2.cod_ano)  
