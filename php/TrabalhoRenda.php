@@ -276,7 +276,7 @@ function OutroTipodeRenda(){
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT m.cod_estado,a.descricao, sum(dc.valor),e.uf,
-							sum((select dc.valor from dadoscenso2010 dc inner join ano a2 on a2.cod_ano = dc.cod_ano where dc.cod_municipio = m.cod_municipio and informacao =  'Total ocupados mais de 10 anos' group by a2.cod_ano))
+							sum((select dc.valor from dadoscenso2010 dc inner join ano a2 on a2.cod_ano = dc.cod_ano where dc.cod_municipio = m.cod_municipio and informacao =  'Total ocupados mais de 10 anos' group by a2.cod_ano))/4
 							from municipio m
 							inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
 							inner join ano a on a.cod_ano = dc.cod_ano
@@ -291,7 +291,7 @@ function OutroTipodeRenda(){
 	}
 	else if($_GET["tipo"] == "MR"){
 		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.nome,
-							sum((select dc.valor from dadoscenso2010 dc inner join ano a2 on a2.cod_ano = dc.cod_ano where dc.cod_municipio = m.cod_municipio and informacao =  'Total ocupados mais de 10 anos' group by a2.cod_ano))
+							sum((select dc.valor from dadoscenso2010 dc inner join ano a2 on a2.cod_ano = dc.cod_ano where dc.cod_municipio = m.cod_municipio and informacao =  'Total ocupados mais de 10 anos' group by a2.cod_ano))/4
 							from municipio m
 							inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
 							inner join ano a on a.cod_ano = dc.cod_ano
@@ -313,7 +313,7 @@ function OutroTipodeRenda(){
 	echo $result;
 }
 
-//TALVEZ DADOS DUPLICADOS, VERIFICAR==========================================================================================
+
 
 function HomensComRendimento(){
 	include "ConexaoDB.php";
@@ -325,7 +325,7 @@ function HomensComRendimento(){
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and informacao like  'Homens' 
 							group by m.cod_municipio, a.cod_ano
-							order by m.cod_municipio");
+							order by m.cod_municipio, dc.informcao");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
@@ -335,7 +335,7 @@ function HomensComRendimento(){
 							inner join ano a on a.cod_ano = dc.cod_ano
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and dc.informacao = 'Homens'
-							group by m.cod_estado,a.cod_ano");
+							group by m.cod_estado,a.cod_ano,dc.informacao");
 	}
 	else if($_GET["tipo"] == "MR"){
 		$res = $con->query("SELECT e.cod_mesoregiao, a.descricao,sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
@@ -345,7 +345,7 @@ function HomensComRendimento(){
 							inner join ano a on a.cod_ano = dc.cod_ano
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and dc.informacao = 'Homens'
-							group by m.cod_mesoregiao,a.cod_ano");
+							group by m.cod_mesoregiao,a.cod_ano, dc.informcao");
 	}
 
 	$result = "";
@@ -356,7 +356,6 @@ function HomensComRendimento(){
 	echo $result;
 }
 
-//TALVEZ DADOS DUPLICADOS, VERIFICAR===========================================================================================
 
 function MulheresComRedendimento(){
 	include "ConexaoDB.php";
@@ -368,7 +367,7 @@ function MulheresComRedendimento(){
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and informacao like  'Mulheres' 
 							group by m.cod_municipio, a.cod_ano
-							order by m.cod_municipio");
+							order by m.cod_municipio, dc.informacao");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado, a.descricao, sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
@@ -378,7 +377,7 @@ function MulheresComRedendimento(){
 							inner join ano a on a.cod_ano = dc.cod_ano
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and dc.informacao = 'Mulheres'
-							group by m.cod_estado,a.cod_ano");
+							group by m.cod_estado,a.cod_ano, dc.informacao");
 	}
 	else if($_GET["tipo"] == "MR"){
 		$res = $con->query("SELECT e.cod_mesoregiao, a.descricao,sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
@@ -388,7 +387,7 @@ function MulheresComRedendimento(){
 							inner join ano a on a.cod_ano = dc.cod_ano
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and dc.informacao = 'Mulheres'
-							group by m.cod_mesoregiao,a.cod_ano");
+							group by m.cod_mesoregiao,a.cod_ano, dc.informacao");
 	}
 
 	$result = "";
