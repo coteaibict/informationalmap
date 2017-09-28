@@ -80,16 +80,28 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
   for(var i =0; i<window.dado["nome"].length;i++){
     if(window.dado["nome"][i]==informacao){
       var x = i;
-      i=window.dado["nome"].length;
+      break;
     }
   }
-  
   var valoreslocal =[];
-  for(var i =0; i<window.AnosUnicos.length;i++){
-    valoreslocal.push(valores[x+i]);
-  } 
-  
-console.log(window.dado["nome"].length);
+  if(i < window.dado["nome"].length){
+    for(var i =0; i<window.AnosUnicos.length;i++){
+      valoreslocal.push(valores[x+i]);
+    } 
+  }
+  else{
+    i = 0;
+    var j = 0;
+    while(i<valores.length){
+      for(j = 0; j <window.AnosUnicos.length; j++){
+        if(valoreslocal[j] == null)
+          valoreslocal[j] = valores[i+j];
+        else
+          valoreslocal[j] += valores[i+j];
+      }
+      i += j;
+    }
+  }
 
   var options = {
     legend: {
