@@ -22,7 +22,6 @@ window.jsonLayers = [];
 window.anoSelecionado = null;
 window.numRelatorio = 1;
 
-//PODE ISSO, ARNALDO?====================================================
 window.AnosUnicos = [];
 
 
@@ -960,13 +959,7 @@ function loadCensusData(variable, tipo,numGrafico) {
           "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
           "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
           "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+window.caminho+" | ano "+ano+"</div>"+
-          "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
-          "<select id='selectGrafico' onchange=\'CriarGrafico("+window.numeroGrafico+","+JSON.stringify(nomes)+", window.informacao[window.indexInformacao],"+JSON.stringify(valores)+", this.value, this, )\'>"+
-            "<option value='' selected>Selecione um tipo de gráfico</option>"+
-            "<option value='bar'>Barra</option>"+
-            "<option value='radar'>Radar</option>"+
-            "<option value='line'>Linha</option>"+
-          "</select>"+
+          "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+          
           "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
             "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
           "</div>"+

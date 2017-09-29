@@ -6,25 +6,28 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.Populacao , m.nome,null
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
-								inner join ano a on a.cod_ano = a.cod_ano
+								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by m.cod_municipio, a.cod_ano");
+								group by m.cod_municipio, a.cod_ano
+								order by m.cod_municipio,a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.Populacao) , e.uf,null
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado
-								inner join ano a on a.cod_ano = a.cod_ano
+								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by m.cod_estado,a.cod_ano");
+								group by m.cod_estado,a.cod_ano
+								order by m.cod_municipio,a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.Populacao) , e.nome,null
 								from municipio m inner join pibmunicipalibge pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao
-								inner join ano a on a.cod_ano = a.cod_ano
+								inner join ano a on a.cod_ano = pb.cod_ano
 								where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								group by m.cod_mesoregiao,a.cod_ano");
+								group by m.cod_mesoregiao,a.cod_ano
+								order by m.cod_municipio,a.descricao");
 		}
 
 		$result = "";
@@ -42,31 +45,31 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor) , e.uf,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor) , e.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 		$result = "";
@@ -81,31 +84,31 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal - Dimensão Educação ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor) , e.uf,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal - Dimensão Educação ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor) , e.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal - Dimensão Educação ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 		$result = "";
@@ -120,31 +123,31 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal  - Dimensão Longevidade ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor) , e.uf,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal  - Dimensão Longevidade ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor) , e.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal  - Dimensão Longevidade ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 		$result = "";
@@ -159,31 +162,31 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal - Dimensão Renda ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor) , e.uf,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal - Dimensão Renda ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor) , e.nome,null
 								from municipio m inner join idh pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Desenvolvimento Humano Municipal - Dimensão Renda ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 		$result = "";
@@ -198,31 +201,31 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Gini (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor), e.uf,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Gini (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor), m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'Índice de Gini (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 		$result = "";
@@ -237,53 +240,53 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' extremamente pobres (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  pb.valor
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor), e.uf,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' extremamente pobres (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  sum(pb.valor)
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor), m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' extremamente pobres (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  sum(pb.valor)
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 
@@ -300,53 +303,53 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'pobres (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  pb.valor
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor), e.uf,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'pobres (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  sum(pb.valor)
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor), m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'pobres (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  sum(pb.valor)
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 
@@ -363,53 +366,53 @@
 		if($_GET["tipo"] == "M"){
 			$res = $con->query("SELECT  m.cod_municipio,  a.descricao, pb.valor , m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'vulneráveis à pobreza (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  pb.valor
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_municipio, a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT  m.cod_estado,  a.descricao, sum(pb.valor), e.uf,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'vulneráveis à pobreza (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  sum(pb.valor)
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_estado,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 		else if($_GET["tipo"] == "MR"){
 			$res = $con->query("SELECT  m.cod_mesoRegiao,  a.descricao, sum(pb.valor), m.nome,null
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = 'vulneráveis à pobreza (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 								group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 			$resd = $con->query("SELECT  sum(pb.valor)
 								from municipio m inner join dadosatlasbrasilpnud pb on pb.cod_municipio = m.cod_municipio
 								inner join mesoRegiao e on m.cod_mesoRegiao = e.cod_mesoRegiao 
-                                inner join ano a on a.cod_ano = a.cod_ano
+                                inner join ano a on a.cod_ano = pb.cod_ano
 								where pb.informacao = ' População total (2010) ' 
                                 and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
                                 group by m.cod_mesoregiao,a.cod_ano
-								order by m.cod_municipio");
+								order by m.cod_municipio, a.descricao");
 		}
 
 
