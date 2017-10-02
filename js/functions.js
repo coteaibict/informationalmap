@@ -265,11 +265,10 @@ function SetoresMarcado(){
   window.setoresMarcados = [];
   var inputElements = document.getElementsByClassName('setoresMarcados');
   for(var i=0; inputElements[i]; ++i){
-        if(inputElements[i].checked){
-             window.setoresMarcados.push(inputElements[i].value);
-        }
+    if(inputElements[i].checked){
+         window.setoresMarcados.push(inputElements[i].value);
+    }
   }
-  AtualizaVarialvelPesquisa(window.variavelPesquisa);
 }
 
 function RecarregaPesquisa(grafico, id, variavel, indexSetoresMarcado, divisao, logCaminho){
@@ -761,6 +760,7 @@ function initMap() {
   });
 
   LoadMapShapes();
+  map.data.setStyle(styleFeature);
 }
 
 function clearCensusData() {
@@ -808,32 +808,32 @@ function loadCensusData(variable, tipo,numGrafico) {
       }
 
       //FUNCAO PARA ATUALIZAR OS ANOS==================================================================================
-  window.AnosUnicos = [];
+    window.AnosUnicos = [];
 
-  $.each(window.dado["ano"], function(i, el){
-      if($.inArray(el,window.AnosUnicos) === -1)window.AnosUnicos.push(el);
-  });
+    $.each(window.dado["ano"], function(i, el){
+        if($.inArray(el,window.AnosUnicos) === -1)window.AnosUnicos.push(el);
+    });
 
-  $("#datas").empty();
+    $("#datas").empty();
 
-  for(var i = 0; i <window.AnosUnicos.length ;i++){
-    $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:70px;" ><b>'+ window.AnosUnicos[i] +'</b></div>');    
-  }
-  if($.inArray(window.anoSelecionado,AnosUnicos)==-1){
-    $("#Marcador").css("display", "block");
-    //$("#Marcador").css("left", $(this).position().left + 20);
-    window.anoSelecionado =window.AnosUnicos[0];
-  }
-  else{
-    $("#Marcador").css("left",($.inArray(window.anoSelecionado,AnosUnicos) * 70 + 20)+"px");
-  }
-  //========================================================================================================
+    for(var i = 0; i <window.AnosUnicos.length ;i++){
+      $("#datas").append('<div class="anoData" id= "ano'+window.AnosUnicos[i] +'" style= "width:70px;" ><b>'+ window.AnosUnicos[i] +'</b></div>');    
+    }
+    if($.inArray(window.anoSelecionado,AnosUnicos)==-1){
+      $("#Marcador").css("display", "block");
+      //$("#Marcador").css("left", $(this).position().left + 20);
+      window.anoSelecionado =window.AnosUnicos[0];
+    }
+    else{
+      $("#Marcador").css("left",($.inArray(window.anoSelecionado,AnosUnicos) * 70 + 20)+"px");
+    }
+    //========================================================================================================
 
-  $(".anoData").click( function(){
-    $("#Marcador").css("display", "block");
-    $("#Marcador").css("left", $(this).position().left + 20);
-    window.anoSelecionado = this.id.replace( /^\D+/g, '');
-  });
+    $(".anoData").click( function(){
+      $("#Marcador").css("display", "block");
+      $("#Marcador").css("left", $(this).position().left + 20);
+      window.anoSelecionado = this.id.replace( /^\D+/g, '');
+    });
 
       for( i = 0; i < window.dado["cod"].length; i++){
         if(window.dado["ano"][i] == window.anoSelecionado){
@@ -897,59 +897,20 @@ function loadCensusData(variable, tipo,numGrafico) {
           }
         }
         // window.open("Grafico.php?nome="+JSON.stringify(dadosGrafico["label"])+"&valor="+JSON.stringify(dadosGrafico["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+    }
+    else{
+      for (i in window.dado["cod"]){
+        dadosGrafico["label"].push(window.dado["nome"][i]);
+        if(window.dado["total"][i] != "")
+          dadosGrafico["valor"].push(window.dado["valor"][i] / window.dado["total"][i]);
+        else
+          dadosGrafico["valor"].push(window.dado["valor"][i]);
       }
-      else{
-        for (i in window.dado["cod"]){
-          dadosGrafico["label"].push(window.dado["nome"][i]);
-          if(window.dado["total"][i] != "")
-            dadosGrafico["valor"].push(window.dado["valor"][i] / window.dado["total"][i]);
-          else
-            dadosGrafico["valor"].push(window.dado["valor"][i]);
-        }
-        // window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
-      }
+      // window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
+    }
 
       nomes = dadosGrafico["label"];
       valores = dadosGrafico["valor"];
-
-
-      // var formGrafico = document.createElement("form");
-      // formGrafico.id = "formGrafico";
-      // if(numGrafico == null)
-      //   formGrafico.target = "Grafico" + window.numeroGrafico;
-      // else
-      //   formGrafico.target = "Grafico" + numGrafico;
-      // formGrafico.method = "POST"; // or "post" if appropriate
-      // formGrafico.action = "Grafico.php";
-
-      // var graficoNome = document.createElement("input");
-      // graficoNome.type = "hidden";
-      // graficoNome.name = "nome";
-      // graficoNome.value = JSON.stringify(nomes);
-      // formGrafico.appendChild(graficoNome);
-
-      // var graficoValor = document.createElement("input");
-      // graficoValor.type = "hidden";
-      // graficoValor.name = "valor";
-      // graficoValor.value = JSON.stringify(valores);
-      // formGrafico.appendChild(graficoValor);
-
-      // var graficoInformcao = document.createElement("input");
-      // graficoInformcao.type = "hidden";
-      // graficoInformcao.name = "informacao";
-      // graficoInformcao.value = JSON.stringify(window.informacao[window.indexInformacao]);
-      // formGrafico.appendChild(graficoInformcao);
-
-      // var graficoTipo = document.createElement("input");
-      // graficoTipo.type = "hidden";
-      // graficoTipo.name = "tipo";
-      // graficoTipo.value = JSON.stringify("bar");
-      // formGrafico.appendChild(graficoTipo);
-
-     
-      
-      // $('#formGrafico').remove();
-      // $('body').append(formGrafico);
 
       if(numGrafico == null){
         var ano;
@@ -985,7 +946,6 @@ function loadCensusData(variable, tipo,numGrafico) {
       
       
 
-      map.data.setStyle(styleFeature);
 
       document.getElementById('census-min').textContent = censusMin.toPrecision(3);
       document.getElementById('census-max').textContent = censusMax.toPrecision(3);
@@ -1026,7 +986,7 @@ function SetoresPordivisao(){
 
 
 function styleFeature(feature) {
-  
+  console.log("oi");
   var low = [5, 69, 54];
   var high = [151, 83, 34];
 
@@ -1045,31 +1005,22 @@ function styleFeature(feature) {
     color[1] = 70;
     color[2] = 70;
   }
+
+  var achou = 0;
   if(window.setoresMarcados.length > 0){
-    i = 0;
-    var achou = 0;
     for (var j in window.setores){
-      if(window.setores[j].key == feature.getId()){
-        for (var i in window.setoresMarcados){
-          if(window.setoresMarcados[i] == window.setores[j].cod_setor){
-            achou = 1;
-          }
-        }
+      if(window.setores[j].key == feature.getId() && window.setoresMarcados.includes(window.setores[j].cod_setor)){
+          achou = 1;
+          break;
       }
     }
+  
     if(achou == 0){
-      
       color[0] = 0;
       color[1] = 0;
       color[2] = 0;
     }
   }
-  
-  // var showRow = true;
-  // if (feature.getProperty('census_variable') == null ||
-  //     isNaN(feature.getProperty('census_variable'))) {
-  //   showRow = true;
-  // }
 
   var outlineWeight = 0.5, zIndex = 1;
   var strokeColorVal = '#fff';
@@ -1308,7 +1259,8 @@ function LoadMapShapes(grafico){
         $('#loading').css('display','none');
       });
     }
-    map.data.setStyle(styleFeature);
+
   }
+
 }
 
