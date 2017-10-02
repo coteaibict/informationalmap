@@ -133,66 +133,166 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
 
 function CriarGraficoPizza(nomes,valores, informacao){
 
-  console.log(informacao);
-  console.log(informacao.indexOf('População'));
-  if(informacao.indexOf('População')!=-1)
-    console.log("FUCK YEAH!!!!!!!!!!!!!!!!!!!!!!!!!")
+  if(informacao.indexOf('População')!=-1){
+    var G2 = window.numeroGrafico +1;
+    var G3 = window.numeroGrafico +2;
+    $("body").append("<div class='dragable'>"+
+      "<div class='chartsHearder'></div>"+
+      "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
+      "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
+      "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
 
-  //var x = window.numeroGrafico +1;
 
-  $("body").append("<div class='dragable'>"+
-    "<div class='chartsHearder'></div>"+
-    "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
-    "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
-    "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+      "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+'Rural x Urbano'+"</div>"+
+      "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+  
 
-    "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
-    //"<canvas class='charts' id='myChart2"+x+"'></canvas>"+
+      "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
+        "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+      "</div>"+
 
-    "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
-      "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
-    "</div>"+
-  "</div>");
+      "<div class='chatsTittles' id='chartTittle"+G2+"'>"+'Idade'+"</div>"+
+      "<canvas class='charts' id='myChart2"+G2+"'></canvas>"+
 
-  var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
-  //var ctx2 = document.getElementById("myChart2"+x).getContext("2d");
+      "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart2"+G2+"')\">"+
+        "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+      "</div>"+
 
-  colors = [];
-  for(var i in valores){
+      "<div class='chatsTittles' id='chartTittle"+G3+"'>"+'Sexo e Idade'+"</div>"+
+      "<canvas class='charts' id='myChart3"+G3+"'></canvas>"+
 
-    colors.push('rgb('+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+')');
+      "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart3"+G3+"')\">"+
+        "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+      "</div>"+
+    "</div>");
+
+    var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
+    var ctx2 = document.getElementById("myChart2"+G2).getContext("2d");
+    var ctx3 = document.getElementById("myChart3"+G3).getContext("2d");
+
+    colors = [];
+    for(var i in valores){
+
+      colors.push('rgb('+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+')');
+    }
+    var options = {
+      legend: {
+              display: false
+           },
+      responsive: false
+    };    
+
+    var val1 = [];
+    var val2 = [];
+    var val3 = [];
+    var nome1 = [];
+    var nome2 = [];
+    var nome3 = [];
+
+    for(var i = 0;i<valores.length;i++){
+      if(i<2){
+        val1.push(valores[i]);
+        nome1.push(nomes[i]);
+      }else if(i<6){
+        val2.push(valores[i]);
+        nome2.push(nomes[i]);
+      }else{
+        val3.push(valores[i]);
+        nome3.push(nomes[i]);
+      }
+    }
+
+    data1 = {
+      datasets: [{
+          data: val1,
+          backgroundColor: colors
+      }],
+      labels:nome1
+    };
+    data2 = {
+      datasets: [{
+          data: val2,
+          backgroundColor: colors
+      }],
+      labels:nome2
+    };
+    data3 = {
+      datasets: [{
+          data: val3,
+          backgroundColor: colors
+      }],
+      labels:nome3
+    };
+
+    var myPieChart = new Chart(ctx,{
+      type: 'pie',
+      data: data1,
+      options: options
+    });
+
+    var myPieChart2 = new Chart(ctx2,{
+      type: 'pie',
+      data: data2,
+      options: options
+    });
+
+    var myPieChart3 = new Chart(ctx3,{
+      type: 'pie',
+      data: data3,
+      options: options
+    });
+
+
+    $(".dragable").draggable();
+    $(".dragable").resizable();
+    window.numeroGrafico+=3;
+  }else{
+
+  
+    $("body").append("<div class='dragable'>"+
+      "<div class='chartsHearder'></div>"+
+      "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
+      "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
+      "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+
+      "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
+
+      "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
+        "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+      "</div>"+
+    "</div>");
+
+    var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
+
+    colors = [];
+    for(var i in valores){
+
+      colors.push('rgb('+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+','+Math.floor(Math.random() * 255)+')');
+    }
+    var options = {
+      legend: {
+              display: false
+           },
+      responsive: false
+    };
+    data = {
+      datasets: [{
+          data: valores,
+          backgroundColor: colors
+      }],
+
+      labels:nomes
+    };
+
+    var myPieChart = new Chart(ctx,{
+      type: 'pie',
+      data: data,
+      options: options
+    });
+
+    $(".dragable").draggable();
+    $(".dragable").resizable();
+    window.numeroGrafico++;
   }
-  var options = {
-    legend: {
-            display: false
-         },
-    responsive: false
-  };
-  data = {
-    datasets: [{
-        data: valores,
-        backgroundColor: colors
-    }],
-
-    labels:nomes
-  };
-
-  var myPieChart = new Chart(ctx,{
-    type: 'pie',
-    data: data,
-    options: options
-  });
-
-  /*var myPieChart2 = new Chart(ctx2,{
-    type: 'pie',
-    data: data,
-    options: options
-  });*/
-
-
-  $(".dragable").draggable();
-  $(".dragable").resizable();
-  window.numeroGrafico++;
 }
 
 
