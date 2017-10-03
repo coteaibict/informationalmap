@@ -15,10 +15,14 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
       var i0 = i;
   }
 
+
+
   for (var i =i0;i<valores.length;i+=anos.length){
     valoreslocal.push(valores[i]);
     nomelocal.push(nome[i]);
   }
+
+  //console.log(nomelocal,valoreslocal);
 
   var myChart = new Chart(ctx, {
       type: tipo,

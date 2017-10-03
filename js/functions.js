@@ -866,9 +866,10 @@ function loadCensusData(variable, tipo,numGrafico) {
         for (i in window.dado["cod"]){
           for(var j in window.setores){
             if(!dadosGrafico["label"].includes(window.dado["nome"][i]) && window.setores[j].key == window.dado["cod"][i] && window.setoresMarcados.includes(window.setores[j].cod_setor)){
-              dadosGrafico["label"].push(window.dado["nome"][i]);
-              if(window.dado["total"][i] != ""){
-                if(dadosGrafico["valor"].length == 0 ){
+              dadosGrafico["label"].push(window.dado["nome"][i]);     
+
+              if(window.dado["total"][i] != ""){                
+                if(i == 0 ){
                   censusMax = window.dado["valor"][i] / window.dado["total"][i];
                   censusMin = window.dado["valor"][i] / window.dado["total"][i];
                 }
@@ -881,17 +882,18 @@ function loadCensusData(variable, tipo,numGrafico) {
                 dadosGrafico["valor"].push(window.dado["valor"][i] / window.dado["total"][i]);
               }
               else{
-                if(dadosGrafico["valor"].length == 0 ){
+                if(i == 0 ){                  
                   censusMax = window.dado["valor"][i];
                   censusMin = window.dado["valor"][i];
                 }
-                else{ 
+                else{                                   
                   if((window.dado["valor"][i]) > censusMax)
                     censusMax = window.dado["valor"][i];
                   if((window.dado["valor"][i]) < censusMin)
                     censusMin = window.dado["valor"][i] ;
                 }
                 dadosGrafico["valor"].push(window.dado["valor"][i]);
+
               }
             }
           }
@@ -926,7 +928,6 @@ function loadCensusData(variable, tipo,numGrafico) {
           "</div>"+
         "</div>");
 
-        
         CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar');
 
         $(".dragable").draggable();
@@ -986,7 +987,6 @@ function SetoresPordivisao(){
 
 
 function styleFeature(feature) {
-  console.log("oi");
   var low = [5, 69, 54];
   var high = [151, 83, 34];
 
