@@ -6,31 +6,15 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   }
 	var ctx = document.getElementById("myChart"+numero).getContext("2d");
 
-  var valoreslocal = [];
-  var nomelocal = [];
-  var anos = (window.AnosUnicos);
-
-  for(var i=0;i<anos.length;i++){
-    if(anos[i]==window.anoSelecionado)
-      var i0 = i;
-  }
-
-
-
-  for (var i =i0;i<valores.length;i+=anos.length){
-    valoreslocal.push(valores[i]);
-    nomelocal.push(nome[i]);
-  }
-
-  //console.log(nomelocal,valoreslocal);
+  console.log(nome,valores);
 
   var myChart = new Chart(ctx, {
       type: tipo,
       data: {
-        labels: nomelocal,
+        labels: nome,
         datasets: [{
             label: informacao,
-            data: valoreslocal,
+            data: valores,
             backgroundColor: "rgb(85, 112, 124,1)"  
           }]
       },

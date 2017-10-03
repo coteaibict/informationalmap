@@ -865,7 +865,7 @@ function loadCensusData(variable, tipo,numGrafico) {
         var cod;
         for (i in window.dado["cod"]){
           for(var j in window.setores){
-            if(!dadosGrafico["label"].includes(window.dado["nome"][i]) && window.setores[j].key == window.dado["cod"][i] && window.setoresMarcados.includes(window.setores[j].cod_setor)){
+            if(!dadosGrafico["label"].includes(window.dado["nome"][i]) && window.setores[j].key == window.dado["cod"][i] && window.setoresMarcados.includes(window.setores[j].cod_setor) && window.dado["ano"][i] == window.anoSelecionado){
               dadosGrafico["label"].push(window.dado["nome"][i]);     
 
               if(window.dado["total"][i] != ""){                
@@ -902,18 +902,18 @@ function loadCensusData(variable, tipo,numGrafico) {
     }
     else{
       for (i in window.dado["cod"]){
-        dadosGrafico["label"].push(window.dado["nome"][i]);
-        if(window.dado["total"][i] != "")
-          dadosGrafico["valor"].push(window.dado["valor"][i] / window.dado["total"][i]);
-        else
-          dadosGrafico["valor"].push(window.dado["valor"][i]);
+        if(window.dado["ano"][i] == window.anoSelecionado){
+          dadosGrafico["label"].push(window.dado["nome"][i]);
+          if(window.dado["total"][i] != "")
+            dadosGrafico["valor"].push(window.dado["valor"][i] / window.dado["total"][i]);
+          else
+            dadosGrafico["valor"].push(window.dado["valor"][i]);
+        }
       }
       // window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
     }
-
       nomes = dadosGrafico["label"];
       valores = dadosGrafico["valor"];
-
       if(numGrafico == null){
         var ano;
         ano = Number(window.anoSelecionado);
