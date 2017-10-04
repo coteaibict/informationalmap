@@ -668,16 +668,41 @@ function Close(obj){
   $(obj).parent().css("display", "none");
 }
 
+function getOS() {
+  var userAgent = window.navigator.userAgent,
+      platform = window.navigator.platform,
+      macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+      windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+      iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+      os = null;
 
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = 'Mac OS';
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = 'iOS';
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = 'Windows';
+  } else if (/Android/.test(userAgent)) {
+    os = 'Android';
+  } else if (!os && /Linux/.test(platform)) {
+    os = 'Linux';
+  }
+
+  return os;
+}
 
 function DownloadDiv() {
-  // var a = document.body.appendChild(
-  //     document.createElement("a")
-  // );
-  // a.download = "Relatorio.docx";
-  // a.href = "data:text/doc,"+'<!DOCTYPE html></br>' + document.getElementById("relatorio").innerHTML;
-  // a.click();
-  $("#relatorio").wordExport();
+  if(getOS() == 'Windows'){
+    $("#relatorio").wordExport();
+  }else{
+     var a = document.body.appendChild(
+         document.createElement("a")
+     );
+     a.download = "Relatorio.docx";
+     a.href = "data:text/doc,"+'<!DOCTYPE html></br>' + document.getElementById("relatorio").innerHTML;
+     a.click();
+     a.remove();
+  }
   // ConvertImagesToBase64();
 
   // var contentDocument = tinymce.get('relatorio').getDoc();
