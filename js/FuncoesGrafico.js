@@ -24,10 +24,15 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
         legend: {
           display: false
         },
+
         scales: {
           xAxes: [{
             gridLines: {
                 display:false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: window.UnidadeX
             }
           }],
           yAxes: [{
@@ -36,6 +41,10 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
             },
             ticks: {
                 beginAtZero:false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: window.UnidadeY
             }
           }]
         }

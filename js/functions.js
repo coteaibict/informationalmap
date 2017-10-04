@@ -24,6 +24,9 @@ window.numRelatorio = 1;
 
 window.AnosUnicos = [];
 
+window.UnidadeX ='';
+window.UnidadeY ='';
+
 
 
  var mapStyle = [{
@@ -687,7 +690,6 @@ function getOS() {
   } else if (!os && /Linux/.test(platform)) {
     os = 'Linux';
   }
-
   return os;
 }
 
@@ -953,6 +955,8 @@ function loadCensusData(variable, tipo,numGrafico) {
           "</div>"+
         "</div>");
 
+        GetLegend();
+
         CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar');
 
         $(".dragable").draggable();
@@ -967,11 +971,7 @@ function loadCensusData(variable, tipo,numGrafico) {
         //   window.graficos[numGrafico] = window.open("", "Grafico" + numGrafico, "status=0,title=0,height=600,width=800,scrollbars=1");
         //   formGrafico.submit();
         // }
-      }
-
-      
-      
-
+      }  
 
       document.getElementById('census-min').textContent = censusMin.toPrecision(3);
       document.getElementById('census-max').textContent = censusMax.toPrecision(3);
@@ -985,6 +985,19 @@ function loadCensusData(variable, tipo,numGrafico) {
   xmlhttp.send();
 
 }
+
+//=============================================================================COLOCAR LEGENDAS PARA CASOS ESPECIFICOS
+
+function GetLegend(){
+  console.log(window.indexInformacao);
+  if((window.informacao[window.indexInformacao] == '% da despesa sobre a receita') || (window.informacao[window.indexInformacao] ==  'Possuem Ocupação %'))
+    window.UnidadeY = '%';
+  else
+    window.UnidadeY = 'GOJIRA';
+  window.UnidadeX = 'VS KING GHIDORA';
+}
+
+//=====================================================================================================================
 
 function SetoresPordivisao(){
     window.setores = [];
