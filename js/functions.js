@@ -24,7 +24,7 @@ window.numRelatorio = 1;
 
 window.AnosUnicos = [];
 
-window.UnidadeX ='';
+window.UnidadeX =' ';
 window.UnidadeY ='';
 
 
@@ -994,7 +994,7 @@ function GetLegend(){
     window.UnidadeY = '%';
   else
     window.UnidadeY = 'GOJIRA';
-  window.UnidadeX = 'VS KING GHIDORA';
+  //window.UnidadeX = 'VS KING GHIDORA';
 }
 
 //=====================================================================================================================
