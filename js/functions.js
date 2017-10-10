@@ -993,7 +993,7 @@ function GetLegend(){
   if((window.informacao[window.indexInformacao] == '% da despesa sobre a receita') || (window.informacao[window.indexInformacao] ==  'Possuem Ocupação %'))
     window.UnidadeY = '%';
   else
-    window.UnidadeY = 'GOJIRA';
+    window.UnidadeY = ' ';
   //window.UnidadeX = 'VS KING GHIDORA';
 }
 

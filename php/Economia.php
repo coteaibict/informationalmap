@@ -567,16 +567,17 @@ function ReceitaTransferenciaRepasse(){
 	    	$i++;
 		}
 
-		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_estado order by m.cod_estado");
+		$res = $con->query("SELECT sum(valor),a.descricao from receitas_municipios rm inner join municipio m on m.cod_municipio = rm.cod_municipio inner join ano a on a.cod_ano = rm.cod_ano where informacao = 'Total Receitas' group by m.cod_estado,a.cod_ano order by m.cod_estado");
 		$i = 0;
 		while ($row = $res->fetch_row()) {
 			$total[$i] = $row[0];
+			$ano[$i] = $row[1];
 	    	$i++;
 		}
 		$i = 0;
 		$result = "";
 		while($i < $j){
-			$result .= $estados[$i] . ",,".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
+			$result .= $estados[$i] . ",".$ano[$i].",".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
 			$i++;
 		}
 
@@ -659,16 +660,17 @@ function ReceitaTransferenciaRepasse(){
 	    	$i++;
 		}
 
-		$res = $con->query("SELECT sum(valor) from receitas_municipios rm inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_estado order by m.cod_mesoRegiao");
+		$res = $con->query("SELECT sum(valor),a.descricao from receitas_municipios rm inner join ano a on a.cod_ano = rm.cod_ano inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_estado,a.cod_ano order by m.cod_mesoRegiao");
 		$i = 0;
 		while ($row = $res->fetch_row()) {
 			$total[$i] = $row[0];
+			$ano[$i] = $row[1];
 	    	$i++;
 		}
 		$i = 0;
 		$result = "";
 		while($i < $j){
-			$result .= $mesoRegiao[$i] . ",,".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
+			$result .= $mesoRegiao[$i] . ",".$ano[$i].",".$valorT[$i].",".$nomes[$i].",".$total[$i].";";
 			$i++;
 		}
 		mysqli_close($con);
