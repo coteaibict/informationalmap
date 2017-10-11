@@ -939,32 +939,35 @@ function loadCensusData(variable, tipo,numGrafico) {
       }
       // window.open("Grafico.php?nome="+JSON.stringify(window.dado["nome"])+"&valor="+JSON.stringify(window.dado["valor"])+"&informacao="+JSON.stringify(window.dado["informacao"][0]),'', 'width=680, height=500'); 
     }
-      nomes = dadosGrafico["label"];
-      valores = dadosGrafico["valor"];
-      if(numGrafico == null){
-        var ano;
-        ano = Number(window.anoSelecionado);
-        $("body").append("<div class='dragable'>"+
-          "<div class='chartsHearder'></div>"+
-          "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
-          "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
-          "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+window.caminho+" | ano "+ano+"</div>"+
-          "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+          
-          "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
-            "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
-          "</div>"+
-        "</div>");
+      if(window.tipoDivisao == "E"){
+        nomes = dadosGrafico["label"];
+        valores = dadosGrafico["valor"];
+        if(numGrafico == null){
+          var ano;
+          ano = Number(window.anoSelecionado);
+          $("body").append("<div class='dragable'>"+
+            "<div class='chartsHearder'></div>"+
+            "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
+            "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
+            "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+window.caminho+" | ano "+ano+"</div>"+
+            "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+          
+            "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
+              "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+            "</div>"+
+          "</div>");
 
-        GetLegend();
+          GetLegend();
 
-        CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar');
+          CriarGrafico(window.numeroGrafico,nomes,window.informacao[window.indexInformacao],valores,'bar');
 
-        $(".dragable").draggable();
-        $(".dragable").resizable();
-        window.numeroGrafico++;
+          $(".dragable").draggable();
+          $(".dragable").resizable();
+          window.numeroGrafico++;
       }
+    }
       else{
-        $("#myChart"+numGrafico).parent().css("display", "block");
+        if(window.tipoDivisao == "E")
+          $("#myChart"+numGrafico).parent().css("display", "block");
         // if(!window.graficos[numGrafico].closed)
         //   window.graficos[numGrafico].focus()
         // else{
