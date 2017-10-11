@@ -660,7 +660,7 @@ function ReceitaTransferenciaRepasse(){
 	    	$i++;
 		}
 
-		$res = $con->query("SELECT sum(valor),a.descricao from receitas_municipios rm inner join ano a on a.cod_ano = rm.cod_ano inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_estado,a.cod_ano order by m.cod_mesoRegiao");
+		$res = $con->query("SELECT sum(valor),a.descricao from receitas_municipios rm inner join ano a on a.cod_ano = rm.cod_ano inner join municipio m on m.cod_municipio = rm.cod_municipio where informacao = 'Total Receitas' group by m.cod_mesoregiao,a.cod_ano order by m.cod_mesoRegiao");
 		$i = 0;
 		while ($row = $res->fetch_row()) {
 			$total[$i] = $row[0];
