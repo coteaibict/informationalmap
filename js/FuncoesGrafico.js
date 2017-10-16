@@ -6,7 +6,7 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   }
 	var ctx = document.getElementById("myChart"+numero).getContext("2d");
 
-  console.log(nome,valores);
+  // console.log(nome,valores);
 
   var myChart = new Chart(ctx, {
       type: tipo,

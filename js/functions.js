@@ -992,7 +992,7 @@ function loadCensusData(variable, tipo,numGrafico) {
 //=============================================================================COLOCAR LEGENDAS PARA CASOS ESPECIFICOS
 
 function GetLegend(){
-  console.log(window.indexInformacao);
+  
   if((window.informacao[window.indexInformacao] == '% da despesa sobre a receita') || (window.informacao[window.indexInformacao] ==  'Possuem Ocupação %'))
     window.UnidadeY = '%';
   else
