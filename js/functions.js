@@ -14,7 +14,7 @@ window.historico["setoresMarcados"] = [];
 window.historico["divisao"] = [];
 window.dadosGerais = [];
 window.divisoesMarcadas = [];
-
+window.buscaEspecifica = false;
 window.indexInformacao = null;
 window.caminho = null;
 window.arquivoPhp = null;
@@ -103,6 +103,7 @@ function MostraDadosGerais(dadosGerais){
 
   var i = window.dadosGerais.map(function(x) {return x.Nome; }).indexOf(dadosGerais);
   if(i != -1){
+    window.buscaEspecifica = true;
     $("#geraGraficoHistorico").remove();
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
@@ -111,8 +112,8 @@ function MostraDadosGerais(dadosGerais){
     $('#divisaoPesquisada').css("display","block");
     $("#addResumoRelatorio").css("display", "block");
     $('#divisaoPesquisada').html(
-      "<div>código: "+window.dadosGerais[i].key+"</div>"+
-      "<div>Nome do Município: "+ window.dadosGerais[i].Nome+"</div>"+
+      "<div>Código: "+window.dadosGerais[i].key+"</div>"+
+      "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
       "<div>Número de Habitantes: "+ window.dadosGerais[i].NHabitantes+"</div>"+
       "<div>PIB: "+ window.dadosGerais[i].PIB+"</div>"+
       "<div>PIB per capita: "+ window.dadosGerais[i].PIBpercapita+"</div>"+
@@ -154,6 +155,7 @@ function MostraDadosGerais(dadosGerais){
   }
   
   else if(dadosGerais != ""){
+    window.buscaEspecifica = false;
     map.data.forEach(function(feature) {
       if(feature.getProperty('click') == 'clicked')
         feature.setProperty('click', 'normal');
@@ -812,7 +814,7 @@ function loadCensusData(variable, tipo,numGrafico) {
       dado["valor"] = [];
       dado["nome"] = [];
       dado["total"] = [];
-
+      console.log(map.data);
       for(var i = 0; i < dados.length -1; i++){
         var aux = dados[i].split(",");
 
@@ -1142,6 +1144,25 @@ function mouseInToRegion(e) {
     }
   }
   $("#total").html(total);
+  if(!window.buscaEspecifica){
+    $('#divisaoPesquisada').css("display","block");
+    $("#addResumoRelatorio").css("display", "block");
+    var i = window.dadosGerais.map(function(x) {return x.key; }).indexOf(e.feature.getId());
+    $('#divisaoPesquisada').html(
+        "<div>Código: "+window.dadosGerais[i].key+"</div>"+
+        "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
+        "<div>Número de Habitantes: "+ window.dadosGerais[i].NHabitantes+"</div>"+
+        "<div>PIB: "+ window.dadosGerais[i].PIB+"</div>"+
+        "<div>PIB per capita: "+ window.dadosGerais[i].PIBpercapita+"</div>"+
+        "<div>Possuem Ocupação: "+ window.dadosGerais[i].PossuemOcupacao+"</div>"+
+        "<div>Empregados"+ window.dadosGerais[i].Empregados+"</div>"+
+        "<div>Média rendimento homens: "+ window.dadosGerais[i].MediaRendimentoHomens+"</div>"+
+        "<div>Média rendimento mulheres: "+ window.dadosGerais[i].MediaRendimentoMulheres+"</div>"+
+        "<div>Fundamental Incompleto: "+ window.dadosGerais[i].FundamentalIncompleto+"</div>"+
+        "<div>Fundamental Completo: "+ window.dadosGerais[i].FundamentalCompleto+"</div>"+
+        "<div>Médio Completo: "+ window.dadosGerais[i].MédioCompleto+"</div>"+
+        "<div>Superior Completo: "+ window.dadosGerais[i].SuperiorCompleto+"</div>");
+  }
     
   if(window.variavelPesquisa != null){
     // $("#resumoInformacoes").prepend("<div id='informacaoAtual'><ul>"+
@@ -1209,6 +1230,10 @@ function mouseOutOfRegion(e) {
     $("#"+ i).html("0");
   }
   $("#total").html("0");
+  if(!window.buscaEspecifica){
+    $('#divisaoPesquisada').css("display","none");
+    $("#addResumoRelatorio").css("display", "none");
+  }
   // reset the hover state, returning the border to normal
   e.feature.setProperty('state', 'normal');
 
@@ -1228,6 +1253,10 @@ function LoadMapShapes(grafico){
   ClearMapData();
   clearCensusData();
   LimpaDadosGerais();
+  if($("#opcoes").is(':visible')){
+    RotateImage(0, $("#setores"));
+    $("#opcoes").slideToggle();
+  }
   if(window.variavelPesquisa != null){
     $("#SalvaAnalise").remove();
     if(window.caminho.includes("|"))
@@ -1259,7 +1288,8 @@ function LoadMapShapes(grafico){
       });    
     }
     else if(window.tipoDivisao == 'MR'){
-      $('#loading').css('display','block');
+      $('#loading').css('display','block');$('#divisaoPesquisada').css("display","block");
+    $("#addResumoRelatorio").css("display", "block");
       window.caminho += " | por Meso Região"
       SetoresPordivisao();
       $("#Saves").html("<img src='images/escova.png' alt='Limpar' id='Limpar' onclick='LimparTudo()'/><img alt='Salvar analise' src='images/SalvaAnalise.png' id='SalvaAnalise' onclick='SalvaPesquisa("+window.numeroGrafico+", \""+window.informacao[window.indexInformacao]+" por meso região\", \""+window.caminho+"\")')' /><img src='images/relatorio.png' onclick=\" AdicionarRelatorio('map') \" id='relatorioMapa' />");
