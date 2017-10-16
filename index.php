@@ -19,6 +19,24 @@
     <script src="js/FileSaver.js"></script>
     <script src="js/html-docx.js"></script>
     <script src="js/jquery.wordexport.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $("#opcoes2").hide();
+
+        $("input[name$='Apl']").click(function() {
+          var test = $(this).val();
+          $("div.desc").hide();
+          //TIRAR SELECAO DE APL
+          $('input[type=checkbox]').each(function(){ this.checked = false;});
+
+          if(test=='True'){
+            $("#opcoes2").show();
+          }
+        });
+      });
+      </script>
+
     <!-- <script src="http://tinymce.cachefly.net/4.1/tinymce.min.js"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
@@ -50,6 +68,7 @@
     <div id="setores">
       <img src="images/setinhaBranca.png" onclick="ExpandeDivisaoGeo()" id="ExpandeDivisaoGeografica"/>
       <span onclick="ExpandeDivisaoGeo()" >APL</span>
+      
       <?php
         ObtemSetoresApl();
       ?>

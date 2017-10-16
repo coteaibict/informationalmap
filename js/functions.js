@@ -97,6 +97,7 @@ function ExpandeDivisaoGeo(){
   $("#opcoes").slideToggle();
 }
 
+
 function MostraDadosGerais(dadosGerais){
 
 
@@ -982,8 +983,7 @@ function loadCensusData(variable, tipo,numGrafico) {
       document.getElementById('census-max').textContent = censusMax.toPrecision(3);
       // document.getElementById('census-variable').textContent = window.dado["informacao"][0];
       $('#loading').css('display','none');
-      
-    }
+ }
   };
 
   xmlhttp.open("GET", "php/"+window.arquivoPhp+"?variavel="+variable+"&tipo="+tipo+"&ano="+window.anoSelecionado, true);
