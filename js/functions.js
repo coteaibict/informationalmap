@@ -979,8 +979,8 @@ function loadCensusData(variable, tipo,numGrafico) {
         // }
       }  
 
-      document.getElementById('census-min').textContent = censusMin.toPrecision(3);
-      document.getElementById('census-max').textContent = censusMax.toPrecision(3);
+      document.getElementById('census-min').textContent = numberWithCommas(censusMin);
+      document.getElementById('census-max').textContent = numberWithCommas(censusMax);
       // document.getElementById('census-variable').textContent = window.dado["informacao"][0];
       $('#loading').css('display','none');
  }
@@ -989,6 +989,17 @@ function loadCensusData(variable, tipo,numGrafico) {
   xmlhttp.open("GET", "php/"+window.arquivoPhp+"?variavel="+variable+"&tipo="+tipo+"&ano="+window.anoSelecionado, true);
   xmlhttp.send();
 
+}
+
+function numberWithCommas(x) {
+  if(x-parseInt(x)>0)
+    var parts = (x.toFixed(3)).toString().split(".");
+  else{
+    var parts = x.toString().split(".");
+  }
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return parts.join(",");
+  
 }
 
 //=============================================================================COLOCAR LEGENDAS PARA CASOS ESPECIFICOS
