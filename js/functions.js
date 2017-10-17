@@ -136,7 +136,6 @@ function MostraDadosGerais(dadosGerais){
         //window.divisoesMarcadas.push(window.dadosGerais[i]); 
         // AtualizarDivisoesMarcadas();
 
-// PROBLEMA: COMO PEGAR VALOR SOMENTE DO MUNICIPIO
 //Receber lista de anos e lista de valores. CriarGraficoLInha===========================================================================
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
     $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos); });
@@ -815,7 +814,7 @@ function loadCensusData(variable, tipo,numGrafico) {
       dado["valor"] = [];
       dado["nome"] = [];
       dado["total"] = [];
-      console.log(map.data);
+
       for(var i = 0; i < dados.length -1; i++){
         var aux = dados[i].split(",");
 
@@ -948,6 +947,8 @@ function loadCensusData(variable, tipo,numGrafico) {
         if(numGrafico == null){
           var ano;
           ano = Number(window.anoSelecionado);
+
+        if(valores.length != 0){
           $("body").append("<div class='dragable'>"+
             "<div class='chartsHearder'></div>"+
             "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
@@ -966,6 +967,7 @@ function loadCensusData(variable, tipo,numGrafico) {
           $(".dragable").draggable();
           $(".dragable").resizable();
           window.numeroGrafico++;
+        }
       }
     }
       else{
