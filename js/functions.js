@@ -1008,8 +1008,43 @@ function numberWithCommas(x) {
 
 function GetLegend(){
   
-  if((window.informacao[window.indexInformacao] == '% da despesa sobre a receita') || (window.informacao[window.indexInformacao] ==  'Possuem Ocupação %'))
+  if((window.informacao[window.indexInformacao] == '% da despesa sobre a receita') 
+          || (window.informacao[window.indexInformacao] ==  'Possuem Ocupação %'))
     window.UnidadeY = '%';
+  else if((window.informacao[window.indexInformacao] == 'PIB')
+          ||(window.informacao[window.indexInformacao] == 'Impostos Recolhidos')
+          ||(window.informacao[window.indexInformacao] == 'PIB Agropecuária')
+          ||(window.informacao[window.indexInformacao] == 'PIB Indústria')
+          ||(window.informacao[window.indexInformacao] == 'PIB Serviços')
+          ||(window.informacao[window.indexInformacao] == 'PIB Governo')
+  )
+    window.UnidadeY = 'R$ 1000';
+  else if((window.informacao[window.indexInformacao] == 'Exportações')
+          ||(window.informacao[window.indexInformacao] == 'Importações')
+          ||(window.informacao[window.indexInformacao] == 'Balança comercial')
+  )
+    window.UnidadeY = 'US$ FOB';
+  else if((window.informacao[window.indexInformacao] == 'Receitas Totais')
+          ||(window.informacao[window.indexInformacao] == 'Receitas Próprias')
+          ||(window.informacao[window.indexInformacao] == 'Receitas de Transferências e Repasses')
+          ||(window.informacao[window.indexInformacao] == 'Despesas Totais')
+          ||(window.informacao[window.indexInformacao] == 'Despesas Correntes')
+          ||(window.informacao[window.indexInformacao] == 'Despesas de Capital')
+
+          ||(window.informacao[window.indexInformacao] == 'Média rendimento homens')
+          ||(window.informacao[window.indexInformacao] == 'Média rendimento mulheres')
+
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Extrativa mineral')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Indústria de Transformação')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Serviços Industriais')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Construção Civil')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Comércio')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Serviços')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Administração Pública')
+          ||(window.informacao[window.indexInformacao] == 'Remuneração média: Agropecuárias')
+
+  )
+    window.UnidadeY = 'R$'
   else
     window.UnidadeY = ' ';
   //window.UnidadeX = 'VS KING GHIDORA';
