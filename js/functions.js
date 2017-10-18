@@ -197,6 +197,7 @@ function ObtemdadosGerais(){
   var request = new XMLHttpRequest();
   request.onreadystatechange = function(response) {
     if (request.readyState === 4 && request.status === 200) {
+      window.dadosGerais = [];
       var dados = this.responseText.split(";");    
       for(var i = 0; i < dados.length-1; i++){
         var aux = dados[i].split(",");
@@ -244,7 +245,10 @@ function ObtemdadosGerais(){
   input.placeholder = "Carregando opções...";
 
   
-  request.open('GET', 'php/ObtemdadosGerais.php?tipo='+window.tipoDivisao, true);
+  if(window.anoSelecionado != null)
+    request.open('GET', 'php/ObtemdadosGerais.php?tipo='+window.tipoDivisao+'&ano='+window.anoSelecionado, true);
+  else
+    request.open('GET', 'php/ObtemdadosGerais.php?tipo='+window.tipoDivisao+'&ano=2010', true);
   request.send();
 }
 
@@ -981,6 +985,8 @@ function loadCensusData(variable, tipo,numGrafico) {
         // }
       }  
 
+      ObtemdadosGerais();
+
       document.getElementById('census-min').textContent = numberWithCommas(censusMin);
       document.getElementById('census-max').textContent = numberWithCommas(censusMax);
       // document.getElementById('census-variable').textContent = window.dado["informacao"][0];
@@ -1297,7 +1303,6 @@ function ClearMapData(){
 
 function LoadMapShapes(grafico){
   SetoresMarcado();
-  ObtemdadosGerais();
   ClearMapData();
   clearCensusData();
   LimpaDadosGerais();
@@ -1354,6 +1359,7 @@ function LoadMapShapes(grafico){
 
   }
   else{
+    ObtemdadosGerais();
     if(window.tipoDivisao == 'M'){
       $('#loading').css('display','block');
       SetoresPordivisao();
@@ -1380,6 +1386,5 @@ function LoadMapShapes(grafico){
     }
 
   }
-
 }
 
