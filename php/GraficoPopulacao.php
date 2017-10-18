@@ -2,7 +2,7 @@
 	function Brasil(){
 		include "ConexaoDB.php";
 		$result = '';
-		$res = $con->query("SELECT sum(valor) 
+		$res = $con->query("SELECT sum(valor)/2 
 							FROM dadosatlasbrasilpnud 
 							where informacao = ' População total (2010) '
 							");
@@ -209,7 +209,7 @@
 	function Municipio(){
 		include "ConexaoDB.php";
 		$result = '';
-		$res = $con->query("SELECT sum(valor) 
+		$res = $con->query("SELECT sum(valor)/2 
 							FROM dadosatlasbrasilpnud 
 							where informacao = ' População total (2010) '
 							and cod_municipio =".$_GET["cod"].";");
@@ -415,7 +415,7 @@
 	function MesoRegiao(){
 		include "ConexaoDB.php";
 		$result = '';
-		$res = $con->query("SELECT sum(valor) 
+		$res = $con->query("SELECT sum(valor)/2 
 							FROM dadosatlasbrasilpnud d
 							inner join municipio m on m.cod_municipio = d.cod_municipio
 							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
@@ -656,7 +656,7 @@
 	function Estado(){
 		include "ConexaoDB.php";
 		$result = '';
-		$res = $con->query("SELECT sum(valor) 
+		$res = $con->query("SELECT sum(valor)/2 
 							FROM dadosatlasbrasilpnud d
 							inner join municipio m on m.cod_municipio = d.cod_municipio
 							inner join estado e on m.cod_estado = e.cod_estado

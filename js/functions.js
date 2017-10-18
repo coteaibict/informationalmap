@@ -141,7 +141,7 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome); });
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome+" (R$)"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
     $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População de "+window.dadosGerais[i].Nome); });
@@ -170,7 +170,7 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
     $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
@@ -375,7 +375,7 @@ function LimpaDadosGerais(){
     $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil"); });
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
     $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
@@ -1200,12 +1200,12 @@ function mouseInToRegion(e) {
         "<div>Código: "+window.dadosGerais[i].key+"</div>"+
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ window.dadosGerais[i].NHabitantes+"</div>"+
-        "<div>PIB: "+ window.dadosGerais[i].PIB+"</div>"+
-        "<div>PIB per capita: "+ window.dadosGerais[i].PIBpercapita+"</div>"+
+        "<div>PIB (R$ 1000): "+ window.dadosGerais[i].PIB+"</div>"+
+        "<div>PIB per capita (R$): "+ window.dadosGerais[i].PIBpercapita+"</div>"+
         "<div>Possuem Ocupação: "+ window.dadosGerais[i].PossuemOcupacao+"</div>"+
         "<div>Empregados"+ window.dadosGerais[i].Empregados+"</div>"+
-        "<div>Média rendimento homens: "+ window.dadosGerais[i].MediaRendimentoHomens+"</div>"+
-        "<div>Média rendimento mulheres: "+ window.dadosGerais[i].MediaRendimentoMulheres+"</div>"+
+        "<div>Média rendimento homens (R$): "+ window.dadosGerais[i].MediaRendimentoHomens+"</div>"+
+        "<div>Média rendimento mulheres (R$): "+ window.dadosGerais[i].MediaRendimentoMulheres+"</div>"+
         "<div>Fundamental Incompleto: "+ window.dadosGerais[i].FundamentalIncompleto+"</div>"+
         "<div>Fundamental Completo: "+ window.dadosGerais[i].FundamentalCompleto+"</div>"+
         "<div>Médio Completo: "+ window.dadosGerais[i].MédioCompleto+"</div>"+

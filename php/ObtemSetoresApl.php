@@ -6,7 +6,7 @@
 
 		echo '<div id="opcoes">';		
 		echo '<form class="Limpo">';
-		echo '<input type="radio" name="Apl" checked ="checked" value="False">Todos</br>';
+		echo '<input type="radio" name="Apl" checked ="checked" value="False">Todos     ';
 		echo '<input type="radio" name="Apl" value="True">Todos com APL</br></br>';
 
 		
