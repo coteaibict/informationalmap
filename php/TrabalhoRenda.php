@@ -345,7 +345,7 @@ function HomensComRendimento(){
 							inner join ano a on a.cod_ano = dc.cod_ano
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) 
 							and dc.informacao = 'Homens'
-							group by m.cod_mesoregiao,a.cod_ano, dc.informcao");
+							group by m.cod_mesoregiao,a.cod_ano, dc.informacao");
 	}
 
 	$result = "";
