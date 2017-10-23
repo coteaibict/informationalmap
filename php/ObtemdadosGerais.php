@@ -1,5 +1,6 @@
 <?php
 	include "ConexaoDB.php";
+
 	if($_GET["tipo"] == "M"){
 		$res = $con->query("SELECT  m.cod_municipio, m.nome, p.Populacao, p.PIB, p.PIB/p.Populacao, 
 							(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total ocupados mais de 10 anos')/(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Total população mais de 10 anos')as 'Possuem Ocupação(%)',
@@ -11,9 +12,8 @@
 							((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1) +(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1)) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1) as 'Médio Completo',
 							(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1) as 'Superior Completo'
 							from pibmunicipalibge p 
-                            inner join municipio m on m.cod_municipio = p.cod_municipio 
-							where p.cod_ano = 12
-");
+                            inner join municipio m on m.cod_municipio = p.cod_municipio inner join ano a on p.cod_ano = a.cod_ano 
+							where a.descricao ='".$_GET["ano"]."'");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT  e.cod_estado, e.uf, sum(p.Populacao) as 'População', sum(p.PIB) as 'Pib' , sum(p.PIB)/sum(p.Populacao) as 'Pib percapita', 
@@ -28,7 +28,8 @@
 							from pibmunicipalibge p 
                             inner join municipio m on m.cod_municipio = p.cod_municipio 
                             inner join estado e on m.cod_estado = e.cod_estado
-							where p.cod_ano = 12
+                            inner join ano a on p.cod_ano = a.cod_ano 
+							where a.descricao ='".$_GET["ano"]."'
                             group by e.uf");
 	}
 	else if($_GET["tipo"] == "MR"){
@@ -44,10 +45,10 @@
 							from pibmunicipalibge p 
                             inner join municipio m on m.cod_municipio = p.cod_municipio 
                             inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
-							where p.cod_ano = 12
+                            inner join ano a on p.cod_ano = a.cod_ano 
+							where a.descricao ='".$_GET["ano"]."'
                             group by mr.nome");
 	}
-
 	$result = "";
 	while ($row = $res->fetch_row()) {
 		if($row[1]!='undefined')
