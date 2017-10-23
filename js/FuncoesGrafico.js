@@ -244,20 +244,44 @@ function CriarGraficoPizza(nomes,valores, informacao){
     window.numeroGrafico+=3;
   }else{
 
-  
-    $("body").append("<div class='dragable'>"+
-      "<div class='chartsHearder'></div>"+
-      "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
-      "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
-      "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+//Colocar uma seleção de Ano para Patentes
+    if(informacao.indexOf('Patentes')!=-1){
+      $("body").append("<div class='dragable'>"+
+        "<div class='chartsHearder'></div>"+
+        "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
+        "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
+        "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
 
-      "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
+//Inserção do Código html para criação do menu dropdown
+        "<select>"+
+        "</select>"+
 
-      "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
-        "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
-      "</div>"+
-    "</div>");
 
+        "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
+
+        "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
+          "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+        "</div>"+
+      "</div>");
+      for(var i = 0; i<5;i++){
+        $("#chartTittle"+window.numeroGrafico+" select").append("<option value='Godzilla'>Godzilla</option>");
+        console.log("GODZILLA");
+      }
+
+    }else{  
+      $("body").append("<div class='dragable'>"+
+        "<div class='chartsHearder'></div>"+
+        "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
+        "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
+        "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
+
+        "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
+
+        "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
+          "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
+        "</div>"+
+      "</div>");
+    }
     var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
 
     colors = [];

@@ -740,7 +740,7 @@ function initMap() {
     zoomControl: true,
     zoomControlOptions: {
       position: google.maps.ControlPosition.RIGHT_CENTER
-    },
+    }
 
     // styles: mapStyle
   });

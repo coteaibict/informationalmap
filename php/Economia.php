@@ -9,7 +9,7 @@ function PIB(){
 							group by m.cod_municipio, a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
-		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.PIB), e.Uf, null 
+		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(pm.PIB), e.uf, null 
 							from pibmunicipalibge pm inner join ano a on a.cod_ano = pm.cod_ano inner join municipio m on pm.cod_municipio = m.cod_municipio
                             inner join estado e on m.cod_estado = e.cod_estado
 							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)

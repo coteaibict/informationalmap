@@ -153,7 +153,7 @@ function ComCarteiraAssinada(){
 							order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos'))  
+		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos'))  
 							from municipio m
 				            inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
 				            inner join ano a on a.cod_ano = dc.cod_ano
@@ -196,7 +196,7 @@ function SemCarteiraAssinada(){
 							order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos'))  
+		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos'))  
 							from municipio m
 				            inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
 				            inner join ano a on a.cod_ano = dc.cod_ano
@@ -239,7 +239,7 @@ function FuncionariosPublicos(){
 							order by m.cod_municipio");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos'))  
+		$res = $con->query("SELECT m.cod_mesoregiao,a.descricao, sum(dc.valor),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio  and informacao like  'Total ocupados mais de 10 anos'))  
 							from municipio m
 				            inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
 				            inner join ano a on a.cod_ano = dc.cod_ano
@@ -338,7 +338,7 @@ function HomensComRendimento(){
 							group by m.cod_estado,a.cod_ano,dc.informacao");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT e.cod_mesoregiao, a.descricao,sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
+		$res = $con->query("SELECT e.cod_mesoregiao, a.descricao,sum(dc.valor),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
 							from municipio m 
 							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
 							inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio
@@ -380,7 +380,7 @@ function MulheresComRedendimento(){
 							group by m.cod_estado,a.cod_ano, dc.informacao");
 	}
 	else if($_GET["tipo"] == "MR"){
-		$res = $con->query("SELECT e.cod_mesoregiao, a.descricao,sum(dc.valor),e.uf,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
+		$res = $con->query("SELECT e.cod_mesoregiao, a.descricao,sum(dc.valor),e.nome,sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao like  'Pessoas Mais de 10 anos com rendimentos' limit 1))  
 							from municipio m 
 							inner join mesoregiao e on m.cod_mesoregiao = e.cod_mesoregiao
 							inner join dadoscenso2010 dc on dc.cod_municipio = m.cod_municipio

@@ -19,7 +19,7 @@
     <script src="js/FileSaver.js"></script>
     <script src="js/html-docx.js"></script>
     <script src="js/jquery.wordexport.js"></script>
-
+    <!--Script Para Funcionamento do Menu da APL-->
     <script>
       $(document).ready(function() {
         $("#opcoes2").hide();
@@ -36,6 +36,7 @@
         });
       });
       </script>
+
 
     <!-- <script src="http://tinymce.cachefly.net/4.1/tinymce.min.js"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
