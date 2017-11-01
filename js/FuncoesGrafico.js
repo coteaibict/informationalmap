@@ -54,7 +54,7 @@ function CriarGrafico(numero,nome, informacao, valores, tipo, select){
   // $(select).parent().prepend("<button id='addGraficoRelatorio' onclick='SalvaGraficoImg()'>Adcionar gráfico ao relatório</button>");
 }
 //Colocar nomes como argumento se quiser usar labels
-function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
+function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio, total){
   $("body").append("<div class='dragable'>"+
     "<div class='chartsHearder'></div>"+
     "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
@@ -68,7 +68,10 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
     "</div>"+
   "</div>");
 
+
+
   var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
+
 
   
   for(var i =0; i<window.dado["nome"].length;i++){
@@ -80,7 +83,10 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
   var valoreslocal =[];
   if(i < window.dado["nome"].length){
     for(var i =0; i<window.AnosUnicos.length;i++){
-      valoreslocal.push(valores[x+i]);
+      if(total[x+i] == 0){
+        total[x+i] = 1;
+      }
+      valoreslocal.push(valores[x+i]/total[x+i]);
     } 
   }
   else{
@@ -88,10 +94,13 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
     var j = 0;
     while(i<valores.length){
       for(j = 0; j <window.AnosUnicos.length; j++){
+        if(total[j+i] == 0){
+          total[j+i] = 1;
+        }
         if(valoreslocal[j] == null)
-          valoreslocal[j] = valores[i+j];
+          valoreslocal[j] = valores[i+j]/total[j+i];
         else
-          valoreslocal[j] += valores[i+j];
+          valoreslocal[j] += valores[i+j]/total[j+i];
       }
       i += j;
     }
@@ -101,7 +110,30 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio){
     legend: {
             display: false
          },
-    responsive: false
+    responsive: false,
+    scales: {
+          xAxes: [{
+            gridLines: {
+                display:false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: window.UnidadeX
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+                display:false
+            },
+            ticks: {
+                beginAtZero:false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: window.UnidadeY
+            }
+          }]
+        }
   };
   var data = {
     datasets: [{

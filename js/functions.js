@@ -118,12 +118,12 @@ function MostraDadosGerais(dadosGerais){
       "<div>Código: "+window.dadosGerais[i].key+"</div>"+
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
-        "<div>PIB (R$ 1000): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
-        "<div>PIB per capita (R$): "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
+        "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
+        "<div>PIB per capita: R$"+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
         "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
         "<div>Empregados"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
-        "<div>Média rendimento homens (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
-        "<div>Média rendimento mulheres (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
+        "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
+        "<div>Média rendimento mulheres: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
         "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
         "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto)+"</div>"+
         "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto)+"</div>"+
@@ -140,7 +140,7 @@ function MostraDadosGerais(dadosGerais){
 
 //Receber lista de anos e lista de valores. CriarGraficoLInha===========================================================================
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos, window.dado["total"]); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome+" (R$)"); });
@@ -168,8 +168,9 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoEstabelecimento").remove();
     $("#geraGraficoPatentes").remove();
 
+
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos, window.dado["total"]); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
@@ -381,8 +382,9 @@ function LimpaDadosGerais(){
     $("#geraGraficoEstabelecimento").remove();
     $("#geraGraficoPatentes").remove();
 
+
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos,window.dado["total"]); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
@@ -1009,7 +1011,7 @@ function numberWithCommas(y) {
   x = Number(y);
 
   if(x-parseInt(x)>0)
-    var parts = (x.toFixed(3)).toString().split(".");
+    var parts = (x.toFixed(2)).toString().split(".");
   else{
     var parts = x.toString().split(".");
   }
@@ -1032,7 +1034,7 @@ function GetLegend(){
           ||(window.informacao[window.indexInformacao] == 'PIB Serviços')
           ||(window.informacao[window.indexInformacao] == 'PIB Governo')
   )
-    window.UnidadeY = 'R$ 1000';
+    window.UnidadeY = 'R$ 1000,00';
   else if((window.informacao[window.indexInformacao] == 'Exportações')
           ||(window.informacao[window.indexInformacao] == 'Importações')
           ||(window.informacao[window.indexInformacao] == 'Balança comercial')
@@ -1214,12 +1216,12 @@ function mouseInToRegion(e) {
         "<div>Código: "+window.dadosGerais[i].key+"</div>"+
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
-        "<div>PIB (R$ 1000): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
-        "<div>PIB per capita (R$): "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
+        "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
+        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
         "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
         "<div>Empregados"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
-        "<div>Média rendimento homens (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
-        "<div>Média rendimento mulheres (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
+        "<div>Média rendimento homens: R$"+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
+        "<div>Média rendimento mulheres: R$"+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
         "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
         "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto)+"</div>"+
         "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto)+"</div>"+
