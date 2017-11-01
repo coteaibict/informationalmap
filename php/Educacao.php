@@ -182,7 +182,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao,a.cod_ano)");
+                                group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -219,7 +219,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Estabelecimentos - Educação Profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao,a.cod_ano)");
+                                group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -256,7 +256,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas - Educação Básica  ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao,a.cod_ano)");
+                                group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -293,7 +293,7 @@
 								inner join ano a on a.cod_ano = pb.cod_ano
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								where dc.informacao = ' Matrículas - Ensino  Médio ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao,a.cod_ano)");
+                                group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -330,7 +330,7 @@
                                 inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
 								inner join ano a on a.cod_ano = pb.cod_ano
 								where dc.informacao = ' Matrículas -Educação profissional ' and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-                                group by mr.cod_mesoRegiao,a.cod_ano)");
+                                group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -447,7 +447,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_MATRICULA_CURSO - Ciências sociais, negócios e direito Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao,a.cod_ano)");
+						        group by mr.cod_mesoRegiao,a.cod_ano");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
@@ -455,7 +455,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao,a.cod_ano)");
+						        group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
@@ -508,7 +508,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Ciências, matemática e computação Total '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao,a.cod_ano)");
+						        group by mr.cod_mesoRegiao,a.cod_ano");
 
 			$res2 = $con->query("SELECT  sum(dc.valor)
 								from municipio m inner join dadoscensoeducacaosuperior dc on m.cod_municipio = dc.cod_municipio
@@ -516,7 +516,7 @@
 								inner join ano a on a.cod_ano = dc.cod_ano
 						        where dc.informacao = ' QT_CONCLUINTES_CURSO - Total geral '
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-						        group by mr.cod_mesoRegiao,a.cod_ano)");
+						        group by mr.cod_mesoRegiao,a.cod_ano");
 		}
 
 		$result = "";
