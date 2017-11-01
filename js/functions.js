@@ -105,6 +105,8 @@ function MostraDadosGerais(dadosGerais){
   var i = window.dadosGerais.map(function(x) {return x.Nome; }).indexOf(dadosGerais);
   if(i != -1){
     window.buscaEspecifica = true;
+    console.log(numberWithCommas(window.dadosGerais[i].PIB));
+
     $("#geraGraficoHistorico").remove();
     $("#geraGraficoDespesas").remove();
     $("#geraGraficoPopulacao").remove();
@@ -114,18 +116,18 @@ function MostraDadosGerais(dadosGerais){
     $("#addResumoRelatorio").css("display", "block");
     $('#divisaoPesquisada').html(
       "<div>Código: "+window.dadosGerais[i].key+"</div>"+
-      "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
-      "<div>Número de Habitantes: "+ window.dadosGerais[i].NHabitantes+"</div>"+
-      "<div>PIB: "+ window.dadosGerais[i].PIB+"</div>"+
-      "<div>PIB per capita: "+ window.dadosGerais[i].PIBpercapita+"</div>"+
-      "<div>Possuem Ocupação: "+ window.dadosGerais[i].PossuemOcupacao+"</div>"+
-      "<div>Empregados"+ window.dadosGerais[i].Empregados+"</div>"+
-      "<div>Média rendimento homens: "+ window.dadosGerais[i].MediaRendimentoHomens+"</div>"+
-      "<div>Média rendimento mulheres: "+ window.dadosGerais[i].MediaRendimentoMulheres+"</div>"+
-      "<div>Fundamental Incompleto: "+ window.dadosGerais[i].FundamentalIncompleto+"</div>"+
-      "<div>Fundamental Completo: "+ window.dadosGerais[i].FundamentalCompleto+"</div>"+
-      "<div>Médio Completo: "+ window.dadosGerais[i].MédioCompleto+"</div>"+
-      "<div>Superior Completo: "+ window.dadosGerais[i].SuperiorCompleto+"</div>");
+        "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
+        "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
+        "<div>PIB (R$ 1000): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
+        "<div>PIB per capita (R$): "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
+        "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
+        "<div>Empregados"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
+        "<div>Média rendimento homens (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
+        "<div>Média rendimento mulheres (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
+        "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
+        "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto)+"</div>"+
+        "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto)+"</div>"+
+        "<div>Superior Completo: "+ numberWithCommas(window.dadosGerais[i].SuperiorCompleto)+"</div>");
     map.data.forEach(function(feature) {
       if(feature.getProperty('click') == 'clicked')
         feature.setProperty('click', 'normal');
@@ -201,6 +203,10 @@ function ObtemdadosGerais(){
       var dados = this.responseText.split(";");    
       for(var i = 0; i < dados.length-1; i++){
         var aux = dados[i].split(",");
+        if(aux[2]==0){
+          aux[4] = 0;
+        }
+
         window.dadosGerais.push({
           key: aux[0],
           Nome: aux[1],
@@ -999,7 +1005,9 @@ function loadCensusData(variable, tipo,numGrafico) {
 
 }
 
-function numberWithCommas(x) {
+function numberWithCommas(y) {
+  x = Number(y);
+
   if(x-parseInt(x)>0)
     var parts = (x.toFixed(3)).toString().split(".");
   else{
@@ -1205,17 +1213,17 @@ function mouseInToRegion(e) {
     $('#divisaoPesquisada').html(
         "<div>Código: "+window.dadosGerais[i].key+"</div>"+
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
-        "<div>Número de Habitantes: "+ window.dadosGerais[i].NHabitantes+"</div>"+
-        "<div>PIB (R$ 1000): "+ window.dadosGerais[i].PIB+"</div>"+
-        "<div>PIB per capita (R$): "+ window.dadosGerais[i].PIBpercapita+"</div>"+
-        "<div>Possuem Ocupação: "+ window.dadosGerais[i].PossuemOcupacao+"</div>"+
-        "<div>Empregados"+ window.dadosGerais[i].Empregados+"</div>"+
-        "<div>Média rendimento homens (R$): "+ window.dadosGerais[i].MediaRendimentoHomens+"</div>"+
-        "<div>Média rendimento mulheres (R$): "+ window.dadosGerais[i].MediaRendimentoMulheres+"</div>"+
-        "<div>Fundamental Incompleto: "+ window.dadosGerais[i].FundamentalIncompleto+"</div>"+
-        "<div>Fundamental Completo: "+ window.dadosGerais[i].FundamentalCompleto+"</div>"+
-        "<div>Médio Completo: "+ window.dadosGerais[i].MédioCompleto+"</div>"+
-        "<div>Superior Completo: "+ window.dadosGerais[i].SuperiorCompleto+"</div>");
+        "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
+        "<div>PIB (R$ 1000): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
+        "<div>PIB per capita (R$): "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
+        "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
+        "<div>Empregados"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
+        "<div>Média rendimento homens (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
+        "<div>Média rendimento mulheres (R$): "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
+        "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
+        "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto)+"</div>"+
+        "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto)+"</div>"+
+        "<div>Superior Completo: "+ numberWithCommas(window.dadosGerais[i].SuperiorCompleto)+"</div>");
   }
     
   if(window.variavelPesquisa != null){

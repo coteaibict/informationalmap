@@ -9,7 +9,7 @@ function PossuemOcupacao(){
 							inner join ano a on a.cod_ano = dc.cod_ano
 							where dc.informacao = 'Total ocupados mais de 10 anos'
 							and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
-							group by a.cod_ano  ");
+							group by m.cod_municipio, a.cod_ano");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT e.cod_estado,a.descricao, sum(valor), e.uf,null 

@@ -57,6 +57,9 @@ function PibPerCapita(){
 
 	$result = "";
 	while ($row = $res->fetch_row()) {
+		if($row[4]==0){
+			$row[2]=0;
+		}
     	$result .= $row[0] . "," . $row[1] .",". $row[2].','.$row[3].",".$row[4].";";
 	}   
 	mysqli_close($con);
