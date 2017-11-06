@@ -693,12 +693,13 @@ function DespesasCorrentes(){
 			                    or dm.informacao = '3.1.00.00.00.00 - Pessoal e Encargos Sociais ')
 			                    group by m.cod_municipio,a.cod_ano
 			                    order by m.cod_municipio");
-			$resd = $con->query("SELECT valor 
+			$resd = $con->query("SELECT dm.valor 
 								from despesas_municipios dm
+						        inner join municipio m on m.cod_municipio = dm.cod_municipio
 								inner join ano a on a.cod_ano = dm.cod_ano
 								where informacao = 'Total Despesa'
-                                group by m.cod_municipio,a.cod_ano
-								order by cod_municipio");
+								group by m.cod_municipio,a.cod_ano
+								order by m.cod_municipio");
 		}
 		else if($_GET["tipo"] == "E"){
 			$res = $con->query("SELECT m.cod_estado, a.descricao,  sum(dm.valor), e.uf, null

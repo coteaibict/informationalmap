@@ -818,7 +818,8 @@ function clearCensusData() {
 function loadCensusData(variable, tipo,numGrafico) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200){ 
+    if (this.readyState == 4 && this.status == 200){
+      // console.log(this.responseText);
       var dados = this.responseText.split(";");
       //console.log(this.responseText);//salvar apenas do ano selecionado
       dado["cod"] = [];
