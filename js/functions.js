@@ -119,9 +119,9 @@ function MostraDadosGerais(dadosGerais){
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
         "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
-        "<div>PIB per capita: R$"+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
+        "<div>PIB per capita (R$ 1000,00): R$"+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
         "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
-        "<div>Empregados"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
+        "<div>Empregados:"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
         "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
         "<div>Média rendimento mulheres: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
         "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
@@ -864,17 +864,19 @@ function loadCensusData(variable, tipo,numGrafico) {
     if($.inArray(window.anoSelecionado,AnosUnicos)==-1){
       $("#Marcador").css("display", "block");
       //$("#Marcador").css("left", $(this).position().left + 20);
-      window.anoSelecionado =window.AnosUnicos[0];
+      window.anoSelecionado =window.AnosUnicos[window.AnosUnicos.length -1];
+
     }
-    else{
-      $("#Marcador").css("left",($.inArray(window.anoSelecionado,AnosUnicos) * 70 + 20)+"px");
-    }
+    
+    $("#Marcador").css("left",($.inArray(window.anoSelecionado,AnosUnicos) * 70 + 20)+"px");
+    
     //========================================================================================================
 
     $(".anoData").click( function(){
       $("#Marcador").css("display", "block");
       $("#Marcador").css("left", $(this).position().left + 20);
       window.anoSelecionado = this.id.replace( /^\D+/g, '');
+      LoadMapShapes();
     });
 
       for( i = 0; i < window.dado["cod"].length; i++){
