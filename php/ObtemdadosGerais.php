@@ -13,7 +13,7 @@
 							(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1) as 'Superior Completo'
 							from pibmunicipalibge p 
                             inner join municipio m on m.cod_municipio = p.cod_municipio inner join ano a on p.cod_ano = a.cod_ano 
-							where a.descricao ='".$_GET["ano"]."'");
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and a.descricao ='".$_GET["ano"]."'");
 	}
 	else if($_GET["tipo"] == "E"){
 		$res = $con->query("SELECT  e.cod_estado, e.uf, sum(p.Populacao) as 'População', sum(p.PIB) as 'Pib' , sum(p.PIB)/sum(p.Populacao) as 'Pib percapita', 
@@ -22,14 +22,14 @@
 							sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Rendimento Médio Mensal NULLHomens' limit 1)) as 'Média rendimento homens',
 							sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Rendimento Médio Mensal NULLMulheres' limit 1)) as 'Média rendimento mulheres',
 							sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Sem instrução e fundamental incompleto' limit 1))/ sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Fundamental Incompleto(%)',
-							(sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Fundamental completo e médio incompleto' limit 1)) +sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1)) + sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1)) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Fundamental Completo',
+							(sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Fundamental completo e médio incompleto' limit 1)) +sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1)) + sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1))) / sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Fundamental Completo',
 							(sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1)) +sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1))) / sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Médio Completo',
 							(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1) as 'Superior Completo'
 							from pibmunicipalibge p 
                             inner join municipio m on m.cod_municipio = p.cod_municipio 
                             inner join estado e on m.cod_estado = e.cod_estado
                             inner join ano a on p.cod_ano = a.cod_ano 
-							where a.descricao ='".$_GET["ano"]."'
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and a.descricao ='".$_GET["ano"]."'
                             group by e.uf");
 	}
 	else if($_GET["tipo"] == "MR"){
@@ -39,14 +39,14 @@
 							sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Rendimento Médio Mensal NULLHomens' limit 1)) as 'Média rendimento homens',
 							sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Rendimento Médio Mensal NULLMulheres' limit 1)) as 'Média rendimento mulheres',
 							sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Sem instrução e fundamental incompleto' limit 1))/ sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Fundamental Incompleto(%)',
-							(sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Fundamental completo e médio incompleto' limit 1)) +sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1)) + sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1)) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Fundamental Completo',
+							(sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Fundamental completo e médio incompleto' limit 1)) +sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1)) + sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1))) / sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Fundamental Completo',
 							(sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Médio completo e superior incompleto' limit 1)) +sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1))) / sum((select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1)) as 'Médio Completo',
 							(select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Superior completo' limit 1) / (select dc.valor from dadoscenso2010 dc where dc.cod_municipio = m.cod_municipio and informacao =  'Total população mais de 10 anos' limit 1) as 'Superior Completo'
 							from pibmunicipalibge p 
                             inner join municipio m on m.cod_municipio = p.cod_municipio 
                             inner join mesoregiao mr on m.cod_mesoRegiao = mr.cod_mesoRegiao
                             inner join ano a on p.cod_ano = a.cod_ano 
-							where a.descricao ='".$_GET["ano"]."'
+							where m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275) and a.descricao ='".$_GET["ano"]."'
                             group by mr.nome");
 	}
 	$result = "";

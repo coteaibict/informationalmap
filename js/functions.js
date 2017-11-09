@@ -120,8 +120,8 @@ function MostraDadosGerais(dadosGerais){
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
         "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
         "<div>PIB per capita (R$ 1000,00): R$"+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
-        "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
-        "<div>Empregados:"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
+        "<div>Possuem Ocupação (%): "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao * 100)+"</div>"+
+        "<div>Empregados(%):"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
         "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
         "<div>Média rendimento mulheres: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
         "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
@@ -539,8 +539,8 @@ function AtualizaInformacoesEspecificas(variavel, div){
         "<input type='radio' name='informacaoEspecifica' value='Fundamental Completo,1'>Fundamental Completo </br>"+
         "<input type='radio' name='informacaoEspecifica' value='Médio Completo,2'>Médio Completo</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Superior Completo,3'>Superior Completo</br>"+
-        "<input type='radio' name='informacaoEspecifica' value='Estabelecimento de Educação Básica,4'>Estabelecimento de Educação Básica</br>"+
-        "<input type='radio' name='informacaoEspecifica' value='Estabelecimento de Educação Profissional,17'>Estabelecimento de Educação Profissional</br>"+
+        // "<input type='radio' name='informacaoEspecifica' value='Estabelecimento de Educação Básica,4'>Estabelecimento de Educação Básica</br>"+
+        // "<input type='radio' name='informacaoEspecifica' value='Estabelecimento de Educação Profissional,17'>Estabelecimento de Educação Profissional</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Matrículas Educação Básica,5'>Matrículas Educação Básica </br>"+
         "<input type='radio' name='informacaoEspecifica' value='Matrículas Ensino Médio,6'>Matrículas Ensino Médio</br>"+
         "<input type='radio' name='informacaoEspecifica' value='Matrículas Educação Profissional,7'>Matrículas Educação Profissional</br>"+
@@ -1220,9 +1220,9 @@ function mouseInToRegion(e) {
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
         "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
-        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
-        "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao)+"</div>"+
-        "<div>Empregados"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
+        "<div>PIB per capita (R$ 1000,00): R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
+        "<div>Possuem Ocupação(%): "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao *100)+"</div>"+
+        "<div>Empregados (%):"+ numberWithCommas(window.dadosGerais[i].Empregados *100)+"</div>"+
         "<div>Média rendimento homens: R$"+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
         "<div>Média rendimento mulheres: R$"+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
         "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
