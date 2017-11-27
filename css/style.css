@@ -567,6 +567,19 @@ ul {
   width: 360px;
   height: 20px;
 }
+
+.graphs{
+	width: 10%;
+	height: 10%;
+	cursor: pointer;
+	float: left;
+	padding-left:8%;
+	padding-top: 13px;
+	padding-bottom: 10px;
+}
+
+
+
 #legend { display: flex; display: -webkit-box; padding-top: 7px }
 .color-key {
   background: linear-gradient(to right,

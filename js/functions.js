@@ -138,21 +138,20 @@ function MostraDadosGerais(dadosGerais){
         //window.divisoesMarcadas.push(window.dadosGerais[i]); 
         // AtualizarDivisoesMarcadas();
 
-//Receber lista de anos e lista de valores. CriarGraficoLInha===========================================================================
-    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos, window.dado["total"]); });
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'><img class='graphs' src='images/historico.jpg' title='Histórico'/></div>");
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos,window.dado["total"]); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome+" (R$)"); });
+    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'><img class='graphs' src='images/despesas.png' title='Despesas'/></div>");
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
-    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População de "+window.dadosGerais[i].Nome); });
+    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'><img class='graphs' src='images/populacao.png' title='População'/></div>");
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
-    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoEstabelecimento.php","Estabelecimentos em "+window.dadosGerais[i].Nome); });
+    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'><img class='graphs' src='images/Estabelecimentos.png' title='Estabelecimentos'/></div>");
+    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza("", "GraficoEstabelecimento.php","Estabelecimentos no Brasil"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
-    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPatentes.php","Patentes em "+window.dadosGerais[i].Nome); });
+    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'><img class='graphs' src='images/patentes.jpg' title='Patentes'/></div>");
+    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza("", "GraficoPatentes.php","Patentes no Brasil"); });
 
   }
   
@@ -169,19 +168,19 @@ function MostraDadosGerais(dadosGerais){
     $("#geraGraficoPatentes").remove();
 
 
-    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos, window.dado["total"]); });
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'><img class='graphs' src='images/historico.jpg' title='Histórico'/></div>");
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos,window.dado["total"]); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'><img class='graphs' src='images/despesas.png' title='Despesas'/></div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'><img class='graphs' src='images/populacao.png' title='População'/></div>");
     $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'><img class='graphs' src='images/Estabelecimentos.png' title='Estabelecimentos'/></div>");
     $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza("", "GraficoEstabelecimento.php","Estabelecimentos no Brasil"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'><img class='graphs' src='images/patentes.jpg' title='Patentes'/></div>");
     $("#geraGraficoPatentes").on("click", function(){ GraficoPizza("", "GraficoPatentes.php","Patentes no Brasil"); });
 
     $('#divisaoPesquisada').css("display","none");
@@ -383,19 +382,19 @@ function LimpaDadosGerais(){
     $("#geraGraficoPatentes").remove();
 
 
-    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'>Histórico</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoHistorico'><img class='graphs' src='images/historico.jpg' title='Histórico'/></div>");
     $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos,window.dado["total"]); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'>Despesas</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoDespesas'><img class='graphs' src='images/despesas.png' title='Despesas'/></div>");
     $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'>População</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'><img class='graphs' src='images/populacao.png' title='População'/></div>");
     $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'>Estabelecimentos</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'><img class='graphs' src='images/Estabelecimentos.png' title='Estabelecimentos'/></div>");
     $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza("", "GraficoEstabelecimento.php","Estabelecimentos no Brasil"); });
 
-    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'>Patentes</div>");
+    $("#resumoInformacoes").append("<div id='geraGraficoPatentes'><img class='graphs' src='images/patentes.jpg' title='Patentes'/></div>");
     $("#geraGraficoPatentes").on("click", function(){ GraficoPizza("", "GraficoPatentes.php","Patentes no Brasil"); });
 
     $('#divisaoPesquisada').css("display","none");
