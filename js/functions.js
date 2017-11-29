@@ -713,7 +713,7 @@ function DownloadDiv() {
      var a = document.body.appendChild(
          document.createElement("a")
      );
-     a.download = "Relatorio.docx";
+     a.download = "Visão - relatório analítico "+new Date()+".docx";
      a.href = "data:text/doc,"+'<!DOCTYPE html></br>' + document.getElementById("relatorio").innerHTML;
      a.click();
      a.remove();
