@@ -19,8 +19,8 @@ window.indexInformacao = null;
 window.caminho = null;
 window.arquivoPhp = null;
 window.jsonLayers = [];
-window.anoSelecionado = null;
-window.numRelatorio = 1;
+window.anoSelecionado = null;geraGra
+window.numRelatorio = 1;geraGra
 
 window.AnosUnicos = [];
 
@@ -139,19 +139,19 @@ function MostraDadosGerais(dadosGerais){
         // AtualizarDivisoesMarcadas();
 
     $("#resumoInformacoes").append("<div id='geraGraficoHistorico'><img class='graphs' src='images/historico.jpg' title='Histórico'/></div>");
-    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],"Brasil",window.AnosUnicos,window.dado["total"]); });
+    $("#geraGraficoHistorico").on("click", function(){ CriarGraficoLinha(window.dado["valor"],window.dadosGerais[i].Nome,window.AnosUnicos,window.dado["total"]); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoDespesas'><img class='graphs' src='images/despesas.png' title='Despesas'/></div>");
-    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza("", "GraficoDespesas.php", "Despesas do Brasil (R$)"); });
+    $("#geraGraficoDespesas").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoDespesas.php", "Despesas de "+window.dadosGerais[i].Nome+" (R$)"); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPopulacao'><img class='graphs' src='images/populacao.png' title='População'/></div>");
-    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza("", "GraficoPopulacao.php","População do Brasil"); });
+    $("#geraGraficoPopulacao").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPopulacao.php","População de "+window.dadosGerais[i].Nome+""); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoEstabelecimento'><img class='graphs' src='images/Estabelecimentos.png' title='Estabelecimentos'/></div>");
-    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza("", "GraficoEstabelecimento.php","Estabelecimentos no Brasil"); });
+    $("#geraGraficoEstabelecimento").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoEstabelecimento.php","Estabelecimentos em "+window.dadosGerais[i].Nome+""); });
 
     $("#resumoInformacoes").append("<div id='geraGraficoPatentes'><img class='graphs' src='images/patentes.jpg' title='Patentes'/></div>");
-    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza("", "GraficoPatentes.php","Patentes no Brasil"); });
+    $("#geraGraficoPatentes").on("click", function(){ GraficoPizza(window.dadosGerais[i].key, "GraficoPatentes.php","Patentes no "+window.dadosGerais[i].Nome+""); });
 
   }
   
