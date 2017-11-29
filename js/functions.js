@@ -19,8 +19,8 @@ window.indexInformacao = null;
 window.caminho = null;
 window.arquivoPhp = null;
 window.jsonLayers = [];
-window.anoSelecionado = null;geraGra
-window.numRelatorio = 1;geraGra
+window.anoSelecionado = null;
+window.numRelatorio = 1;
 
 window.AnosUnicos = [];
 

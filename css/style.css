@@ -7,7 +7,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Roboto', sans-serif;
-	font-size: 11.5px
+	font-size: 11.5px;
 }
 li { 
 	cursor: pointer; 
@@ -46,7 +46,7 @@ li {
 	display: none;
 	position: relative;
 	overflow-y: scroll;
-	height: 60%;
+	max-height: 40%;
 	left: 15px;
 }
 #mediaDadosGerais{
