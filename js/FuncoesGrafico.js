@@ -314,9 +314,9 @@ function CriarGraficoPizza(nomes,valores, informacao){
           "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
         "</div>"+
       "</div></div>");
-    }
+    
     var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
-
+  }
     colors = [];
     for(var i in valores){
 
