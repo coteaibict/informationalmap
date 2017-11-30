@@ -118,16 +118,16 @@ function MostraDadosGerais(dadosGerais){
       "<div>Código: "+window.dadosGerais[i].key+"</div>"+
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
-        "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
-        "<div>PIB per capita (R$ 1000,00): R$"+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
-        "<div>Possuem Ocupação (%): "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao * 100)+"</div>"+
-        "<div>Empregados(%):"+ numberWithCommas(window.dadosGerais[i].Empregados)+"</div>"+
+        "<div>PIB: R$ "+ numberWithCommas(window.dadosGerais[i].PIB*1000)+",00</div>"+
+        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita*1000)+",00</div>"+
+        "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao * 100)+" %</div>"+
+        "<div>Empregados:"+ numberWithCommas(window.dadosGerais[i].Empregados*100)+" %</div>"+
         "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
         "<div>Média rendimento mulheres: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
-        "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
-        "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto)+"</div>"+
-        "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto)+"</div>"+
-        "<div>Superior Completo: "+ numberWithCommas(window.dadosGerais[i].SuperiorCompleto)+"</div>");
+        "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto*100)+" %</div>"+
+        "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto*100)+" %</div>"+
+        "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto*100)+" %</div>"+
+        "<div>Superior Completo: "+ numberWithCommas(window.dadosGerais[i].SuperiorCompleto*100)+" %</div>");
     map.data.forEach(function(feature) {
       if(feature.getProperty('click') == 'clicked')
         feature.setProperty('click', 'normal');
@@ -1215,19 +1215,19 @@ function mouseInToRegion(e) {
     $("#addResumoRelatorio").css("display", "block");
     var i = window.dadosGerais.map(function(x) {return x.key; }).indexOf(e.feature.getId());
     $('#divisaoPesquisada').html(
-        "<div>Código: "+window.dadosGerais[i].key+"</div>"+
+      "<div>Código: "+window.dadosGerais[i].key+"</div>"+
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
-        "<div>PIB (R$ 1000,00): "+ numberWithCommas(window.dadosGerais[i].PIB)+"</div>"+
-        "<div>PIB per capita (R$ 1000,00): R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita)+"</div>"+
-        "<div>Possuem Ocupação(%): "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao *100)+"</div>"+
-        "<div>Empregados (%):"+ numberWithCommas(window.dadosGerais[i].Empregados *100)+"</div>"+
-        "<div>Média rendimento homens: R$"+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
-        "<div>Média rendimento mulheres: R$"+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
-        "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto)+"</div>"+
-        "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto)+"</div>"+
-        "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto)+"</div>"+
-        "<div>Superior Completo: "+ numberWithCommas(window.dadosGerais[i].SuperiorCompleto)+"</div>");
+        "<div>PIB: R$ "+ numberWithCommas(window.dadosGerais[i].PIB*1000)+",00</div>"+
+        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita*1000)+",00</div>"+
+        "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao * 100)+" %</div>"+
+        "<div>Empregados:"+ numberWithCommas(window.dadosGerais[i].Empregados*100)+" %</div>"+
+        "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
+        "<div>Média rendimento mulheres: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoMulheres)+"</div>"+
+        "<div>Fundamental Incompleto: "+ numberWithCommas(window.dadosGerais[i].FundamentalIncompleto*100)+" %</div>"+
+        "<div>Fundamental Completo: "+ numberWithCommas(window.dadosGerais[i].FundamentalCompleto*100)+" %</div>"+
+        "<div>Médio Completo: "+ numberWithCommas(window.dadosGerais[i].MédioCompleto*100)+" %</div>"+
+        "<div>Superior Completo: "+ numberWithCommas(window.dadosGerais[i].SuperiorCompleto*100)+" %</div>");
   }
     
   if(window.variavelPesquisa != null){

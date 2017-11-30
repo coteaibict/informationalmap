@@ -60,13 +60,13 @@ function CriarGraficoLinha(/*nomes,*/valores, informacao, dominio, total){
     "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
     "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
     "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>Histórico de "+informacao+"</div>"+
-
+    "<div class='conteudo'>"+
     "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
 
     "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
       "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
     "</div>"+
-  "</div>");
+  "</div></div>");
 
 
 
@@ -166,11 +166,12 @@ function CriarGraficoPizza(nomes,valores, informacao){
     var G2 = window.numeroGrafico +1;
     var G3 = window.numeroGrafico +2;
     $("body").append("<div class='dragable'>"+
+      
       "<div class='chartsHearder'></div>"+
       "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
       "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
       "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
-
+      "<div class='conteudo'>"+
 
       "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+'Rural x Urbano'+"</div>"+
       "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+  
@@ -192,7 +193,7 @@ function CriarGraficoPizza(nomes,valores, informacao){
       "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart3"+G3+"')\">"+
         "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
       "</div>"+
-    "</div>");
+    "</div></div>");
 
     var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
     var ctx2 = document.getElementById("myChart2"+G2).getContext("2d");
@@ -275,7 +276,7 @@ function CriarGraficoPizza(nomes,valores, informacao){
     $(".dragable").resizable();
     window.numeroGrafico+=3;
   }else{
-
+/*
 //Colocar uma seleção de Ano para Patentes
     if(informacao.indexOf('Patentes')!=-1){
       $("body").append("<div class='dragable'>"+
@@ -288,31 +289,31 @@ function CriarGraficoPizza(nomes,valores, informacao){
         "<select>"+
         "</select>"+
 
-
+        "<div class='conteudo'>"+
         "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
 
         "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
           "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
         "</div>"+
-      "</div>");
+      "</div></div>");
       for(var i = 0; i<5;i++){
         $("#chartTittle"+window.numeroGrafico+" select").append("<option value='Godzilla'>Godzilla</option>");
         console.log("GODZILLA");
       }
 
-    }else{  
+    }else{ */ 
       $("body").append("<div class='dragable'>"+
         "<div class='chartsHearder'></div>"+
         "<img src='images/fechar.png' class='close' onClick='Close(this)'/>"+
         "<img src='images/minimizar.png' class='minimize' onClick='Minimize(this)'/>"+
         "<div class='chatsTittles' id='chartTittle"+window.numeroGrafico+"'>"+informacao+"</div>"+
-
+        "<div class='conteudo'>"+
         "<canvas class='charts' id='myChart"+window.numeroGrafico+"'></canvas>"+
 
         "<div class='relatorioGrafico' onclick=\"AdicionarRelatorio('myChart"+window.numeroGrafico+"')\">"+
           "Enviar Gráfico para relatório <img src='images/relatorio.png' /> "+
         "</div>"+
-      "</div>");
+      "</div></div>");
     }
     var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
 
@@ -345,7 +346,7 @@ function CriarGraficoPizza(nomes,valores, informacao){
     $(".dragable").draggable();
     $(".dragable").resizable();
     window.numeroGrafico++;
-  }
+  //}
 }
 
 

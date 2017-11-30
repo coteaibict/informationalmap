@@ -285,7 +285,6 @@ span {
 	padding-top: 15px;
 	font-size: 15px;
 	padding-bottom: 20px;
-
 }
 #minimizesDivs{
 	position: absolute;
@@ -316,8 +315,13 @@ span {
 	z-index: 10;
 	background-color: white;
 	cursor: move;
+	
+}
+.conteudo{
+	width: 500px;
+	height: 337px;
+	z-index: 10;
 	overflow: scroll;/*MUDANÇA: ADICAO*/
-
 }
 .removeItem{
 	width: 10px;
