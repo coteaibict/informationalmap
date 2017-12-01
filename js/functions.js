@@ -996,9 +996,6 @@ function loadCensusData(variable, tipo,numGrafico) {
       }  
 
       ObtemdadosGerais();
-
-      document.getElementById('census-min').textContent = numberWithCommas(censusMin);
-      document.getElementById('census-max').textContent = numberWithCommas(censusMax);
       // document.getElementById('census-variable').textContent = window.dado["informacao"][0];
       $('#loading').css('display','none');
  }
