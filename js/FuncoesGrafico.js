@@ -316,7 +316,7 @@ function CriarGraficoPizza(nomes,valores, informacao){
       "</div></div>");
     
     var ctx = document.getElementById("myChart"+window.numeroGrafico).getContext("2d");
-  }
+  
     colors = [];
     for(var i in valores){
 
@@ -346,7 +346,7 @@ function CriarGraficoPizza(nomes,valores, informacao){
     $(".dragable").draggable();
     $(".dragable").resizable();
     window.numeroGrafico++;
-  //}
+  }
 }
 
 
