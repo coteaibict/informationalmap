@@ -118,7 +118,7 @@ function MostraDadosGerais(dadosGerais){
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
         "<div>PIB: R$ "+ numberWithCommas(window.dadosGerais[i].PIB*1000)+",00</div>"+
-        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita*1000)+",00</div>"+
+        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita*1000)+"</div>"+
         "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao * 100)+" %</div>"+
         "<div>Empregados:"+ numberWithCommas(window.dadosGerais[i].Empregados*100)+" %</div>"+
         "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
@@ -1026,14 +1026,6 @@ function GetLegend(){
   if((window.informacao[window.indexInformacao] == '% da despesa sobre a receita') 
           || (window.informacao[window.indexInformacao] ==  'Possuem Ocupação %'))
     window.UnidadeY = '%';
-  else if((window.informacao[window.indexInformacao] == 'PIB')
-          ||(window.informacao[window.indexInformacao] == 'Impostos Recolhidos')
-          ||(window.informacao[window.indexInformacao] == 'PIB Agropecuária')
-          ||(window.informacao[window.indexInformacao] == 'PIB Indústria')
-          ||(window.informacao[window.indexInformacao] == 'PIB Serviços')
-          ||(window.informacao[window.indexInformacao] == 'PIB Governo')
-  )
-    window.UnidadeY = 'R$ 1000,00';
   else if((window.informacao[window.indexInformacao] == 'Exportações')
           ||(window.informacao[window.indexInformacao] == 'Importações')
           ||(window.informacao[window.indexInformacao] == 'Balança comercial')
@@ -1057,6 +1049,14 @@ function GetLegend(){
           ||(window.informacao[window.indexInformacao] == 'Remuneração média: Serviços')
           ||(window.informacao[window.indexInformacao] == 'Remuneração média: Administração Pública')
           ||(window.informacao[window.indexInformacao] == 'Remuneração média: Agropecuárias')
+
+          ||(window.informacao[window.indexInformacao] == 'PIB')
+          ||(window.informacao[window.indexInformacao] == 'Impostos Recolhidos')
+          ||(window.informacao[window.indexInformacao] == 'PIB Agropecuária')
+          ||(window.informacao[window.indexInformacao] == 'PIB Indústria')
+          ||(window.informacao[window.indexInformacao] == 'PIB Serviços')
+          ||(window.informacao[window.indexInformacao] == 'PIB Governo')
+          ||(window.informacao[window.indexInformacao] == 'PIB per Capita')
 
   )
     window.UnidadeY = 'R$'
@@ -1216,7 +1216,7 @@ function mouseInToRegion(e) {
         "<div>Nome: "+ window.dadosGerais[i].Nome+"</div>"+
         "<div>Número de Habitantes: "+ numberWithCommas(window.dadosGerais[i].NHabitantes)+"</div>"+
         "<div>PIB: R$ "+ numberWithCommas(window.dadosGerais[i].PIB*1000)+",00</div>"+
-        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita*1000)+",00</div>"+
+        "<div>PIB per capita: R$ "+ numberWithCommas(window.dadosGerais[i].PIBpercapita*1000)+"</div>"+
         "<div>Possuem Ocupação: "+ numberWithCommas(window.dadosGerais[i].PossuemOcupacao * 100)+" %</div>"+
         "<div>Empregados:"+ numberWithCommas(window.dadosGerais[i].Empregados*100)+" %</div>"+
         "<div>Média rendimento homens: R$ "+ numberWithCommas(window.dadosGerais[i].MediaRendimentoHomens)+"</div>"+
@@ -1236,11 +1236,16 @@ function mouseInToRegion(e) {
     var percent = (e.feature.getProperty('census_variable') - censusMin) /
         (censusMax - censusMin) * 100;
 
+
+
     // update the label
     document.getElementById('data-label').textContent =
         e.feature.getProperty('nome');
     document.getElementById('data-value').textContent =
-        e.feature.getProperty('census_variable').toLocaleString();
+        formatN(e.feature.getProperty('census_variable'));
+
+
+
     document.getElementById('data-box').style.display = 'block';
     document.getElementById('data-caret').style.display = 'block';
     document.getElementById('data-caret').style.paddingLeft = percent + '%';
@@ -1248,6 +1253,30 @@ function mouseInToRegion(e) {
     $(document).mousemove(function(event){  $varx = event.pageX;  $vary = event.pageY;});
     document.getElementById('data-box').style.top = $vary + 'px';
     document.getElementById('data-box').style.left = $varx + 'px';
+  }
+}
+
+function formatN(y){
+  x = Number(y);
+
+  
+
+  if(window.UnidadeY == 'R$' || window.UnidadeY == 'US$ FOB'){
+    var parts = (x.toFixed(2)).toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    t = parts.join(",");
+    if(window.UnidadeY == 'R$')return ('R$ '+t);
+    else                       return ('US$ '+t);
+  }else if(window.UnidadeY == '%'|| window.UnidadeY == ' '){
+    if(x-parseInt(x)>0)
+      var parts = (x.toFixed(2)).toString().split(".");
+    else{
+      var parts = x.toString().split(".");
+    }
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    t = parts.join(",");
+    if(window.UnidadeY == '%')return (t+' %');
+    else                      return t.toString();
   }
 }
 
