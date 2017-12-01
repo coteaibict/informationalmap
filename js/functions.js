@@ -105,7 +105,6 @@ function MostraDadosGerais(dadosGerais){
   var i = window.dadosGerais.map(function(x) {return x.Nome; }).indexOf(dadosGerais);
   if(i != -1){
     window.buscaEspecifica = true;
-    console.log(numberWithCommas(window.dadosGerais[i].PIB));
 
     $("#geraGraficoHistorico").remove();
     $("#geraGraficoDespesas").remove();
@@ -819,6 +818,7 @@ function loadCensusData(variable, tipo,numGrafico) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
       // console.log(this.responseText);
+
       var dados = this.responseText.split(";");
       //console.log(this.responseText);//salvar apenas do ano selecionado
       dado["cod"] = [];
@@ -1268,7 +1268,7 @@ function LimparTudo(){
   window.indexInformacao = null;
   window.caminho = "";
   $("#caminho span").html("");
-  $(".Limpo").each(function() { this.reset() });
+  $(".Limpo").each(function() { this.reset();});
   $(':checkbox').prop('enabled', false);
   $(".dragable").remove();
   $("#Saves").html("<img src='images/escova.png' alt='Limpar' id='Limpar'/>"+
@@ -1318,6 +1318,7 @@ function LoadMapShapes(grafico){
   ClearMapData();
   clearCensusData();
   LimpaDadosGerais();
+  $("#FormBuscaEspecifica")[0].reset();
   if($("#opcoes").is(':visible')){
     RotateImage(0, $("#setores"));
     $("#opcoes").slideToggle();

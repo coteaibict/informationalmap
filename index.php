@@ -97,8 +97,8 @@
 
         </br>
 
-        <form class="Limpo">
-          <input type="text" id="inputListaDivisao" list="filtroDivisao" oninput="MostraDadosGerais(this.value)" /> 
+        <form class="Limpo" id="FormBuscaEspecifica">
+          <input type="text" id="inputListaDivisao"  list="filtroDivisao" oninput="MostraDadosGerais(this.value)" /> 
           <datalist id="filtroDivisao"></datalist>
         </form>
         </br>
