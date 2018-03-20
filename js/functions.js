@@ -29,7 +29,7 @@ window.UnidadeY ='';
 
 
 
- var mapStyle = [{
+var mapStyle = [{
   'stylers': [{'visibility': 'on'}]
 }, {
   'featureType': 'landscape',
@@ -242,7 +242,7 @@ function ObtemdadosGerais(){
       }
     }
     else {
-      input.placeholder = "Couldn't load datalist options :(";
+      input.placeholder = "Carregando dados";
     }
   };
 
@@ -678,7 +678,12 @@ function Minimize(obj){
     $("body").append($(obj).parent());
   }
 }
-
+function CloseSobre(){
+  $("#backSobre").css("display", "none");
+}
+function ShowSobre(){
+  $("#backSobre").css("display", "block");
+}
 function Close(obj){
   $(obj).parent().css("display", "none");
 }
@@ -742,10 +747,11 @@ function initMap() {
           "color": "#0000ff"
       }]
   }];
+  
   // load the map
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -15, lng: -50},
-    zoom: 3,
+    center: {lat: -15, lng: -65},
+    zoom: 3.5 * ($(window).height()/678),
     disableDefaultUI: true,
     zoomControl: true,
     zoomControlOptions: {
@@ -817,7 +823,7 @@ function loadCensusData(variable, tipo,numGrafico) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
-      // console.log(this.responseText);
+      console.log(this.responseText);
 
       var dados = this.responseText.split(";");
       //console.log(this.responseText);//salvar apenas do ano selecionado
@@ -1245,14 +1251,19 @@ function mouseInToRegion(e) {
         formatN(e.feature.getProperty('census_variable'));
 
 
-
     document.getElementById('data-box').style.display = 'block';
     document.getElementById('data-caret').style.display = 'block';
     document.getElementById('data-caret').style.paddingLeft = percent + '%';
 //TENTATIVA DE COLOCAR VALOR NO MOUSE========================================================
-    $(document).mousemove(function(event){  $varx = event.pageX;  $vary = event.pageY;});
-    document.getElementById('data-box').style.top = $vary + 'px';
-    document.getElementById('data-box').style.left = $varx + 'px';
+    try{
+      $(document).mousemove(function(event){  $varx = event.pageX;  $vary = event.pageY;});
+      document.getElementById('data-box').style.top = $vary + 'px';
+      document.getElementById('data-box').style.left = $varx + 'px';
+    }
+    catch(e)
+    {
+    }
+    
   }
 }
 

@@ -362,7 +362,7 @@ function GraficoPizza(cod, arquivo, informacao){
       for(var i = 0; i < dados.length -1; i++){
         var aux = dados[i].split("&");
         nomes.push(aux[0]); 
-        valores.push((Number(aux[1]) * 100).toFixed(2));
+        valores.push((Number(aux[1]) * 100).toFixed(0));
 
       }
       CriarGraficoPizza(nomes,valores, informacao);

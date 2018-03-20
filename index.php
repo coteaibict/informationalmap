@@ -42,6 +42,48 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body>
+
+    <div id="backSobre">
+      <div id="sobre" >
+      
+        <img src='images/fechar.png' class='close' onClick='CloseSobre()'/>
+        </br>
+        </br>
+        <center><div id="tituloSobre"><img src="images/TituloSobre.png"/></div></center>
+        </br>
+        <center style="color:#DD6650">Versão 1.0</center>
+        </br>
+        <div id="textoSobre">
+      <p>
+        O Sistema Aberto de Observatórios para Visualização de Informações (VISÃO) é uma ferramenta de disponibilização e visualização de informações provenientes de diversas bases de dados, baseadas em localização geográfica, para dar suporte à tomada de decisão.
+ </p>
+ <p>
+Desenvolvida pelo Instituto Brasileiro de Informação em Ciência e Tecnologia (IBICT), os objetivos a serem atendidos pelo VISÃO são: disponibilizar indicadores dinâmicos a partir da análise de grandes conjuntos de dados; permitir a criação de relações entre indicadores oriundos de diferentes instituições; possibilitar a análise visual e histórica de indicadores relativos ao desenvolvimento social, econômico e ambiental; contribuir para a formulação de políticas públicas relacionadas a C&T; e ser uma ferramenta para apoio à tomada de decisão.
+
+ </p>
+
+<p>
+EQUIPE:
+</p>
+<p>
+Coordenação Técnica: <b>Tiago Emmanuel Nunes Braga</b>
+</p>
+<p>
+Pesquisadores: <b>Lucas Fernandes, Mariela Muruga, Milena Simões, Rafael Lopes, Roosevelt Tomé</b>
+</p>
+<p>
+Projeto Gráfico e Diagramação: <b>Mariela Muruga</b>
+</p>
+<p>
+Desenvolvedores: <b>Lucas Fernandes, Rafael Lopes</b>
+</p>
+ 
+<p>
+Mais informações em <a href="http://www.ibict.br">www.ibict.br</a>, ou pelo e-mail visao@ibict.br.
+</p>
+        </div>
+      </div>
+    </div>
     <div id="loading">
       <h1>Carregando...</h1>
     </div>
@@ -51,7 +93,7 @@
       <img src='images/relatorio.png'/>
     </div>
 
-    <div id="header"><img src="images/linhas.png" id="headerBackground"/> <img src="images/visao-ibict.png" id="logo"/> </div>
+    <div id="header"><img src="images/linhas.png" id="headerBackground"/> <img src="images/visao-ibict.png" id="logo"/> <div id="linkSobre" onClick='ShowSobre()'>Sobre</div></div>
     <div id="listaInformacoes">
       <div id="pesquisas">
         <div class="Expandivel" onclick="AtualizaInformacoesEspecificas('Economia', this)" ><div class="ExpandivelTitulo"> Economia</div> <img class="ExpandivelImg" src="images/setinha.png"/> </div>

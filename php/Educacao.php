@@ -907,7 +907,7 @@
 								from municipio m inner join dados_inep_censodaeducacaobasica2015 dc on m.cod_municipio = dc.cod_municipio
 								inner join estado e on m.cod_estado = e.cod_estado
 								inner join ano a on a.cod_ano = dc.cod_ano
-						        where dc.informacao = ' Docentes - Educação Básica  '
+						        where dc.informacao = ' Docentes - Educação Básica  ' 
 								and m.cod_municipio not in (2206720, 1504752, 4212650, 4220000, 4314548, 5006275)
 						        group by e.cod_estado, a.cod_ano
 								order by m.cod_municipio");
@@ -940,8 +940,8 @@
 		}
 
 		$result = "";
-		while ($row2 = $res2->fetch_row()) {
-			$row1 = $res1->fetch_row();
+		while ($row1 = $res1->fetch_row()) {
+			$row2 = $res2->fetch_row();
 	    	$result .= $row1[0] . "," . $row1[1] .",". $row1[2].','.$row1[3].",".$row2[0].";";
 		}   
 		mysqli_close($con);
@@ -1002,8 +1002,8 @@
 		}
 
 		$result = "";
-		while ($row2 = $res2->fetch_row()) {
-			$row1 = $res1->fetch_row();
+		while ($row1 = $res1->fetch_row()) {
+			$row2 = $res2->fetch_row();
 	    	$result .= $row1[0] . "," . $row1[1] .",". $row1[2].','.$row1[3].",".$row2[0].";";
 		}   
 		mysqli_close($con);
@@ -1065,8 +1065,8 @@
 		}
 
 		$result = "";
-		while ($row2 = $res2->fetch_row()) {
-			$row1 = $res1->fetch_row();
+		while ($row1 = $res1->fetch_row()) {
+			$row2 = $res2->fetch_row();
 	    	$result .= $row1[0] . "," . $row1[1] .",". $row1[2].','.$row1[3].",".$row2[0].";";
 		}   
 		mysqli_close($con);

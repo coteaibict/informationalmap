@@ -13,8 +13,35 @@ li {
 	cursor: pointer; 
 	cursor: hand; 
 }
+#linkSobre{
+	color: white;
+    position: absolute;
+    right: 17.5%;;
+    top: 3%;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
+#backSobre{
+	display: none;
+	position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    background-color: rgba(0,0,0,0.5);
+}
+#sobre{
+	height: 60%;
+    width: 659px;
+    z-index: 5;
 
+    background-color: white;
+    position: absolute;
+    left: 25%;
+    top: 20%;
+    overflow-y: scroll;
+}
 #addResumoRelatorio img{
 	position: relative;
 	top:10px;
@@ -440,7 +467,14 @@ ul {
 	width:50%;
 }
  body { height: 100%;width: 100%; margin: 0; padding: 0; overflow: hidden; }
-	
+#textoSobre{
+	padding: 0px 30px 0px 25px;
+	font-family: Cairo;
+    
+    font-size: 14px;
+    line-height: 26px;
+    text-align: left;
+}	
 .nicebox {
   position: absolute;
   text-align: center;
@@ -461,6 +495,7 @@ ul {
 	right: 21%;
 	top: 8%;
 	z-index: 2;
+	background-color: rgba(255,255,255,0.7);
 }
 #resumoTitulo{
 	color: rgb(85, 112, 124);
